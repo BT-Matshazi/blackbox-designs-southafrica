@@ -7,14 +7,7 @@ export default function page() {
   return (
     <>
       <Header />
-      <div className="flex flex-row w-3/4 m-auto gap-4">
-        <div className="w-1/2">
-          <ContactForm />
-        </div>
-        <div className="w-1/2">
-          <ContactForm />
-        </div>
-      </div>
+      <ContactForm />
       <Footer />
     </>
   );

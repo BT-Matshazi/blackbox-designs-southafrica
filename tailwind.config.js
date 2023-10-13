@@ -10,6 +10,7 @@ module.exports = {
       colors: {
         primary: "#000",
         accent: "#D43F52",
+        accent_hover: "#e11d48",
         secondary: "#fff",
       },
       backgroundImage: {

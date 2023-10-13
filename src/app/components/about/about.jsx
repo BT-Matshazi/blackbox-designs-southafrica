@@ -9,9 +9,11 @@ export default function about() {
           <div className="flex flex-wrap ">
             <div className="w-full px-4 mb-10 lg:w-1/2 lg:mb-0">
               <div className="relative">
-                <img
-                  src="https://i.postimg.cc/QtyYkbxp/pexels-andrea-piacquadio-927022.jpg"
+                <Image
+                  src="https://images.pexels.com/photos/196659/pexels-photo-196659.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                   alt=""
+                  width={500}
+                  height={500}
                   className="relative z-40 object-cover w-full h-96 lg:rounded-tr-[80px] lg:rounded-bl-[80px] rounded"
                 />
                 <div className="absolute z-10 hidden w-full h-full bg-accent rounded-bl-[80px] rounded -bottom-6 right-6 lg:block"></div>

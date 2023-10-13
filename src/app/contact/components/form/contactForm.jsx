@@ -3,7 +3,7 @@ import React from "react";
 export default function contactForm() {
   return (
     <>
-      <section className="flex items-center bg-white my-10 font-poppins">
+      <section className="flex items-center  bg-white my-10 font-poppins">
         <div className="justify-center flex-1 max-w-6xl px-4 py-4 mx-auto lg:py-6 md:px-6">
           <h2 className="pb-2 text-xl font-bold text-center text-gray-800 md:text-3xl ">
             Let Us Connect

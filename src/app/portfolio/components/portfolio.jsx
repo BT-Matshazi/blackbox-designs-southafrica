@@ -11,29 +11,36 @@ export default function Portfolio() {
             return (
               <div
                 key={portfolio.id}
-                className="max-w-sm bg-white border border-gray-200 rounded-lg shadow "
+                className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg"
               >
-                <a href="#">
-                  <Image
-                    className="rounded-lg w-full h-72"
-                    src={portfolio.image}
-                    alt=""
-                    width={500}
-                    height={200}
-                  />
-                </a>
+                <div class="relative overflow-hidden">
+                  <div class="m-2 overflow-hidden">
+                    <Image
+                      class="object-cover w-full mx-auto transition-all ease-in-out rounded h-72 hover:scale-110"
+                      src={portfolio.image}
+                      alt=""
+                      width={500}
+                      height={200}
+                    />
+                  </div>
+                  <div class="absolute px-4 py-1 text-xs font-semibold text-white rounded top-3 left-3 sale bg-accent">
+                    {portfolio.tag}
+                  </div>
+                </div>
                 <div className="p-5">
-                  <a href="#">
+                  <div>
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
                       {portfolio.title}
                     </h5>
-                  </a>
+                  </div>
                   <p className="mb-3 font-normal text-gray-700">
                     Here are the biggest enterprise technology acquisitions of
                     2021 so far, in reverse chronological order.
                   </p>
                   <a
-                    href={portfolio.link} target="_blank" rel="noopener noreferrer"
+                    href={portfolio.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-accent rounded-lg hover:bg-accent_hover focus:ring-4 focus:outline-none focus:ring-blue-300"
                   >
                     Visit

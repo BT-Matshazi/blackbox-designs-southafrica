@@ -17,8 +17,8 @@ export default function Hero() {
               transform visions into engaging digital realities.
             </p>
             <a
-              href="#services"
-              className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-accent rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300"
+              href="/services"
+              className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-accent rounded-lg border  border-accent hover:bg-accent hover:text-white focus:ring-4 focus:ring-accent focus:ring-opacity-50 transition-all duration-3"
             >
               Explore Our Services
               <svg
@@ -35,19 +35,14 @@ export default function Hero() {
               </svg>
             </a>
             <a
-              href="#contact"
-              className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100"
+              href="/contact"
+              className="md:inline-flex hidden  items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100"
             >
               Get In Touch
             </a>
           </div>
           <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
-            <Image
-              src={HeroImage}
-              alt="mockup"
-              width={700}
-                height={700}
-            />
+            <Image src={HeroImage} alt="mockup" width={700} height={700} />
           </div>
         </div>
       </section>

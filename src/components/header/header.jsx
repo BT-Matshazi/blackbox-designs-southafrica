@@ -17,8 +17,8 @@ export default function Header() {
       url: "/",
     },
     {
-      name: "Services",
-      url: "/services",
+      name: "Order",
+      url: "/order",
     },
     {
       name: "Portfolio",

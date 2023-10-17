@@ -13,17 +13,17 @@ export default function Portfolio() {
                 key={portfolio.id}
                 className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg"
               >
-                <div class="relative overflow-hidden">
-                  <div class="m-2 overflow-hidden">
+                <div className="relative overflow-hidden">
+                  <div className="m-2 overflow-hidden">
                     <Image
-                      class="object-cover w-full mx-auto transition-all ease-in-out rounded h-72 hover:scale-110"
+                      className="object-cover w-full mx-auto transition-all ease-in-out rounded h-72 hover:scale-110"
                       src={portfolio.image}
                       alt=""
                       width={500}
                       height={200}
                     />
                   </div>
-                  <div class="absolute px-4 py-1 text-xs font-semibold text-white rounded top-3 left-3 sale bg-accent">
+                  <div className="absolute px-4 py-1 text-xs font-semibold text-white rounded top-3 left-3 sale bg-accent">
                     {portfolio.tag}
                   </div>
                 </div>
@@ -53,9 +53,9 @@ export default function Portfolio() {
                     >
                       <path
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="M1 5h12m0 0L9 1m4 4L9 9"
                       />
                     </svg>

@@ -9,11 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "dotenv": "^16.3.1",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest"
   },
-    "devDependencies": {
+  "devDependencies": {
     "autoprefixer": "latest",
     "eslint": "latest",
     "eslint-config-next": "latest",

@@ -3,6 +3,8 @@
 import React from "react";
 import Image from "next/image";
 import { useState } from "react";
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
 
 export default function Page() {
   const [price, setPrice] = useState(0);
@@ -37,6 +39,7 @@ export default function Page() {
 
   return (
     <>
+      <Header />
       <section className="py-20 font-poppins ">
         <div className="max-w-6xl px-4 mx-auto">
           <div className="flex flex-wrap mb-24 -mx-4">
@@ -325,6 +328,7 @@ export default function Page() {
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 }

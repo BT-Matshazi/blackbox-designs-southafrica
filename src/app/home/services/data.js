@@ -20,7 +20,7 @@ const servicesData = [
         />
       </svg>
     ),
-    enquire: "https://www.google.com",
+    enquire: "/contact",
     readMore: "https://www.google.com",
   },
   {
@@ -44,7 +44,7 @@ const servicesData = [
         />
       </svg>
     ),
-    enquire: "https://www.google.com",
+    enquire: "/contact",
     readMore: "https://www.google.com",
   },
   {
@@ -68,7 +68,7 @@ const servicesData = [
         />
       </svg>
     ),
-    enquire: "https://www.google.com",
+    enquire: "/contact",
     readMore: "https://www.google.com",
   },
   {
@@ -92,7 +92,7 @@ const servicesData = [
         />
       </svg>
     ),
-    enquire: "https://www.google.com",
+    enquire: "/contact",
     readMore: "https://www.google.com",
   },
   {
@@ -116,7 +116,7 @@ const servicesData = [
         />
       </svg>
     ),
-    enquire: "https://www.google.com",
+    enquire: "/contact",
     readMore: "https://www.google.com",
   },
   {
@@ -140,7 +140,7 @@ const servicesData = [
         />
       </svg>
     ),
-    enquire: "https://www.google.com",
+    enquire: "/contact",
     readMore: "https://www.google.com",
   },
 ];

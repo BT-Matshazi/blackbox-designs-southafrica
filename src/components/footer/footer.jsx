@@ -7,8 +7,8 @@ export default function Footer() {
 
   const quickLinks = [
     {
-      name: "Services",
-      url: "/services",
+      name: "Home",
+      url: "/",
     },
     {
       name: "Portfolio",

@@ -37,12 +37,12 @@ export default function about() {
                 create enduring impressions that resonate
               </p>
               <div className="flex items-center space-x-4">
-                <button className="px-8 py-3 text-lg font-semibold rounded bg-accent text-secondary hover:bg-primary transition-all duration-300 ease-in-out">
+                <a href="/contact" className="px-8 py-3 text-lg font-semibold rounded bg-accent text-secondary hover:bg-primary transition-all duration-300 ease-in-out">
                   Contact Us
-                </button>
-                <button className="px-8 py-3 text-lg font-semibold border rounded border-black hover:border-accent hover:text-accent transition-all duration-300 ease-in-out">
+                </a>
+                <a href="/portfolio" className="px-8 py-3 text-lg font-semibold border rounded border-black hover:border-accent hover:text-accent transition-all duration-300 ease-in-out">
                   Our Portfolio
-                </button>
+                </a>
               </div>
             </div>
           </div>

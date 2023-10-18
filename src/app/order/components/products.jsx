@@ -23,9 +23,9 @@ export default function products() {
                       height={200}
                     />
                   </div>
-                  <div className="absolute px-4 py-1 text-xs font-semibold text-white rounded top-3 left-3 sale bg-accent">
+                  {/* <div className="absolute px-4 py-1 text-xs font-semibold text-white rounded top-3 left-3 sale bg-accent">
                     From R{product.price}.00 + VAT
-                  </div>
+                  </div> */}
                 </div>
                 <div className="p-5">
                   <div>
@@ -34,8 +34,7 @@ export default function products() {
                     </h5>
                   </div>
                   <p className="mb-3 font-normal text-gray-700">
-                    Here are the biggest enterprise technology acquisitions of
-                    2021 so far, in reverse chronological order.
+                    {product.description}
                   </p>
                   <a
                     href={product.link}

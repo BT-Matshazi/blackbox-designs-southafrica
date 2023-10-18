@@ -24,10 +24,10 @@ export default function Header() {
       name: "Portfolio",
       url: "/portfolio",
     },
-    {
-      name: "Pricing",
-      url: "/pricing",
-    },
+    // {
+    //   name: "Pricing",
+    //   url: "/pricing",
+    // },
     {
       name: "Contact",
       url: "/contact",

@@ -15,8 +15,8 @@ export default function Footer() {
       url: "/portfolio",
     },
     {
-      name: "Pricing",
-      url: "/pricing",
+      name: "Order Now",
+      url: "/order",
     },
     {
       name: "Contact",
@@ -27,15 +27,15 @@ export default function Footer() {
   const legalLinks = [
     {
       name: "POPI",
-      url: "/popi",
+      url: "/#",
     },
     {
       name: "Privacy Policy",
-      url: "/privacy-policy",
+      url: "/#",
     },
     {
       name: "Terms & Conditions",
-      url: "/terms-and-conditions",
+      url: "/#",
     }
   ]
 

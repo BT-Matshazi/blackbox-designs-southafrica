@@ -10,7 +10,6 @@ import Port2 from "../../../../public/images/sites/cms/2.png";
 import Port3 from "../../../../public/images/sites/cms/3.png";
 import Port4 from "../../../../public/images/sites/cms/4.png";
 import Port5 from "../../../../public/images/sites/cms/5.png";
-import Port6 from "../../../../public/images/sites/cms/6.png";
 import Port7 from "../../../../public/images/sites/cms/7.png";
 
 export default function Page() {
@@ -24,7 +23,7 @@ export default function Page() {
   };
 
   const [currentSlide, setCurrentSlide] = useState(0);
-  const images = [Port1, Port2, Port3, Port4, Port5, Port6, Port7 ];
+  const images = [Port1, Port2, Port3, Port4, Port5, Port7 ];
 
   const prevSlide = () => {
     setCurrentSlide((prevSlide) =>

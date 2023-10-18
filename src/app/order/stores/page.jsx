@@ -11,7 +11,7 @@ import Port3 from "../../../../public/images/sites/ecommerce/3.png";
 import Port4 from "../../../../public/images/sites/ecommerce/4.png";
 import Port5 from "../../../../public/images/sites/ecommerce/5.png";
 
-export const metadata = {
+const metadata = {
   title: "BlackBox Designs | Ecommerce website",
   description:
     "BlackBox Designs is a web design and development company based in the South Africa, Johannesburg. We specialise in creating bespoke websites for small to large businesses and individuals.",

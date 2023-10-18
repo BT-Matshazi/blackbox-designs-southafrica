@@ -4,7 +4,7 @@ import Hero from './components/hero'
 import Footer from '@/components/footer/footer'
 import Portfolio from './components/portfolio'
 
-export const metadata = {
+const metadata = {
   title: "BlackBox Designs | Portfolio",
   description:
     "BlackBox Designs is a web design and development company based in the South Africa, Johannesburg. We specialise in creating bespoke websites for small to large businesses and individuals.",

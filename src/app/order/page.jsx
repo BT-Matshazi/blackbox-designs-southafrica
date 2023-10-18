@@ -4,7 +4,7 @@ import Footer from "@/components/footer/footer";
 import Header from "@/components/header/header";
 import Products from "./components/products";
 
-export const metadata = {
+const metadata = {
   title: "BlackBox Designs | Website Order",
   description:
     "BlackBox Designs is a web design and development company based in the South Africa, Johannesburg. We specialise in creating bespoke websites for small to large businesses and individuals.",

@@ -5,6 +5,11 @@ import Image from "next/image";
 import { useState } from "react";
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
+import Port1 from "../../../../public/images/sites/ecommerce/1.png";
+import Port2 from "../../../../public/images/sites/ecommerce/2.png";
+import Port3 from "../../../../public/images/sites/ecommerce/3.png";
+import Port4 from "../../../../public/images/sites/ecommerce/4.png";
+import Port5 from "../../../../public/images/sites/ecommerce/5.png";
 
 export default function Page() {
   const [price, setPrice] = useState(0);
@@ -17,13 +22,7 @@ export default function Page() {
   };
 
   const [currentSlide, setCurrentSlide] = useState(0);
-  const images = [
-    "https://images.pexels.com/photos/12486830/pexels-photo-12486830.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/6985003/pexels-photo-6985003.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/4319805/pexels-photo-4319805.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/6648497/pexels-photo-6648497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/1616516/pexels-photo-1616516.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  ];
+  const images = [Port1, Port2, Port3, Port4, Port5 ];
 
   const prevSlide = () => {
     setCurrentSlide((prevSlide) =>

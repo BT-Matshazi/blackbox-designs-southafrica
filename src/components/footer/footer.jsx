@@ -4,7 +4,6 @@ import Logo from "public/images/logo/logo.png";
 import Copyright from "./copyright";
 
 export default function Footer() {
-
   const quickLinks = [
     {
       name: "Home",
@@ -22,22 +21,22 @@ export default function Footer() {
       name: "Contact",
       url: "/contact",
     },
-  ]
+  ];
 
   const legalLinks = [
     {
       name: "POPI",
-      url: "/#",
+      url: "/popi",
     },
     {
       name: "Privacy Policy",
-      url: "/#",
+      url: "/privacy-policy",
     },
     {
       name: "Terms & Conditions",
-      url: "/#",
-    }
-  ]
+      url: "/terms-&-conditions",
+    },
+  ];
 
   const contactDetails = [
     {
@@ -47,10 +46,6 @@ export default function Footer() {
     {
       name: "info@blackboxdesigns.co.za",
       url: "mailto:info@blackboxdesigns.co.za",
-    },
-    {
-      name: "bekithemba@blackboxdesigns.co.za",
-      url: "mailto:bekithemba@blackboxdesigns.co.za",
     },
   ];
 
@@ -73,7 +68,10 @@ export default function Footer() {
                   {quickLinks.map((link, i) => {
                     return (
                       <li key={i} className="mb-4">
-                        <a href={link.url} className="hover:underline">
+                        <a
+                          href={link.url}
+                          className="hover:underline hover:text-accent_hover transition-all ease-in-out delay-100"
+                        >
                           {link.name}
                         </a>
                       </li>
@@ -89,7 +87,10 @@ export default function Footer() {
                   {legalLinks.map((link, i) => {
                     return (
                       <li key={i} className="mb-4">
-                        <a href={link.url} className="hover:underline">
+                        <a
+                          href={link.url}
+                          className="hover:underline hover:text-accent_hover transition-all ease-in-out delay-100"
+                        >
                           {link.name}
                         </a>
                       </li>
@@ -105,7 +106,10 @@ export default function Footer() {
                   {contactDetails.map((link, i) => {
                     return (
                       <li key={i} className="mb-4">
-                        <a href={link.url} className="hover:underline">
+                        <a
+                          href={link.url}
+                          className="hover:underline hover:text-accent_hover transition-all ease-in-out delay-100"
+                        >
                           {link.name}
                         </a>
                       </li>

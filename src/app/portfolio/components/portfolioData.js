@@ -35,7 +35,7 @@ const portfolioData = [
     title: "Timshir Freight Services",
     link: "https://timshirfreightservices.co.za/",
     image: Timshir,
-    description: "Shipping business",
+    description: "Load-based, freight shipping",
     tag: "Website",
   },
   {
@@ -43,7 +43,7 @@ const portfolioData = [
     title: "Shumba Bags",
     link: "https://shumbabags.store/",
     image: Shumba,
-    description: "South African made handbag online store",
+    description: "South African made handbag store",
     tag: "E-commerce",
   },
   {
@@ -51,7 +51,7 @@ const portfolioData = [
     title: "Optimal Health Systems",
     link: "https://ohsystems.org/",
     image: Obsystems,
-    description: "UK based Medical assistance provider",
+    description: "UK Medical assistance provider",
     tag: "Website",
   },
   {
@@ -59,7 +59,7 @@ const portfolioData = [
     title: "Sianalytics",
     link: "https://sianalytics.co.za/",
     image: Sianalytics,
-    description: "",
+    description: "Air quality monitoring solution",
     tag: "Website",
   },
   {
@@ -67,7 +67,7 @@ const portfolioData = [
     title: "The Washington",
     link: "https://www.edwashingtonlaw.com/",
     image: Washington,
-    description: "",
+    description: "American divorce & Inheritance Law Services",
     tag: "Website",
   },
   {
@@ -75,7 +75,7 @@ const portfolioData = [
     title: "New Ground",
     link: "https://newground-finlit.co.za/",
     image: NewGround,
-    description: "",
+    description: "Financial literacy provider",
     tag: "Website",
   },
   {
@@ -83,7 +83,7 @@ const portfolioData = [
     title: "Stelinchi Concept",
     link: "https://www.stelinchiconcept.com/home/",
     image: Stelinchi,
-    description: "",
+    description: "C-Suite & entrepreneurs solutions",
     tag: "Website",
   },
   {
@@ -91,15 +91,15 @@ const portfolioData = [
     title: "Green Shield Transport",
     link: "https://greenshieldtransport.com/",
     image: GreenShield,
-    description: "",
+    description: "American goods transportation business",
     tag: "Website",
   },
   {
     id: 13,
     title: "City Mag",
-    link: "my work/City Mag/index.html",
+    link: "#0",
     image: CityMag,
-    description: "",
+    description: "Wheels and Tyres reseller",
     tag: "Website",
   },
   {
@@ -107,7 +107,7 @@ const portfolioData = [
     title: "BlackBox Designs",
     link: "https://blackboxdesigns.co.za/",
     image: BlackBox,
-    description: "",
+    description: "Web Development Agency",
     tag: "Website",
   },
   {
@@ -115,7 +115,7 @@ const portfolioData = [
     title: "Bekithemba Matshazi",
     link: "https://bekithembamatshazi.co.za/",
     image: Bekithemba,
-    description: "",
+    description: "Full Stack Web Developer portfolio",
     tag: "Portfolio",
   },
   {
@@ -123,7 +123,7 @@ const portfolioData = [
     title: "Level 5 Solutions",
     link: "https://level5solutions.co.za/",
     image: Level5solutions,
-    description: "",
+    description: "Consulting and project management",
     tag: "Website",
   },
 ];

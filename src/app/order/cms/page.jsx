@@ -11,6 +11,7 @@ import Port3 from "../../../../public/images/sites/cms/3.png";
 import Port4 from "../../../../public/images/sites/cms/4.png";
 import Port5 from "../../../../public/images/sites/cms/5.png";
 import Port7 from "../../../../public/images/sites/cms/7.png";
+import Form from "../components/payment/Form";
 
 const metadata = {
   title: "BlackBox Designs | CMS Website",
@@ -314,31 +315,7 @@ export default function Page() {
                   </div>
                 </div>
                 <div className="mt-6 ">
-                  <form
-                    action="https://sandbox.payfast.co.za/eng/process"
-                    method="post"
-                  >
-                    <input type="hidden" name="merchant_id" value="10000100" />
-                    <input
-                      type="hidden"
-                      name="merchant_key"
-                      value="46f0cd694581a"
-                    />
-                    <input type="hidden" name="amount" value={price} />
-                    <input
-                      type="hidden"
-                      name="item_name"
-                      value="Test Product"
-                    />
-
-                    <button
-                      type="submit"
-                      disabled={price === 0}
-                      className="w-full px-4 py-2 font-bold text-white bg-accent lg:w-96 hover:bg-accent_hover"
-                    >
-                      R{price}.00 Order & Pay
-                    </button>
-                  </form>
+                  <Form price={price} product={'CMS Business Website'}/>
                 </div>
               </div>
             </div>

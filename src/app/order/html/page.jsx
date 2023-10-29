@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
+import Form from "../components/payment/Form";
 import Port1 from "../../../../public/images/sites/html/1.png"
 import Port2 from "../../../../public/images/sites/html/2.png";
 import Port3 from "../../../../public/images/sites/html/3.png";
@@ -319,31 +320,7 @@ export default function Page() {
                   </div>
                 </div>
                 <div className="mt-6 ">
-                  <form
-                    action="https://sandbox.payfast.co.za/eng/process"
-                    method="post"
-                  >
-                    <input type="hidden" name="merchant_id" value="10000100" />
-                    <input
-                      type="hidden"
-                      name="merchant_key"
-                      value="46f0cd694581a"
-                    />
-                    <input type="hidden" name="amount" value={price} />
-                    <input
-                      type="hidden"
-                      name="item_name"
-                      value="Test Product"
-                    />
-
-                    <button
-                      type="submit"
-                      disabled={price === 0}
-                      className="w-full px-4 py-2 font-bold text-white bg-accent lg:w-96 hover:bg-accent_hover"
-                    >
-                      R{price}.00 Order & Pay
-                    </button>
-                  </form>
+                  <Form price={price} product={"HTML Business Website"} />
                 </div>
               </div>
             </div>

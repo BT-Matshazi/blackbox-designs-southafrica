@@ -34,8 +34,7 @@ export default function Portfolio() {
                     </h5>
                   </div>
                   <p className="mb-3 font-normal text-gray-700">
-                    Here are the biggest enterprise technology acquisitions of
-                    2021 so far, in reverse chronological order.
+                    {portfolio.description}
                   </p>
                   <a
                     href={portfolio.link}

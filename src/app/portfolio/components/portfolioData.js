@@ -19,6 +19,7 @@ const portfolioData = [
     title: "Roomsekasi",
     link: "https://www.roomsekasi.co.za/",
     image: Roomsekasi,
+    description: "Real Estate platform",
     tag: "Web Application",
   },
   {
@@ -26,6 +27,7 @@ const portfolioData = [
     title: "Durafence",
     link: "https://durafence.co.za/",
     image: Durafence,
+    description: "Clearview Fencing business",
     tag: "Website",
   },
   {
@@ -33,6 +35,7 @@ const portfolioData = [
     title: "Timshir Freight Services",
     link: "https://timshirfreightservices.co.za/",
     image: Timshir,
+    description: "Shipping business",
     tag: "Website",
   },
   {
@@ -40,6 +43,7 @@ const portfolioData = [
     title: "Shumba Bags",
     link: "https://shumbabags.store/",
     image: Shumba,
+    description: "South African made handbag online store",
     tag: "E-commerce",
   },
   {
@@ -47,6 +51,7 @@ const portfolioData = [
     title: "Optimal Health Systems",
     link: "https://ohsystems.org/",
     image: Obsystems,
+    description: "UK based Medical assistance provider",
     tag: "Website",
   },
   {
@@ -54,6 +59,7 @@ const portfolioData = [
     title: "Sianalytics",
     link: "https://sianalytics.co.za/",
     image: Sianalytics,
+    description: "",
     tag: "Website",
   },
   {
@@ -61,6 +67,7 @@ const portfolioData = [
     title: "The Washington",
     link: "https://www.edwashingtonlaw.com/",
     image: Washington,
+    description: "",
     tag: "Website",
   },
   {
@@ -68,6 +75,7 @@ const portfolioData = [
     title: "New Ground",
     link: "https://newground-finlit.co.za/",
     image: NewGround,
+    description: "",
     tag: "Website",
   },
   {
@@ -75,6 +83,7 @@ const portfolioData = [
     title: "Stelinchi Concept",
     link: "https://www.stelinchiconcept.com/home/",
     image: Stelinchi,
+    description: "",
     tag: "Website",
   },
   {
@@ -82,6 +91,7 @@ const portfolioData = [
     title: "Green Shield Transport",
     link: "https://greenshieldtransport.com/",
     image: GreenShield,
+    description: "",
     tag: "Website",
   },
   {
@@ -89,6 +99,7 @@ const portfolioData = [
     title: "City Mag",
     link: "my work/City Mag/index.html",
     image: CityMag,
+    description: "",
     tag: "Website",
   },
   {
@@ -96,6 +107,7 @@ const portfolioData = [
     title: "BlackBox Designs",
     link: "https://blackboxdesigns.co.za/",
     image: BlackBox,
+    description: "",
     tag: "Website",
   },
   {
@@ -103,6 +115,7 @@ const portfolioData = [
     title: "Bekithemba Matshazi",
     link: "https://bekithembamatshazi.co.za/",
     image: Bekithemba,
+    description: "",
     tag: "Portfolio",
   },
   {
@@ -110,6 +123,7 @@ const portfolioData = [
     title: "Level 5 Solutions",
     link: "https://level5solutions.co.za/",
     image: Level5solutions,
+    description: "",
     tag: "Website",
   },
 ];

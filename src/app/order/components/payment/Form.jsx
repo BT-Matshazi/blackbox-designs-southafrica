@@ -17,17 +17,17 @@ export default function Form(props) {
         <input
           type="hidden"
           name="return_url"
-          value="blackbox-designs.vercel.app"
+          value="https://blackbox-designs.vercel.app"
         />
         <input
           type="hidden"
           name="cancel_url"
-          value="blackbox-designs.vercel.app"
+          value="https://blackbox-designs.vercel.app"
         />
         <input
           type="hidden"
           name="notify_url"
-          value="blackbox-designs.vercel.app"
+          value="https://blackbox-designs.vercel.app"
         />
         <input type="hidden" name="amount" value={props.price} />
         <input type="hidden" name="item_name" value={props.product} />

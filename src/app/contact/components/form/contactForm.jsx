@@ -178,7 +178,7 @@ export default function contactForm() {
                       Name
                     </label>
                     <input
-                      className="w-full p-4 mr-3 text-sm leading-tight text-gray-700 bg-transparent border-b border-gray-300 appearance-none focus:outline-none focus:bg-gray-100"
+                      className="w-full p-4 mr-3 text-sm leading-tight text-gray-700 bg-transparent border-b border-gray-300 appearance-none"
                       type="text"
                       placeholder="Your full name...."
                     />
@@ -190,7 +190,7 @@ export default function contactForm() {
                       Subject
                     </label>
                     <input
-                      className="w-full p-4 mr-3 text-sm leading-tight text-gray-700 bg-transparent border-b border-gray-300 appearance-none  focus:outline-none focus:bg-gray-100"
+                      className="w-full p-4 mr-3 text-sm leading-tight text-gray-700 bg-transparent border-b border-gray-300 appearance-none"
                       type="text"
                       placeholder="I'm asking for...."
                     />
@@ -202,7 +202,7 @@ export default function contactForm() {
                       Email Address
                     </label>
                     <input
-                      className="w-full p-4 mr-3 text-sm leading-tight text-gray-700 bg-transparent border-b border-gray-300 appearance-none focus:outline-none focus:bg-gray-100"
+                      className="w-full p-4 mr-3 text-sm leading-tight text-gray-700 bg-transparent border-b border-gray-300 appearance-none "
                       type="email"
                       placeholder="abc@gmail.com"
                     />
@@ -217,7 +217,7 @@ export default function contactForm() {
                     type="message"
                     placeholder="Write a message..."
                     required=""
-                    className="w-full p-4 mr-3 text-sm leading-tight text-gray-700 bg-transparent border-b border-gray-300 appearance-none focus:outline-none focus:bg-gray-100"
+                    className="w-full p-4 mr-3 text-sm leading-tight text-gray-700 bg-transparent border-b border-gray-300 appearance-none"
                   ></textarea>
                 </div>
                 <div className="px-2">

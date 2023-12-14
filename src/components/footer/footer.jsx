@@ -40,8 +40,8 @@ export default function Footer() {
 
   const contactDetails = [
     {
-      name: "081 514 5508",
-      url: "tel:27815145508",
+      name: "+27 69 637 6056",
+      url: "tel:27696376056",
     },
     {
       name: "info@blackboxdesigns.co.za",

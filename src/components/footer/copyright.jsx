@@ -5,7 +5,7 @@ export default function Copyright() {
   const socials = [
     {
       name: "Facebook",
-      url: "#",
+      url: "https://www.facebook.com/BlackBoxWebDesigns",
       icon: (
         <svg
           className="w-4 h-4"
@@ -24,7 +24,7 @@ export default function Copyright() {
     },
     {
       name: "Github",
-      url: "#",
+      url: "https://github.com/BT-Matshazi",
       icon: (
         <svg
           className="w-4 h-4"
@@ -48,7 +48,7 @@ export default function Copyright() {
       <div className="sm:flex sm:items-center sm:justify-between">
         <span className="text-sm text-gray-500 sm:text-center ">
           © {new Date().getFullYear()}{" "}
-          <a href="https://flowbite.com/" className="hover:underline">
+          <a href="/" className="hover:underline">
             BlackBox Designs
           </a>
           . All Rights Reserved.

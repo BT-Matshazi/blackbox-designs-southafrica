@@ -13,27 +13,6 @@ import Port5 from "../../../../public/images/sites/cms/5.png";
 import Port7 from "../../../../public/images/sites/cms/7.png";
 import Form from "../components/payment/Form";
 
-const metadata = {
-  title: "BlackBox Designs | CMS Website",
-  description:
-    "BlackBox Designs is a web design and development company based in the South Africa, Johannesburg. We specialise in creating bespoke websites for small to large businesses and individuals.",
-  applicationName: "BlackBox Designs",
-  referrer: "origin-when-cross-origin",
-  keywords: [
-    "web design",
-    "website design",
-    "web development",
-    "web design johannesburg",
-    "WordPress",
-    "CMS",
-  ],
-  authors: [
-    { name: "Bekithemba Matshazi", url: "https://bekithembamatshazi.co.za" },
-  ],
-  creator: "Bekithemba Matshazi",
-  publisher: "Bekithemba Matshazi",
-};
-
 export default function Page() {
   const [price, setPrice] = useState(0);
   const [days, setDays] = useState(0);

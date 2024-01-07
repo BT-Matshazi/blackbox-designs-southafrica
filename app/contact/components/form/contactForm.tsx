@@ -213,10 +213,9 @@ export default function contactForm() {
                     Your Message
                   </label>
                   <textarea
-                    rows="4"
-                    type="message"
+                    rows={4}
                     placeholder="Write a message..."
-                    required=""
+                    required
                     className="w-full p-4 mr-3 text-sm leading-tight text-gray-700 bg-transparent border-b border-gray-300 appearance-none"
                   ></textarea>
                 </div>

@@ -1,9 +1,7 @@
-import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import ToasterContext from "@/lib/context/ToasterContext";
 import { constructMetadata } from '@/lib/utils';
-
 
 const inter = Inter({ subsets: ['latin'] })
 

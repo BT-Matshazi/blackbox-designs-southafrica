@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 
 export default function about() {
@@ -24,11 +23,11 @@ export default function about() {
                 <h1 className="absolute -top-20  left-0 text-[20px] lg:text-[100px] font-bold  opacity-5 md:block hidden">
                   About Us
                 </h1>
-                <h1 className="pl-2 text-3xl font-bold border-l-8 border-accent md:text-5xl ">
+                <h2 className="pl-2 text-3xl font-bold border-l-8 border-accent md:text-5xl ">
                   Welcome to our site
-                </h1>
+                </h2>
               </div>
-              <p className="mt-6 mb-10 text-base leading-7 text-gray-500 ">
+              <p className="mt-6 mb-10 text-base leading-7 text-gray-700 ">
                 Discover the essence of craftsmanship at BlackBox Designs, where
                 passion meets expertise. Our dedicated team of designers and
                 developers is committed to elevating your vision. Embrace the

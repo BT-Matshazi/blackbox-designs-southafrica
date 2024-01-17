@@ -1,4 +1,3 @@
-import React from "react";
 import servicesData from "./data";
 
 export default function services() {
@@ -6,12 +5,12 @@ export default function services() {
     <>
       <div className="flex items-center flex-col justify-center py-10 md:py-20">
         <div className="relative">
-          <h1 className="absolute -top-20  left-0 text-[10px] lg:text-[70px] font-bold  opacity-5 md:block hidden">
+          <h2 className="absolute -top-20  left-0 text-[10px] lg:text-[70px] font-bold  opacity-5 md:block hidden">
             Services
-          </h1>
-          <h1 className="pl-2 text-3xl font-bold border-l-8 border-accent md:text-5xl ">
+          </h2>
+          <h3 className="pl-2 text-3xl font-bold border-l-8 border-accent md:text-5xl ">
             What We DO
-          </h1>
+          </h3>
         </div>
         <div className="flex items-center justify-center py-10">
           <section className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
@@ -23,9 +22,9 @@ export default function services() {
                 >
                   <div className="flex flex-col items-center pb-10 my-2">
                     {service.icon}
-                    <h5 className="mb-1 text-xl font-medium text-gray-900 ">
+                    <h3 className="mb-1 text-xl font-medium text-gray-900 ">
                       {service.title}
-                    </h5>
+                    </h3>
                     <span className="text-sm text-gray-500 mx-6 text-center">
                       {service.description}
                     </span>

@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 import HeroImg from "@/public/images/common/hero.svg";
 import Link from "next/link";
@@ -16,7 +15,7 @@ export default function Hero() {
             <p className="mt-6 mb-8 text-lg sm:mb-12">
               Unlock the boundless potential of the Digital Universe with Our
               Web Wizardry and transform your online presence into a mesmerizing
-              realm of endless possibilities!
+              realm of endless possibilities with quality web design!
             </p>
             <div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
               <Link

@@ -5,3 +5,7 @@
 .text-stroke-3 {
   text-shadow: -2px -2px 0 #D43F52, 2px -2px 0 black, -2px 2px 0 #D43F52, 2px 2px 0 #D43F52;
 }
+
+.grecaptcha-badge {
+  visibility: hidden;
+}

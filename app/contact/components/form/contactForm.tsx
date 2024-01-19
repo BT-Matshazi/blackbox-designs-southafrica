@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import toast from "react-hot-toast";
 
 export default function ContactForm() {
@@ -12,6 +13,7 @@ export default function ContactForm() {
   const [loading, setLoading] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
+    const recaptchaRef = useRef(null);
 
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -171,6 +173,11 @@ export default function ContactForm() {
                     )}
                   </button>
                 </div>
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey={`${process.env.NEXT_PUBLIC_SITE_KEY}`}
+                  size="invisible"
+                />
               </form>
             </div>
           </div>

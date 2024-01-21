@@ -8,7 +8,7 @@ export default function Services() {
           <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
             Our Services
           </h1>
-          <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+          <p className="mx-auto max-w-[700px] text-gray-080 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-600">
             We offer a wide range of web development services to help your
             business grow online.
           </p>
@@ -17,7 +17,7 @@ export default function Services() {
           <div className="flex flex-col items-center space-y-4">
             <CodeIcon className="h-12 w-12" />
             <h2 className="text-xl font-bold">Web Development</h2>
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-gray-800 dark:text-gray-400">
               We build responsive, fast and secure websites that meet your
               business needs.
             </p>
@@ -25,7 +25,7 @@ export default function Services() {
           <div className="flex flex-col items-center space-y-4">
             <LayoutIcon className="h-12 w-12" />
             <h2 className="text-xl font-bold">UI/UX Design</h2>
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-gray-080 dark:text-gray-400">
               Our design team creates intuitive and engaging designs to enhance
               user experience.
             </p>
@@ -33,14 +33,14 @@ export default function Services() {
           <div className="flex flex-col items-center space-y-4">
             <CloudIcon className="h-12 w-12" />
             <h2 className="text-xl font-bold">Cloud Services</h2>
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-gray-080 dark:text-gray-400">
               We provide cloud hosting solutions that are reliable and scalable.
             </p>
           </div>
           <div className="flex flex-col items-center space-y-4">
             <SmartphoneIcon className="h-12 w-12" />
             <h2 className="text-xl font-bold">Mobile App Development</h2>
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-gray-080 dark:text-gray-400">
               We develop mobile applications that run smoothly on both iOS and
               Android platforms.
             </p>
@@ -48,7 +48,7 @@ export default function Services() {
           <div className="flex flex-col items-center space-y-4">
             <HelpCircleIcon className="h-12 w-12" />
             <h2 className="text-xl font-bold">Support & Maintenance</h2>
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-gray-080 dark:text-gray-400">
               We offer ongoing support and maintenance services to keep your
               website running smoothly.
             </p>
@@ -56,7 +56,7 @@ export default function Services() {
           <div className="flex flex-col items-center space-y-4">
             <GoalIcon className="h-12 w-12" />
             <h2 className="text-xl font-bold">Digital Strategy</h2>
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-gray-080 dark:text-gray-400">
               We help you develop a digital strategy that aligns with your
               business goals.
             </p>
@@ -65,15 +65,15 @@ export default function Services() {
         <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center mt-10">
           <Link
             className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-            href="#"
+            href="/contact"
           >
             Contact Us
           </Link>
           <Link
             className="inline-flex h-10 items-center justify-center rounded-md border border-gray-200 bg-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-800  dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300"
-            href="#"
+            href="/portfolio"
           >
-            Request a Quote
+            View Portfolio
           </Link>
         </div>
       </div>

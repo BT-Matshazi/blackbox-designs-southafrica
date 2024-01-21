@@ -17,12 +17,16 @@ export default function Header() {
       url: "/",
     },
     {
-      name: "Order",
-      url: "/order",
+      name: "Services",
+      url: "/services",
     },
     {
       name: "Portfolio",
       url: "/portfolio",
+    },
+    {
+      name: "Order",
+      url: "/order",
     },
     {
       name: "Contact",

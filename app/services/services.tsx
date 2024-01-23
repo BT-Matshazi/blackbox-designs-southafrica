@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Services() {
   return (
-    <main className="w-full flex flex-col items-center py-12 md:py-24 lg:py-32">
+    <main className="w-full flex flex-col items-center py-8 md:py-12">
       <div className="container px-4 md:px-6">
         <div className="text-center space-y-3">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">

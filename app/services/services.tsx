@@ -21,6 +21,7 @@ export default function Services() {
               We build responsive, fast and secure websites that meet your
               business needs.
             </p>
+            
           </div>
           <div className="flex flex-col items-center space-y-4">
             <LayoutIcon className="h-12 w-12" />

@@ -41,14 +41,6 @@ const portfolioData = [
     tag: "Web Application",
   },
   {
-    id: 2,
-    title: "Durafence",
-    link: "https://durafence.co.za/",
-    image: Durafence,
-    description: "Clearview Fencing business",
-    tag: "Website",
-  },
-  {
     id: 3,
     title: "Timshir Freight Services",
     link: "https://timshirfreightservices.co.za/",

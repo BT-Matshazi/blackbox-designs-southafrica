@@ -12,8 +12,26 @@ import Stelinchi from "@/public/images/portfolio/stelinchi.jpg";
 import GreenShield from "@/public/images/portfolio/greenshield.jpg";
 import Bekithemba from "@/public/images/portfolio/bekithembamatshazi.webp";
 import Washington from "@/public/images/portfolio/thewashington.jpg";
+import Wonderbunny from "@/public/images/portfolio/wonderbunny.webp";
+import ZimPropertyExpo from "@/public/images/portfolio/zimpropertyexpo.png";
 
 const portfolioData = [
+  {
+    id: 1,
+    title: "Zimbabwe Property Expo",
+    link: "https://www.zimbabwepropertyexpo.co.zw/",
+    image: ZimPropertyExpo,
+    description: "Property Expo and Conference",
+    tag: "Website",
+  },
+  {
+    id: 1,
+    title: "Wonder Bunny Construction",
+    link: "https://www.wonderbunny.co.za/",
+    image: Wonderbunny,
+    description: "Construction Services",
+    tag: "Website",
+  },
   {
     id: 1,
     title: "Roomsekasi",

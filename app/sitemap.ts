@@ -21,22 +21,46 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: "https://www.blackboxdesigns.co.za/prices",
+      url: "https://www.blackboxdesigns.co.za/order",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: "https://www.blackboxdesigns.co.za/about",
+      url: "https://www.blackboxdesigns.co.za/order/cms",
       lastModified: new Date(),
       changeFrequency: "monthly",
-      priority: 0.6,
+      priority: 0.7,
+    },
+    {
+      url: "https://www.blackboxdesigns.co.za/order/html",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: "https://www.blackboxdesigns.co.za/order/stores",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
     },
     {
       url: "https://www.blackboxdesigns.co.za/contact",
       lastModified: new Date(),
       changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    {
+      url: "https://www.blackboxdesigns.co.za/privacy-policy",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
       priority: 0.3,
     },
+    // {
+    //   url: "https://www.blackboxdesigns.co.za/terms-&-conditions",
+    //   lastModified: new Date(),
+    //   changeFrequency: "monthly",
+    //   priority: 0.3,
+    // },
   ];
 }

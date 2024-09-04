@@ -16,8 +16,8 @@ export default function about() {
                   className="relative z-40 object-cover w-full h-96 lg:rounded-tr-[80px] lg:rounded-bl-[80px] rounded"
                 />
                 <div className="absolute z-10 hidden w-full h-full bg-accent rounded-bl-[80px] rounded -bottom-6 right-6 lg:block"></div>
-              </div> */}
-            </div>
+              </div> 
+            </div>*/}
             <div className="w-full px-4 mb-10 lg:w-1/2 lg:mb-0 align-middle">
               <div className="relative">
                 <h1 className="absolute -top-20  left-0 text-[20px] lg:text-[100px] font-bold  opacity-5 md:block hidden">

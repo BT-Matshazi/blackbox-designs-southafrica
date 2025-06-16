@@ -2,12 +2,17 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Logo from "@/public/logo.webp";
-import { Menu, X,} from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Image from "next/image"
+import Image from "next/image";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 // import { ThemeToggle } from "@/components/theme-toggle";
 
 const navItems = [
@@ -18,7 +23,6 @@ const navItems = [
 ];
 
 export function Header() {
-  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -68,31 +72,17 @@ export function Header() {
           </Button>
         </nav>
 
-        {/* Mobile Navigation Toggle */}
+        {/* Mobile Navigation */}
         <div className="flex items-center gap-4 md:hidden">
           {/* <ThemeToggle /> */}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle Menu"
-            className="z-50"
-          >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </Button>
-        </div>
-
-        {/* Mobile Navigation Menu */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-background z-40 flex flex-col items-center justify-center"
-            >
-              <nav className="flex flex-col items-center gap-8">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" aria-label="Toggle Menu">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <nav className="flex flex-col items-center gap-8 mt-8">
                 <ul className="flex flex-col items-center gap-6">
                   {navItems.map((item) => (
                     <motion.li
@@ -104,24 +94,19 @@ export function Header() {
                       <Link
                         href={item.href}
                         className="text-2xl font-medium transition-colors hover:text-primary"
-                        onClick={() => setIsOpen(false)}
                       >
                         {item.name}
                       </Link>
                     </motion.li>
                   ))}
                 </ul>
-                <Button
-                  asChild
-                  onClick={() => setIsOpen(false)}
-                  className="mt-4"
-                >
+                <Button asChild className="mt-4">
                   <Link href="/contact">Get in Touch</Link>
                 </Button>
               </nav>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   );

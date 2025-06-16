@@ -21,6 +21,7 @@ const AnimatedWave = ({ delay, duration, opacity }: WaveProps) => (
       repeat: Infinity,
       repeatType: "reverse",
     }}
+    style={{ willChange: 'transform, opacity' }}
   >
     <svg
       className="absolute inset-0 w-full h-full"
@@ -38,10 +39,11 @@ const AnimatedWave = ({ delay, duration, opacity }: WaveProps) => (
           ],
         }}
         transition={{
-          duration: 8,
+          duration: 12,
           repeat: Infinity,
           ease: "easeInOut",
         }}
+        style={{ willChange: 'd' }}
       />
       <defs>
         <linearGradient id="waveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -55,6 +57,7 @@ const AnimatedWave = ({ delay, duration, opacity }: WaveProps) => (
 
 const FloatingDot = ({ index }: { index: number }) => {
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -62,6 +65,7 @@ const FloatingDot = ({ index }: { index: number }) => {
         width: window.innerWidth,
         height: window.innerHeight,
       });
+      setIsMobile(window.innerWidth <= 768);
     };
 
     handleResize();
@@ -69,7 +73,10 @@ const FloatingDot = ({ index }: { index: number }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const size = Math.random() * 4 + 2;
+  // Reduce number of dots on mobile
+  if (isMobile && index > 8) return null;
+
+  const size = Math.random() * 3 + 2; // Slightly smaller dots
   const initialX = Math.random() * windowSize.width;
   const initialY = Math.random() * windowSize.height;
 
@@ -82,18 +89,19 @@ const FloatingDot = ({ index }: { index: number }) => {
         left: initialX,
         top: initialY,
         background: `radial-gradient(circle, #D43F52, transparent)`,
+        willChange: 'transform, opacity',
       }}
       animate={{
-        y: [0, -30, 0],
-        x: [0, 15, -10, 0],
-        opacity: [0.3, 0.8, 0.3],
-        scale: [1, 1.2, 1],
+        y: [0, -20, 0], // Reduced movement
+        x: [0, 10, -5, 0], // Reduced movement
+        opacity: [0.3, 0.6, 0.3], // Reduced opacity range
+        scale: [1, 1.1, 1], // Reduced scale
       }}
       transition={{
-        duration: 12 + Math.random() * 8,
+        duration: 15 + Math.random() * 5, // Longer duration
         repeat: Infinity,
         ease: "easeInOut",
-        delay: Math.random() * 5,
+        delay: Math.random() * 3,
       }}
     />
   );
@@ -196,6 +204,18 @@ const MorphingBlob = ({ index }: { index: number }) => {
 };
 
 export const AnimatedBackground = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {/* Base gradient background */}
@@ -207,48 +227,49 @@ export const AnimatedBackground = () => {
             radial-gradient(ellipse at 70% 80%, rgba(212, 63, 82, 0.06) 0%, transparent 50%),
             linear-gradient(135deg, rgba(212, 63, 82, 0.02) 0%, transparent 50%)
           `,
+          willChange: 'opacity',
         }}
         animate={{
-          opacity: [0.5, 0.8, 0.5],
+          opacity: [0.5, 0.7, 0.5],
         }}
         transition={{
-          duration: 8,
+          duration: 10,
           repeat: Infinity,
           ease: "easeInOut",
         }}
       />
 
-      {/* Animated waves */}
-      {Array.from({ length: 3 }, (_, i) => (
+      {/* Animated waves - reduced on mobile */}
+      {Array.from({ length: isMobile ? 2 : 3 }, (_, i) => (
         <AnimatedWave
           key={`wave-${i}`}
           delay={i * 2}
-          duration={10 + i * 2}
+          duration={12 + i * 2}
           opacity={0.05 - i * 0.01}
         />
       ))}
 
-      {/* Morphing blobs */}
-      {Array.from({ length: 3 }, (_, i) => (
+      {/* Morphing blobs - reduced on mobile */}
+      {Array.from({ length: isMobile ? 2 : 3 }, (_, i) => (
         <MorphingBlob key={`blob-${i}`} index={i} />
       ))}
 
-      {/* Pulsing circles */}
-      {Array.from({ length: 4 }, (_, i) => (
+      {/* Pulsing circles - reduced on mobile */}
+      {Array.from({ length: isMobile ? 2 : 4 }, (_, i) => (
         <PulsingCircle key={`circle-${i}`} index={i} />
       ))}
 
-      {/* Geometric lines */}
-      {Array.from({ length: 6 }, (_, i) => (
+      {/* Geometric lines - reduced on mobile */}
+      {Array.from({ length: isMobile ? 3 : 6 }, (_, i) => (
         <GeometricLine key={`line-${i}`} index={i} />
       ))}
 
-      {/* Floating dots */}
+      {/* Floating dots - already optimized in the component */}
       {Array.from({ length: 20 }, (_, i) => (
         <FloatingDot key={`dot-${i}`} index={i} />
       ))}
 
-      {/* Subtle grid overlay */}
+      {/* Subtle grid overlay - simplified on mobile */}
       <motion.div
         className="absolute inset-0 opacity-[0.01]"
         style={{
@@ -256,30 +277,32 @@ export const AnimatedBackground = () => {
             linear-gradient(rgba(212, 63, 82, 0.3) 1px, transparent 1px),
             linear-gradient(90deg, rgba(212, 63, 82, 0.3) 1px, transparent 1px)
           `,
-          backgroundSize: "60px 60px",
+          backgroundSize: isMobile ? "80px 80px" : "60px 60px",
+          willChange: 'background-position',
         }}
         animate={{
-          backgroundPosition: ["0px 0px", "60px 60px"],
+          backgroundPosition: ["0px 0px", isMobile ? "80px 80px" : "60px 60px"],
         }}
         transition={{
-          duration: 25,
+          duration: isMobile ? 30 : 25,
           repeat: Infinity,
           ease: "linear",
         }}
       />
 
-      {/* Radial light effect */}
+      {/* Radial light effect - simplified on mobile */}
       <motion.div
         className="absolute inset-0"
         style={{
-          background: `radial-gradient(circle at 50% 50%, rgba(212, 63, 82, 0.1) 0%, transparent 70%)`,
+          background: `radial-gradient(circle at 50% 50%, rgba(212, 63, 82, ${isMobile ? '0.08' : '0.1'}) 0%, transparent 70%)`,
+          willChange: 'transform, opacity',
         }}
         animate={{
-          scale: [1, 1.1, 1],
-          opacity: [0.3, 0.6, 0.3],
+          scale: [1, 1.05, 1],
+          opacity: [0.3, 0.5, 0.3],
         }}
         transition={{
-          duration: 12,
+          duration: isMobile ? 15 : 12,
           repeat: Infinity,
           ease: "easeInOut",
         }}

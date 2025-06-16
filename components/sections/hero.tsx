@@ -99,7 +99,7 @@ export function HeroSection() {
           <div className="space-y-8">
             {/* Premium Badge */}
             <motion.div
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#D43F52]/10 to-[#D43F52]/5 border border-[#D43F52]/20 backdrop-blur-sm"
+              className="lg:inline-flex hidden items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#D43F52]/10 to-[#D43F52]/5 border border-[#D43F52]/20 backdrop-blur-sm"
               variants={itemVariants}
             >
               <Star className="h-4 w-4 text-[#D43F52]" />
@@ -194,7 +194,7 @@ export function HeroSection() {
 
             {/* Scroll Indicator */}
             <motion.div
-              className="pt-16 flex justify-center"
+              className="pt-16 hidden lg:flex justify-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2, duration: 0.8 }}

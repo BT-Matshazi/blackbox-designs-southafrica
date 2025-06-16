@@ -1,13 +1,12 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { motion, useAnimation, Variant } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { cn } from "@/lib/utils";
+import { motion, useAnimation, Variant } from "framer-motion";
 
 type AnimatedTextProps = {
   text: string | string[];
-  el?: keyof JSX.IntrinsicElements;
+  el?: keyof React.JSX.IntrinsicElements;
   className?: string;
   once?: boolean;
   repeatDelay?: number;

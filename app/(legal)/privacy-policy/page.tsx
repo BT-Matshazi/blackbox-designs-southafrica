@@ -1,11 +1,7 @@
-import React from "react";
-import Header from "@/common/header/header";
-import Footer from "@/common/footer/footer";
+
 
 export default function Page() {
   return (
-    <>
-      <Header />
       <div className="w-2xl mx-auto bg-white p-10 rounded shadow-lg">
         <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
 
@@ -72,7 +68,5 @@ export default function Page() {
 
         <p className="text-gray-600 mt-6">Last updated: October 25, 2023</p>
       </div>
-      <Footer />
-    </>
   );
 }

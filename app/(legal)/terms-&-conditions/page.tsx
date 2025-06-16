@@ -1,11 +1,6 @@
-import React from "react";
-import Header from "@/common/header/header";
-import Footer from "@/common/footer/footer";
 
 export default function Page() {
   return (
-    <>
-      <Header />
       <div className="w-2xl mx-auto bg-white p-10 rounded shadow-lg">
         <h1 className="text-3xl font-bold mb-6">Terms and Conditions</h1>
 
@@ -87,7 +82,5 @@ export default function Page() {
           By using our website, you hereby consent to our terms and conditions.
         </p>
       </div>
-      <Footer />
-    </>
   );
 }

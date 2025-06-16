@@ -1,38 +1,20 @@
-import Header from "@/common/header/header";
-import Footer from "@/common/footer/footer";
-import Hero from "./home/hero/hero";
-import About from "./home/about/about";
-import Services from "./home/services/services";
+import { HeroSection } from "@/components/sections/hero";
+import { FeaturedProjects } from "@/components/sections/featured-projects";
+import { ProcessSection } from "@/components/sections/process";
+import { CTASection } from "@/components/sections/cta";
+import { TestimonialsSection } from "@/components/sections/testimonials";
+import { getProjectsController } from "@/src/presentation/controllers/product.controller";
 
-export const metadata = {
-  title: "BlackBox Designs - Web Design & Development",
-  description:
-    "BlackBox Designs is a web design and development company based in the South Africa, Johannesburg. We specialise in creating bespoke websites for small to large businesses and individuals.",
-  applicationName: "BlackBox Designs",
-  referrer: "origin-when-cross-origin",
-  keywords: [
-    "web design",
-    "website design",
-    "web development",
-    "web design johannesburg",
-    "WordPress",
-    "CMS",
-  ],
-  authors: [
-    { name: "Bekithemba Matshazi", url: "https://bekithembamatshazi.co.za" },
-  ],
-  creator: "Bekithemba Matshazi",
-  publisher: "Bekithemba Matshazi",
-};
+export default async function Home() {
+  const { success, data } = await getProjectsController();
 
-export default function Home() {
   return (
-    <>
-      <Header />
-      <Hero />
-      <About />
-      <Services />
-      <Footer />
-    </>
+    <div className="flex flex-col w-full">
+      <HeroSection />
+      {!success || !data ? <></> : <FeaturedProjects projects={data} />}
+      <ProcessSection />
+      <CTASection />
+      {/* <TestimonialsSection /> */}
+    </div>
   );
 }

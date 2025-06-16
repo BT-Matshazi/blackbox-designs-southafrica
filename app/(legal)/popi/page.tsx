@@ -2,7 +2,7 @@
 export default function Page() {
   return (
 
-      <div className="w-2xl mx-auto bg-white p-10 rounded shadow-lg">
+      <div className="container px-4 my-24 mx-auto bg-white p-10 rounded shadow-lg">
         <h1 className="text-3xl font-bold mb-6">
           BlackBox Designs - POPI Act Compliance
         </h1>

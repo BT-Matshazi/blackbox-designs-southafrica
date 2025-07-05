@@ -32,7 +32,7 @@ export function AboutSection() {
   const imageOpacity = useTransform(scrollYProgress, [0, 0.3], [0.3, 1]);
 
   return (
-    <section id="about" className="py-24 bg-muted/30 overflow-hidden">
+    <section id="about" className="py-24 bg-background overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>

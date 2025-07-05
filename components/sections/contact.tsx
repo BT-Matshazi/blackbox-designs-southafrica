@@ -19,8 +19,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { MapPin, Mail, Phone, Send, CheckCircle } from "lucide-react";
-
+import { MapPin, Mail, Phone, Send, CheckCircle, Loader2 } from "lucide-react";
+import { contactUsController } from "@/src/presentation/controllers/contact-us.controller";
 const contactFormSchema = z.object({
   firstName: z.string().min(2, { message: "First name must be at least 2 characters" }),
   lastName: z.string().min(2, { message: "Last name must be at least 2 characters" }),
@@ -50,22 +50,26 @@ export function ContactSection() {
     },
   });
 
-  function onSubmit(data: ContactFormValues) {
+  async function onSubmit(data: ContactFormValues) {
     setIsSubmitting(true);
 
     // Simulate API call
-    setTimeout(() => {
+    const result = await contactUsController({
+      ...data,
+      company: data.company || "",
+    });
+
+    if (result.success) {
+      toast.success("Your message has been sent. We'll get back to you soon!");
       setIsSubmitting(false);
       setIsSubmitted(true);
-      toast.success("Your message has been sent. We'll get back to you soon!");
-      console.log(data);
-
-      // Reset form after 2 seconds
+      form.reset();
       setTimeout(() => {
-        form.reset();
         setIsSubmitted(false);
       }, 2000);
-    }, 1500);
+    } else {
+      toast.error("Failed to send message. Please try again.");
+    }
   }
 
   return (
@@ -194,7 +198,7 @@ export function ContactSection() {
 
                       </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <FormField
                           name="email"
                           render={({ field }) => (
@@ -213,17 +217,17 @@ export function ContactSection() {
                             <FormItem>
                               <FormLabel>Phone Number</FormLabel>
                               <FormControl>
-                                <Input 
-                                placeholder="Your phone number"
-                                type="tel"
-                                {...field} />
+                                <Input
+                                  placeholder="Your phone number"
+                                  type="tel"
+                                  {...field} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
                           )}
                         />
-                          
-                        </div>
+
+                      </div>
 
                       <FormField
                         control={form.control}
@@ -264,12 +268,7 @@ export function ContactSection() {
                         disabled={isSubmitting}
                       >
                         {isSubmitting ? (
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: "100%" }}
-                            transition={{ duration: 1.5 }}
-                            className="h-1 bg-white absolute bottom-0 left-0 rounded-full"
-                          />
+                          <Loader2 className="h-4 w-4 animate-spin" />
                         ) : (
                           <>
                             Send Message

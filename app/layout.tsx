@@ -6,6 +6,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
 import ChatButton from "@/components/chat-button";
+import GoogleCaptchaWrapper from "@/lib/context/GoogleCaptchaWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,20 +36,22 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-          disableTransitionOnChange={false}
-        >
-          <div className="flex min-h-screen flex-col bg-background">
-            <Header />
-            <main>{children}</main>
-            <Footer />
-          </div>
-          <Toaster />
-          <ChatButton />
-        </ThemeProvider>
+        <GoogleCaptchaWrapper>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem={false}
+            disableTransitionOnChange={false}
+          >
+            <div className="flex min-h-screen flex-col bg-background">
+              <Header />
+              <main>{children}</main>
+              <Footer />
+            </div>
+            <Toaster />
+            <ChatButton />
+          </ThemeProvider>
+        </GoogleCaptchaWrapper>
       </body>
     </html>
   );

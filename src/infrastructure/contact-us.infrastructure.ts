@@ -1,10 +1,10 @@
 import { renderEmailTemplate } from "@/lib/utils";
-import NotifyUserEmail from "@/lib/emails/notify-user";
+import { ContactUs } from "@/src/application/domain/contact-us.domain";
+import { ContactUsRepository } from "@/src/application/interface/contact-us.repository";
+import ContactUsEmail from "@/lib/emails/contact-us";
 import nodemailer, { Transporter, TransportOptions } from "nodemailer";
-import { NotifyUser } from "@/src/application/domain/notify-user.domain";
-import { NotifyUserRepository } from "@/src/application/interface/notify-user.repository";
 
-export class NotifyUserInfrastructure implements NotifyUserRepository {
+export class ContactUsInfrastructure implements ContactUsRepository {
   private transporter: Transporter;
 
   constructor() {
@@ -19,21 +19,16 @@ export class NotifyUserInfrastructure implements NotifyUserRepository {
     } as TransportOptions);
   }
 
-  /**
-   * Send a notification email to the user
-   */
-  async sendNotifyUserEmail(
-    data: NotifyUser
+  async sendContactUsEmail(
+    data: ContactUs
   ): Promise<{ success: boolean; messageId?: string; error?: string }> {
     try {
-      // Render the React email template to HTML
-      const html = await renderEmailTemplate(NotifyUserEmail, data);
+      const html = await renderEmailTemplate(ContactUsEmail, data);
 
-      // Send the email
       const info = await this.transporter.sendMail({
         from: `"BlackBox Designs" <${process.env.EMAIL_FROM}>`,
-        to: data.email,
-        subject: `Thank you for contacting BlackBox Designs`,
+        to: process.env.EMAIL_TO,
+        subject: `Contact Us from ${data.firstName} ${data.lastName}`,
         html: html,
       });
 
@@ -42,11 +37,8 @@ export class NotifyUserInfrastructure implements NotifyUserRepository {
         messageId: info.messageId || undefined,
       };
     } catch (error) {
-      console.error("Error sending notification email:", error);
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : "Failed to send email",
-      };
+      console.error("Error sending contact us email:", error);
+      return { success: false, error: "Failed to send contact us email" };
     }
   }
 }

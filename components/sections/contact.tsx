@@ -1,9 +1,11 @@
 "use client";
 
+import { z } from "zod";
+import Link from "next/link";
+import { toast } from "sonner";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
@@ -18,12 +20,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { MapPin, Mail, Phone, Send, CheckCircle } from "lucide-react";
-import { toast } from "sonner";
-import Link from "next/link";
 
 const contactFormSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+  firstName: z.string().min(2, { message: "First name must be at least 2 characters" }),
+  lastName: z.string().min(2, { message: "Last name must be at least 2 characters" }),
   email: z.string().email({ message: "Please enter a valid email address" }),
+  phone: z.string().min(10, { message: "Phone number must be at least 10 characters" }),
   company: z.string().optional(),
   message: z
     .string()
@@ -39,7 +41,9 @@ export function ContactSection() {
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
-      name: "",
+      firstName: "",
+      lastName: "",
+      phone: "",
       email: "",
       company: "",
       message: "",
@@ -65,7 +69,7 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-24 bg-muted/50">
+    <section id="contact" className="py-24 bg-background">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <div>
@@ -163,12 +167,12 @@ export function ContactSection() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <FormField
                           control={form.control}
-                          name="name"
+                          name="firstName"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Name</FormLabel>
+                              <FormLabel>First Name</FormLabel>
                               <FormControl>
-                                <Input placeholder="Your name" {...field} />
+                                <Input placeholder="Your first name" {...field} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -176,6 +180,22 @@ export function ContactSection() {
                         />
                         <FormField
                           control={form.control}
+                          name="lastName"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Last Name</FormLabel>
+                              <FormControl>
+                                <Input placeholder="Your last name" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                      </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <FormField
                           name="email"
                           render={({ field }) => (
                             <FormItem>
@@ -187,7 +207,23 @@ export function ContactSection() {
                             </FormItem>
                           )}
                         />
-                      </div>
+                        <FormField
+                          name="phone"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Phone Number</FormLabel>
+                              <FormControl>
+                                <Input 
+                                placeholder="Your phone number"
+                                type="tel"
+                                {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                          
+                        </div>
 
                       <FormField
                         control={form.control}

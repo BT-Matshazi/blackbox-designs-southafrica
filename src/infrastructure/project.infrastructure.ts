@@ -29,6 +29,9 @@ export class ProjectRepository implements ProjectInterface {
           headers: {
             Authorization: `Bearer ${CMS_CONFIG.apiToken}`,
           },
+          next: {
+            revalidate: 60,
+          },
         }
       );
 
@@ -86,6 +89,9 @@ export class ProjectRepository implements ProjectInterface {
           headers: {
             Authorization: `Bearer ${CMS_CONFIG.apiToken}`,
           },
+          next: {
+            revalidate: 60,
+          },
         }
       );
 
@@ -142,6 +148,9 @@ export class ProjectRepository implements ProjectInterface {
         {
           headers: {
             Authorization: `Bearer ${CMS_CONFIG.apiToken}`,
+          },
+          next: {
+            revalidate: 60,
           },
         }
       );

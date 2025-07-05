@@ -1,10 +1,9 @@
 "use client";
 
-import Logo from "@/public/logo.webp";
-import Image from "next/image"
 import Link from "next/link";
-import { Github, Instagram, Linkedin } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import Image from "next/image"
+import Logo from "@/public/logo.webp";
+
 
 export function Footer() {
   return (

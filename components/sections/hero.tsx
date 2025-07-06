@@ -1,8 +1,9 @@
 "use client";
 
+import Cubes from "@/components/ui/cubes";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, MousePointer, Sparkles, Star } from "lucide-react";
+import { ArrowRight, MousePointer, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatedBackground } from "@/components/animated-background";
 
@@ -86,7 +87,19 @@ export function HeroSection() {
     >
       {/* Elegant Animated Background */}
       <AnimatedBackground />
-
+      <div className="absolute inset-0 z-0 hidden md:block">
+        <Cubes
+          gridSize={12}
+          maxAngle={60}
+          radius={5}
+          borderStyle="2px dashed #e55a6f"
+          faceColor="#e55a6f/20"
+          rippleColor="#e55a6f"
+          rippleSpeed={1.8}
+          autoAnimate={true}
+          rippleOnClick={true}
+        />
+      </div>
       {/* Content */}
       <motion.div
         className="container mx-auto px-4 relative z-20"

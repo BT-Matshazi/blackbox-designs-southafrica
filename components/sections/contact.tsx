@@ -117,7 +117,7 @@ export function ContactSection() {
                       href="mailto:info@blackboxdesigns.co.za"
                       className="text-muted-foreground"
                     >
-                      info@blackboxdesigns.com
+                      info@blackboxdesigns.co.za
                     </Link>
                   </div>
                 </div>

@@ -66,8 +66,8 @@ export default function Page() {
         <p className="mb-4">
           If you wish to exercise any of your rights under the POPI Act, please
           contact us at{" "}
-          <a href="mailto:info@blackboxdesigns.com" className="text-blue-500">
-            info@blackboxdesigns.com
+          <a href="mailto:info@blackboxdesigns.co.za" className="text-blue-500">
+            info@blackboxdesigns.co.za
           </a>
           .
         </p>
@@ -84,8 +84,8 @@ export default function Page() {
         <p className="mb-4">
           If you have any questions about our POPI Act compliance, please
           contact us at{" "}
-          <a href="mailto:info@blackboxdesigns.com" className="text-blue-500">
-            info@blackboxdesigns.com
+          <a href="mailto:info@blackboxdesigns.co.za" className="text-blue-500">
+            info@blackboxdesigns.co.za
           </a>
           .
         </p>

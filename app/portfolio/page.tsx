@@ -2,6 +2,16 @@ import Image from "next/image";
 import { PortfolioSection } from "@/components/sections/portfolio";
 import { getProjectsController } from "@/src/presentation/controllers/product.controller";
 import Link from "next/link";
+import { generateMetadata as generateSEOMetadata } from "@/lib/utils/metadata";
+import { PAGE_METADATA, SEO_CONFIG } from "@/lib/config/seo-config";
+import { Metadata } from "next";
+
+export const metadata: Metadata = generateSEOMetadata({
+  title: PAGE_METADATA.portfolio.title,
+  description: PAGE_METADATA.portfolio.description,
+  keywords: PAGE_METADATA.portfolio.keywords,
+  canonical: `${SEO_CONFIG.siteUrl}/portfolio`,
+});
 
 export default async function PortfolioPage() {
   const { success, data } = await getProjectsController();

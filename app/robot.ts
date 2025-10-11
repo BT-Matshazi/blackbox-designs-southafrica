@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { SEO_CONFIG } from "@/lib/config/seo-config";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -7,8 +8,20 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: "/",
         disallow: ["/api/", "/admin/", "/_next/", "/private/"],
+        crawlDelay: 0,
+      },
+      {
+        userAgent: "Googlebot",
+        allow: "/",
+        disallow: ["/api/", "/admin/", "/_next/", "/private/"],
+      },
+      {
+        userAgent: "Bingbot",
+        allow: "/",
+        disallow: ["/api/", "/admin/", "/_next/", "/private/"],
       },
     ],
-    sitemap: "https://www.blackboxdesigns.co.za/sitemap.xml",
+    sitemap: `${SEO_CONFIG.siteUrl}/sitemap.xml`,
+    host: SEO_CONFIG.siteUrl,
   };
 }

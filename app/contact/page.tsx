@@ -1,6 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ContactSection } from "@/components/sections/contact";
+import { generateMetadata as generateSEOMetadata } from "@/lib/utils/metadata";
+import { PAGE_METADATA, SEO_CONFIG } from "@/lib/config/seo-config";
+import { Metadata } from "next";
+
+export const metadata: Metadata = generateSEOMetadata({
+  title: PAGE_METADATA.contact.title,
+  description: PAGE_METADATA.contact.description,
+  keywords: PAGE_METADATA.contact.keywords,
+  canonical: `${SEO_CONFIG.siteUrl}/contact`,
+});
 
 export default function ContactPage() {
   return (

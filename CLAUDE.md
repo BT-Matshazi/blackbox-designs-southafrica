@@ -151,3 +151,44 @@ Next.js image optimization is configured for:
 - Localhost (development)
 
 See `next.config.ts` for full configuration.
+
+## SEO Configuration
+
+Comprehensive SEO implementation with:
+- **Metadata Utilities**: Centralized in `lib/utils/metadata.ts` with `generateMetadata()` helper
+- **SEO Config**: All SEO constants in `lib/config/seo-config.ts` (keywords, descriptions, company info)
+- **Structured Data**: JSON-LD schemas in `lib/utils/structured-data.ts`:
+  - Organization Schema (company details)
+  - LocalBusiness Schema (location, hours, geo-coordinates)
+  - WebSite Schema (search action)
+  - Service Schema (service offerings)
+  - Utilities for Breadcrumb and FAQ schemas
+
+### Page-Specific SEO
+Each page has unique metadata via `generateMetadata()`:
+- Home: `/` - Main landing page
+- About: `/about` - Company information
+- Services: `/services` - Service offerings + Service Schema
+- Portfolio: `/portfolio` - Project showcase
+- Contact: `/contact` - Contact information
+
+### Technical SEO
+- **Sitemap**: Dynamic sitemap at `/sitemap.xml` using `app/sitemap.ts`
+- **Robots.txt**: Optimized for Googlebot, Bingbot at `/robots.txt`
+- **Open Graph**: Full OG tags for social sharing (Twitter, Facebook, LinkedIn)
+- **Canonical URLs**: Prevent duplicate content
+- **Structured Data**: All schemas injected via Next.js `<Script>` component
+
+### Keywords Strategy
+Targeting South African market with location-based keywords:
+- "web development South Africa"
+- "web design Johannesburg"
+- "mobile app development"
+- Full keyword list in `seo-config.ts`
+
+### SEO Action Items
+See `SEO-CHECKLIST.md` for:
+- Google Search Console setup
+- Content creation strategy
+- Performance optimization
+- Analytics configuration

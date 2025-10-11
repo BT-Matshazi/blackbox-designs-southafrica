@@ -25,11 +25,23 @@ export class NotifyUserInfrastructure implements NotifyUserRepository {
   async sendNotifyUserEmail(
     data: NotifyUser
   ): Promise<{ success: boolean; messageId?: string; error?: string }> {
+    console.log("[NotifyUserInfrastructure] Starting notification email process", {
+      to: data.email,
+      from: process.env.EMAIL_FROM,
+    });
+
     try {
       // Render the React email template to HTML
+      console.log("[NotifyUserInfrastructure] Rendering email template");
       const html = await renderEmailTemplate(NotifyUserEmail, data);
+      console.log("[NotifyUserInfrastructure] Email template rendered successfully");
 
       // Send the email
+      console.log("[NotifyUserInfrastructure] Sending email via SMTP", {
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
+      });
+
       const info = await this.transporter.sendMail({
         from: `"BlackBox Designs" <${process.env.EMAIL_FROM}>`,
         to: data.email,
@@ -37,12 +49,18 @@ export class NotifyUserInfrastructure implements NotifyUserRepository {
         html: html,
       });
 
+      console.log("[NotifyUserInfrastructure] Email sent successfully", {
+        messageId: info.messageId,
+        accepted: info.accepted,
+        rejected: info.rejected,
+      });
+
       return {
         success: true,
         messageId: info.messageId || undefined,
       };
     } catch (error) {
-      console.error("Error sending notification email:", error);
+      console.error("[NotifyUserInfrastructure] Error sending notification email:", error);
       return {
         success: false,
         error: error instanceof Error ? error.message : "Failed to send email",

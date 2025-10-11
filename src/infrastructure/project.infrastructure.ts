@@ -21,25 +21,49 @@ export class ProjectRepository implements ProjectInterface {
   }
 
   async findById(id: string): Promise<Project | null> {
+    console.log("[ProjectRepository] Finding project by ID", { projectId: id });
+
     try {
       const queryParams = this.buildQueryParams();
-      const response = await fetch(
-        `${CMS_CONFIG.baseUrl}${CMS_CONFIG.endpoints.Projects}/${id}?${queryParams}`,
-        {
-          headers: {
-            Authorization: `Bearer ${CMS_CONFIG.apiToken}`,
-          },
-          next: {
-            revalidate: 60,
-          },
-        }
-      );
+      const url = `${CMS_CONFIG.baseUrl}${CMS_CONFIG.endpoints.Projects}/${id}?${queryParams}`;
 
-      if (!response.ok) return null;
+      console.log("[ProjectRepository] Making CMS API request", {
+        url,
+        method: "GET",
+      });
+
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${CMS_CONFIG.apiToken}`,
+        },
+        next: {
+          revalidate: 60,
+        },
+      });
+
+      console.log("[ProjectRepository] CMS API response received", {
+        status: response.status,
+        ok: response.ok,
+      });
+
+      if (!response.ok) {
+        console.warn("[ProjectRepository] CMS API returned non-OK status", {
+          status: response.status,
+        });
+        return null;
+      }
 
       const { data } = await response.json();
 
-      if (!data) return null;
+      if (!data) {
+        console.warn("[ProjectRepository] No data returned from CMS");
+        return null;
+      }
+
+      console.log("[ProjectRepository] Project data retrieved from CMS", {
+        projectId: data.id,
+        projectName: data.name,
+      });
 
       return {
         id: data.id,
@@ -73,35 +97,59 @@ export class ProjectRepository implements ProjectInterface {
           })) || [],
       };
     } catch (error) {
-      console.error("Error fetching project by ID:", error);
+      console.error("[ProjectRepository] Error fetching project by ID:", error);
       return null;
     }
   }
 
   async findBySlug(slug: string): Promise<Project | null> {
+    console.log("[ProjectRepository] Finding project by slug", { slug });
+
     try {
       const queryParams = this.buildQueryParams();
       queryParams.append("filters[slug][$eq]", slug);
+      const url = `${CMS_CONFIG.baseUrl}${CMS_CONFIG.endpoints.Projects}?${queryParams}`;
 
-      const response = await fetch(
-        `${CMS_CONFIG.baseUrl}${CMS_CONFIG.endpoints.Projects}?${queryParams}`,
-        {
-          headers: {
-            Authorization: `Bearer ${CMS_CONFIG.apiToken}`,
-          },
-          next: {
-            revalidate: 60,
-          },
-        }
-      );
+      console.log("[ProjectRepository] Making CMS API request", {
+        url,
+        method: "GET",
+        filter: slug,
+      });
 
-      if (!response.ok) return null;
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${CMS_CONFIG.apiToken}`,
+        },
+        next: {
+          revalidate: 60,
+        },
+      });
+
+      console.log("[ProjectRepository] CMS API response received", {
+        status: response.status,
+        ok: response.ok,
+      });
+
+      if (!response.ok) {
+        console.warn("[ProjectRepository] CMS API returned non-OK status", {
+          status: response.status,
+        });
+        return null;
+      }
 
       const { data } = await response.json();
 
-      if (!data || !data[0]) return null;
+      if (!data || !data[0]) {
+        console.warn("[ProjectRepository] No project found with slug", { slug });
+        return null;
+      }
 
       const project = data[0];
+      console.log("[ProjectRepository] Project found by slug", {
+        slug,
+        projectId: project.id,
+        projectName: project.name,
+      });
 
       return {
         id: project.id,
@@ -135,30 +183,55 @@ export class ProjectRepository implements ProjectInterface {
           })) || [],
       };
     } catch (error) {
-      console.error("Error fetching project by slug:", error);
+      console.error("[ProjectRepository] Error fetching project by slug:", error);
       return null;
     }
   }
 
   async findAll(): Promise<Project[]> {
+    console.log("[ProjectRepository] Finding all projects");
+
     try {
       const queryParams = this.buildQueryParams();
-      const response = await fetch(
-        `${CMS_CONFIG.baseUrl}${CMS_CONFIG.endpoints.Projects}?${queryParams}`,
-        {
-          headers: {
-            Authorization: `Bearer ${CMS_CONFIG.apiToken}`,
-          },
-          next: {
-            revalidate: 60,
-          },
-        }
-      );
+      const url = `${CMS_CONFIG.baseUrl}${CMS_CONFIG.endpoints.Projects}?${queryParams}`;
 
-      if (!response.ok) return [];
+      console.log("[ProjectRepository] Making CMS API request", {
+        url,
+        method: "GET",
+      });
+
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${CMS_CONFIG.apiToken}`,
+        },
+        next: {
+          revalidate: 60,
+        },
+      });
+
+      console.log("[ProjectRepository] CMS API response received", {
+        status: response.status,
+        ok: response.ok,
+      });
+
+      if (!response.ok) {
+        console.warn("[ProjectRepository] CMS API returned non-OK status", {
+          status: response.status,
+        });
+        return [];
+      }
 
       const { data } = await response.json();
-      if (!data) return [];
+
+      if (!data) {
+        console.warn("[ProjectRepository] No data returned from CMS");
+        return [];
+      }
+
+      console.log("[ProjectRepository] Projects retrieved from CMS", {
+        count: data.length,
+        projectNames: data.map((p: any) => p.name),
+      });
 
       return data.map((project: any) => ({
         id: project.id,
@@ -192,7 +265,7 @@ export class ProjectRepository implements ProjectInterface {
           })) || [],
       }));
     } catch (error) {
-      console.error("Error fetching all projects:", error);
+      console.error("[ProjectRepository] Error fetching all projects:", error);
       return [];
     }
   }

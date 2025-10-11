@@ -22,8 +22,21 @@ export class ContactUsInfrastructure implements ContactUsRepository {
   async sendContactUsEmail(
     data: ContactUs
   ): Promise<{ success: boolean; messageId?: string; error?: string }> {
+    console.log("[ContactUsInfrastructure] Starting email send process", {
+      to: process.env.EMAIL_TO,
+      from: process.env.EMAIL_FROM,
+      recipientEmail: data.email,
+    });
+
     try {
+      console.log("[ContactUsInfrastructure] Rendering email template");
       const html = await renderEmailTemplate(ContactUsEmail, data);
+      console.log("[ContactUsInfrastructure] Email template rendered successfully");
+
+      console.log("[ContactUsInfrastructure] Sending email via SMTP", {
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
+      });
 
       const info = await this.transporter.sendMail({
         from: `"BlackBox Designs" <${process.env.EMAIL_FROM}>`,
@@ -32,12 +45,18 @@ export class ContactUsInfrastructure implements ContactUsRepository {
         html: html,
       });
 
+      console.log("[ContactUsInfrastructure] Email sent successfully", {
+        messageId: info.messageId,
+        accepted: info.accepted,
+        rejected: info.rejected,
+      });
+
       return {
         success: true,
         messageId: info.messageId || undefined,
       };
     } catch (error) {
-      console.error("Error sending contact us email:", error);
+      console.error("[ContactUsInfrastructure] Error sending contact us email:", error);
       return { success: false, error: "Failed to send contact us email" };
     }
   }

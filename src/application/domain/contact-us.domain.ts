@@ -5,4 +5,9 @@ export interface ContactUs {
     company: string;
     phone: string;
     message: string;
+    projectType?: string;
+    budgetRange?: string;
+    attachmentName?: string;
+    attachmentSize?: number;
+    attachmentType?: string;
 }

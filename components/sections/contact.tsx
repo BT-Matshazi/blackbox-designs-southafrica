@@ -3,7 +3,7 @@
 import { z } from "zod";
 import Link from "next/link";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,31 +12,96 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
-import { MapPin, Mail, Phone, Send, CheckCircle, Loader2 } from "lucide-react";
+import {
+  MapPin,
+  Mail,
+  Phone,
+  Send,
+  CheckCircle,
+  Loader2,
+  Upload,
+  X,
+  FileText,
+} from "lucide-react";
 import { contactUsController } from "@/src/presentation/controllers/contact-us.controller";
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const ACCEPTED_FILE_TYPES = [
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "text/plain",
+  "image/jpeg",
+  "image/png",
+  "image/jpg",
+];
+
 const contactFormSchema = z.object({
-  firstName: z.string().min(2, { message: "First name must be at least 2 characters" }),
-  lastName: z.string().min(2, { message: "Last name must be at least 2 characters" }),
+  firstName: z
+    .string()
+    .min(2, { message: "First name must be at least 2 characters" }),
+  lastName: z
+    .string()
+    .min(2, { message: "Last name must be at least 2 characters" }),
   email: z.string().email({ message: "Please enter a valid email address" }),
-  phone: z.string().min(10, { message: "Phone number must be at least 10 characters" }),
+  phone: z
+    .string()
+    .min(10, { message: "Phone number must be at least 10 characters" }),
   company: z.string().optional(),
+  projectType: z.string().optional(),
+  budgetRange: z.string().optional(),
   message: z
     .string()
     .min(10, { message: "Message must be at least 10 characters" }),
+  // Honeypot field - should always be empty
+  website: z.string().optional(),
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
+const FORM_STORAGE_KEY = "contact-form-draft";
+
+const PROJECT_TYPES = [
+  "Website Development",
+  "Mobile App Development",
+  "E-commerce Solution",
+  "UI/UX Design",
+  "Web Application",
+  "API Development",
+  "Maintenance & Support",
+  "Consulting",
+  "Other",
+];
+
+const BUDGET_RANGES = [
+  "Under R50,000",
+  "R50,000 - R100,000",
+  "R100,000 - R250,000",
+  "R250,000 - R500,000",
+  "R500,000+",
+  "Not sure yet",
+];
+
 export function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
@@ -46,29 +111,121 @@ export function ContactSection() {
       phone: "",
       email: "",
       company: "",
+      projectType: "",
+      budgetRange: "",
       message: "",
+      website: "", // Honeypot field
     },
   });
+
+  // Load form data from localStorage on mount
+  useEffect(() => {
+    const savedData = localStorage.getItem(FORM_STORAGE_KEY);
+    if (savedData) {
+      try {
+        const parsed = JSON.parse(savedData);
+        form.reset(parsed);
+        console.log("[ContactForm] Restored form data from localStorage");
+      } catch (error) {
+        console.error("[ContactForm] Failed to parse saved form data:", error);
+      }
+    }
+  }, [form]);
+
+  // Save form data to localStorage on every change
+  useEffect(() => {
+    const subscription = form.watch((value) => {
+      // Don't save honeypot field
+      const { website, ...dataToSave } = value;
+      localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify(dataToSave));
+    });
+    return () => subscription.unsubscribe();
+  }, [form]);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Validate file size
+    if (file.size > MAX_FILE_SIZE) {
+      toast.error("File size must be less than 5MB");
+      return;
+    }
+
+    // Validate file type
+    if (!ACCEPTED_FILE_TYPES.includes(file.type)) {
+      toast.error(
+        "Please upload a PDF, Word document, text file, or image (JPG, PNG)"
+      );
+      return;
+    }
+
+    setUploadedFile(file);
+    console.log("[ContactForm] File attached:", {
+      name: file.name,
+      size: file.size,
+      type: file.type,
+    });
+  };
+
+  const removeFile = () => {
+    setUploadedFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const formatFileSize = (bytes: number) => {
+    const kb = bytes / 1024;
+    if (kb < 1024) return `${kb.toFixed(2)} KB`;
+    return `${(kb / 1024).toFixed(2)} MB`;
+  };
 
   async function onSubmit(data: ContactFormValues) {
     setIsSubmitting(true);
 
-    // Simulate API call
+    // Honeypot check - if filled, it's a bot
+    if (data.website) {
+      console.warn("[ContactForm] Honeypot triggered - possible bot detected");
+      // Pretend to submit successfully to fool bots
+      setTimeout(() => {
+        toast.success("Your message has been sent. We'll get back to you soon!");
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+        form.reset();
+        setTimeout(() => {
+          setIsSubmitted(false);
+        }, 2000);
+      }, 1000);
+      return;
+    }
+
     const result = await contactUsController({
       ...data,
       company: data.company || "",
+      projectType: data.projectType,
+      budgetRange: data.budgetRange,
+      attachmentName: uploadedFile?.name,
+      attachmentSize: uploadedFile?.size,
+      attachmentType: uploadedFile?.type,
     });
 
     if (result.success) {
       toast.success("Your message has been sent. We'll get back to you soon!");
       setIsSubmitting(false);
       setIsSubmitted(true);
+
+      // Clear localStorage and file
+      localStorage.removeItem(FORM_STORAGE_KEY);
+      removeFile();
       form.reset();
+
       setTimeout(() => {
         setIsSubmitted(false);
-      }, 2000);
+      }, 3000);
     } else {
       toast.error("Failed to send message. Please try again.");
+      setIsSubmitting(false);
     }
   }
 
@@ -152,7 +309,7 @@ export function ContactSection() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="flex flex-col items-center justify-center h-[360px] text-center"
+                    className="flex flex-col items-center justify-center h-[600px] text-center"
                   >
                     <CheckCircle className="h-16 w-16 text-primary mb-4" />
                     <h4 className="text-xl font-semibold mb-2">
@@ -166,7 +323,7 @@ export function ContactSection() {
                   <Form {...form}>
                     <form
                       onSubmit={form.handleSubmit(onSubmit)}
-                      className="space-y-6"
+                      className="space-y-4"
                     >
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <FormField
@@ -205,6 +362,7 @@ export function ContactSection() {
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <FormField
+                          control={form.control}
                           name="email"
                           render={({ field }) => (
                             <FormItem>
@@ -217,6 +375,7 @@ export function ContactSection() {
                           )}
                         />
                         <FormField
+                          control={form.control}
                           name="phone"
                           render={({ field }) => (
                             <FormItem>
@@ -248,6 +407,82 @@ export function ContactSection() {
                         )}
                       />
 
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <FormField
+                          control={form.control}
+                          name="projectType"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Project Type (Optional)</FormLabel>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select type" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  {PROJECT_TYPES.map((type) => (
+                                    <SelectItem key={type} value={type}>
+                                      {type}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="budgetRange"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Budget Range (Optional)</FormLabel>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select range" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  {BUDGET_RANGES.map((range) => (
+                                    <SelectItem key={range} value={range}>
+                                      {range}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      {/* Honeypot field - hidden from real users */}
+                      <FormField
+                        control={form.control}
+                        name="website"
+                        render={({ field }) => (
+                          <FormItem className="hidden" aria-hidden="true">
+                            <FormLabel>Website</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Your website"
+                                tabIndex={-1}
+                                autoComplete="off"
+                                {...field}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+
                       <FormField
                         control={form.control}
                         name="message"
@@ -256,8 +491,8 @@ export function ContactSection() {
                             <FormLabel>Message</FormLabel>
                             <FormControl>
                               <Textarea
-                                placeholder="How can we help you?"
-                                className="resize-none min-h-[120px]"
+                                placeholder="Tell us about your project..."
+                                className="resize-none min-h-[100px]"
                                 {...field}
                               />
                             </FormControl>
@@ -265,6 +500,63 @@ export function ContactSection() {
                           </FormItem>
                         )}
                       />
+
+                      {/* File Upload */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                          Attach Project Brief (Optional)
+                        </label>
+                        <p className="text-[0.8rem] text-muted-foreground">
+                          Upload a file (PDF, Word, Image - Max 5MB)
+                        </p>
+
+                        {!uploadedFile ? (
+                          <div className="relative">
+                            <input
+                              ref={fileInputRef}
+                              type="file"
+                              onChange={handleFileChange}
+                              accept={ACCEPTED_FILE_TYPES.join(",")}
+                              className="hidden"
+                              id="file-upload"
+                            />
+                            <label
+                              htmlFor="file-upload"
+                              className="flex items-center justify-center w-full h-24 px-4 transition bg-background border-2 border-border border-dashed rounded-md appearance-none cursor-pointer hover:border-primary/50 focus:outline-none"
+                            >
+                              <div className="flex flex-col items-center space-y-2">
+                                <Upload className="w-6 h-6 text-muted-foreground" />
+                                <span className="text-sm text-muted-foreground">
+                                  Click to upload file
+                                </span>
+                              </div>
+                            </label>
+                          </div>
+                        ) : (
+                          <div className="flex items-center justify-between p-3 border border-border rounded-md bg-muted/50">
+                            <div className="flex items-center space-x-3">
+                              <FileText className="w-5 h-5 text-primary" />
+                              <div>
+                                <p className="text-sm font-medium">
+                                  {uploadedFile.name}
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                  {formatFileSize(uploadedFile.size)}
+                                </p>
+                              </div>
+                            </div>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              onClick={removeFile}
+                              className="h-8 w-8 p-0"
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        )}
+                      </div>
 
                       <Button
                         type="submit"

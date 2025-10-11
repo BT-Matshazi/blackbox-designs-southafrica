@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import nodemailer, { Transporter, TransportOptions } from "nodemailer";
-import { onboardingSchema } from "@/app/onboarding/page";
+import { onboardingSchema } from "@/lib/utils";
 
 type OnboardingData = z.infer<typeof onboardingSchema>;
 

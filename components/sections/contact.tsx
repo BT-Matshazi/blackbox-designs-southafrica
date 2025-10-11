@@ -131,10 +131,10 @@ export function ContactSection() {
                   <div>
                     <h3 className="font-medium text-lg">Call Us</h3>
                     <Link
-                      href="tel:+27696376056"
+                      href="tel:+27615314470"
                       className="text-muted-foreground"
                     >
-                      +27 69 637 6056
+                      +27 61 531 4470
                     </Link>
                   </div>
                 </div>
@@ -176,7 +176,10 @@ export function ContactSection() {
                             <FormItem>
                               <FormLabel>First Name</FormLabel>
                               <FormControl>
-                                <Input placeholder="Your first name" {...field} />
+                                <Input
+                                  placeholder="Your first name"
+                                  {...field}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -189,13 +192,15 @@ export function ContactSection() {
                             <FormItem>
                               <FormLabel>Last Name</FormLabel>
                               <FormControl>
-                                <Input placeholder="Your last name" {...field} />
+                                <Input
+                                  placeholder="Your last name"
+                                  {...field}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
                           )}
                         />
-
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -220,13 +225,13 @@ export function ContactSection() {
                                 <Input
                                   placeholder="Your phone number"
                                   type="tel"
-                                  {...field} />
+                                  {...field}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
                           )}
                         />
-
                       </div>
 
                       <FormField

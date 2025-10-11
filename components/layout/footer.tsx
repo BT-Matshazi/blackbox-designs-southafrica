@@ -136,7 +136,7 @@ export function Footer() {
                 </Link>{" "}
               </p>
               <p>
-                <Link href="tel:+27696376056">+27 69 637 6056</Link>
+                <Link href="tel:+27615314470">+27 61 531 4470</Link>
               </p>
             </address>
           </div>

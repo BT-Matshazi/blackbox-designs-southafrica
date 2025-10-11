@@ -30,7 +30,7 @@ const ChatButton = () => {
             </motion.a>
 
             <motion.a
-              href="https://wa.me/+27696376056" // Replace with your WhatsApp number
+              href="https://wa.me/+27615314470" // Replace with your WhatsApp number
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 0, scale: 0.8 }}

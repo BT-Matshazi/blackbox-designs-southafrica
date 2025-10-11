@@ -1,56 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import nodemailer from "nodemailer";
-
-// Validation schema matching the frontend
-const onboardingSchema = z.object({
-  // Step 1: Contact Info
-  contactName: z.string().min(2, "Name is required"),
-  contactEmail: z.string().email("Valid email is required"),
-  contactPhone: z.string().min(10, "Valid phone number is required"),
-  companyName: z.string().min(2, "Company name is required"),
-
-  // Step 2: Business Vision
-  mainGoal: z.string().min(10, "Please describe your main goal"),
-  primaryAudience: z.string().min(10, "Please describe your target audience"),
-  problemSolving: z.string().min(10, "Please describe the problem you're solving"),
-  differentiation: z.string().min(10, "Please describe what makes you different"),
-  brandIdentity: z.string().optional(),
-  websiteTone: z.string().optional(),
-
-  // Step 3: Functionality
-  speakerInfo: z.string().optional(),
-  approvalProcess: z.string().optional(),
-  speakerEditProfile: z.string().optional(),
-  corporateDetails: z.string().optional(),
-  clientBrowsing: z.string().optional(),
-  bookingType: z.string().optional(),
-  adminManagement: z.string().optional(),
-  needAnalytics: z.string().optional(),
-  automatedEmails: z.string().optional(),
-
-  // Step 4: Content & Structure
-  desiredPages: z.string().min(5, "Please list your desired pages"),
-  contentReady: z.string().min(1, "Please indicate if content is ready"),
-  needBlog: z.string().optional(),
-  needTestimonials: z.string().optional(),
-
-  // Step 5: Design & Branding
-  haveBrandMaterials: z.string().min(1, "Please indicate if you have brand materials"),
-  referenceWebsites: z.string().optional(),
-  designStyle: z.string().optional(),
-  colorThemes: z.string().optional(),
-
-  // Step 6: Timeline & Budget
-  launchDate: z.string().min(1, "Launch date is required"),
-  budgetRange: z.string().min(1, "Budget range is required"),
-  needMaintenance: z.string().min(1, "Please indicate maintenance needs"),
-  needTraining: z.string().optional(),
-
-  // Step 7: Future Expansion
-  futureFeatures: z.string().optional(),
-  additionalNotes: z.string().optional(),
-});
+import nodemailer, { Transporter, TransportOptions } from "nodemailer";
+import { onboardingSchema } from "@/app/onboarding/page";
 
 type OnboardingData = z.infer<typeof onboardingSchema>;
 
@@ -59,14 +10,17 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    console.log("[OnboardingController] Parsing request body");
+
+    console.log("[OnboardingController] Parsing request body", body);
 
     // Validate the data
-    const validatedData = onboardingSchema.parse(body);
+    // const validatedData = onboardingSchema.parse(body);
+
+
     console.log("[OnboardingController] Data validated successfully");
 
     // Send email
-    await sendOnboardingEmail(validatedData);
+    await sendOnboardingEmail(body);
     console.log("[OnboardingController] Email sent successfully");
 
     return NextResponse.json(
@@ -95,14 +49,14 @@ async function sendOnboardingEmail(data: OnboardingData): Promise<void> {
 
   // Create transporter
   const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: Number(process.env.EMAIL_PORT),
-    secure: false,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
+        host: process.env.SMTP_HOST,
+        port: parseInt(process.env.SMTP_PORT || "587"),
+        secure: process.env.SMTP_SECURE === "true",
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASSWORD,
+        },
+      } as TransportOptions);
 
   console.log("[OnboardingInfrastructure] Transporter created");
 
@@ -168,76 +122,140 @@ async function sendOnboardingEmail(data: OnboardingData): Promise<void> {
             <div class="field-label">Differentiation:</div>
             <div class="field-value">${data.differentiation}</div>
           </div>
-          ${data.brandIdentity ? `
+          ${
+            data.brandIdentity
+              ? `
           <div class="field">
             <div class="field-label">Brand Identity:</div>
             <div class="field-value">${data.brandIdentity}</div>
           </div>
-          ` : ''}
-          ${data.websiteTone ? `
+          `
+              : ""
+          }
+          ${
+            data.websiteTone
+              ? `
           <div class="field">
             <div class="field-label">Website Tone:</div>
             <div class="field-value">${data.websiteTone}</div>
           </div>
-          ` : ''}
+          `
+              : ""
+          }
         </div>
 
         <div class="section">
           <div class="section-title">⚙️ Step 3: Functionality Requirements</div>
-          ${data.speakerInfo ? `
+          ${
+            data.speakerInfo
+              ? `
           <div class="field">
             <div class="field-label">Speaker Registration Info:</div>
             <div class="field-value">${data.speakerInfo}</div>
           </div>
-          ` : ''}
-          ${data.approvalProcess ? `
+          `
+              : ""
+          }
+          ${
+            data.approvalProcess
+              ? `
           <div class="field">
             <div class="field-label">Approval Process:</div>
             <div class="field-value">${data.approvalProcess}</div>
           </div>
-          ` : ''}
-          ${data.speakerEditProfile ? `
+          `
+              : ""
+          }
+          ${
+            data.speakerEditProfile
+              ? `
           <div class="field">
             <div class="field-label">Speaker Edit Profile:</div>
             <div class="field-value">${data.speakerEditProfile}</div>
           </div>
-          ` : ''}
-          ${data.corporateDetails ? `
+          `
+              : ""
+          }
+          ${
+            data.speakerLogin
+              ? `
+          <div class="field">
+            <div class="field-label">Speaker Login:</div>
+            <div class="field-value">${data.speakerLogin}</div>
+          </div>
+          `
+              : ""
+          }
+          ${
+            data.corporateDetails
+              ? `
           <div class="field">
             <div class="field-label">Corporate Client Details:</div>
             <div class="field-value">${data.corporateDetails}</div>
           </div>
-          ` : ''}
-          ${data.clientBrowsing ? `
+          `
+              : ""
+          }
+          ${
+            data.clientBrowsing
+              ? `
           <div class="field">
             <div class="field-label">Client Browsing:</div>
             <div class="field-value">${data.clientBrowsing}</div>
           </div>
-          ` : ''}
-          ${data.bookingType ? `
+          `
+              : ""
+          }
+          ${
+            data.bookingType
+              ? `
           <div class="field">
             <div class="field-label">Booking Type:</div>
             <div class="field-value">${data.bookingType}</div>
           </div>
-          ` : ''}
-          ${data.adminManagement ? `
+          `
+              : ""
+          }
+          ${
+            data.emailNotifications
+              ? `
+          <div class="field">
+            <div class="field-label">Email Notifications:</div>
+            <div class="field-value">${data.emailNotifications}</div>
+          </div>
+          `
+              : ""
+          }
+          ${
+            data.adminManagement
+              ? `
           <div class="field">
             <div class="field-label">Admin Management:</div>
             <div class="field-value">${data.adminManagement}</div>
           </div>
-          ` : ''}
-          ${data.needAnalytics ? `
+          `
+              : ""
+          }
+          ${
+            data.needAnalytics
+              ? `
           <div class="field">
             <div class="field-label">Need Analytics:</div>
             <div class="field-value">${data.needAnalytics}</div>
           </div>
-          ` : ''}
-          ${data.automatedEmails ? `
+          `
+              : ""
+          }
+          ${
+            data.automatedEmails
+              ? `
           <div class="field">
             <div class="field-label">Automated Emails:</div>
             <div class="field-value">${data.automatedEmails}</div>
           </div>
-          ` : ''}
+          `
+              : ""
+          }
         </div>
 
         <div class="section">
@@ -250,18 +268,46 @@ async function sendOnboardingEmail(data: OnboardingData): Promise<void> {
             <div class="field-label">Content Ready:</div>
             <div class="field-value">${data.contentReady}</div>
           </div>
-          ${data.needBlog ? `
+          ${
+            data.needBlog
+              ? `
           <div class="field">
             <div class="field-label">Need Blog:</div>
             <div class="field-value">${data.needBlog}</div>
           </div>
-          ` : ''}
-          ${data.needTestimonials ? `
+          `
+              : ""
+          }
+          ${
+            data.needTestimonials
+              ? `
           <div class="field">
             <div class="field-label">Need Testimonials:</div>
             <div class="field-value">${data.needTestimonials}</div>
           </div>
-          ` : ''}
+          `
+              : ""
+          }
+          ${
+            data.haveDomain
+              ? `
+          <div class="field">
+            <div class="field-label">Have Domain:</div>
+            <div class="field-value">${data.haveDomain}</div>
+          </div>
+          `
+              : ""
+          }
+          ${
+            data.needPayments
+              ? `
+          <div class="field">
+            <div class="field-label">Need Payments:</div>
+            <div class="field-value">${data.needPayments}</div>
+          </div>
+          `
+              : ""
+          }
         </div>
 
         <div class="section">
@@ -270,24 +316,36 @@ async function sendOnboardingEmail(data: OnboardingData): Promise<void> {
             <div class="field-label">Have Brand Materials:</div>
             <div class="field-value">${data.haveBrandMaterials}</div>
           </div>
-          ${data.referenceWebsites ? `
+          ${
+            data.referenceWebsites
+              ? `
           <div class="field">
             <div class="field-label">Reference Websites:</div>
             <div class="field-value">${data.referenceWebsites}</div>
           </div>
-          ` : ''}
-          ${data.designStyle ? `
+          `
+              : ""
+          }
+          ${
+            data.designStyle
+              ? `
           <div class="field">
             <div class="field-label">Design Style:</div>
             <div class="field-value">${data.designStyle}</div>
           </div>
-          ` : ''}
-          ${data.colorThemes ? `
+          `
+              : ""
+          }
+          ${
+            data.colorThemes
+              ? `
           <div class="field">
             <div class="field-label">Color Themes:</div>
             <div class="field-value">${data.colorThemes}</div>
           </div>
-          ` : ''}
+          `
+              : ""
+          }
         </div>
 
         <div class="section">
@@ -304,28 +362,40 @@ async function sendOnboardingEmail(data: OnboardingData): Promise<void> {
             <div class="field-label">Need Maintenance:</div>
             <div class="field-value">${data.needMaintenance}</div>
           </div>
-          ${data.needTraining ? `
+          ${
+            data.needTraining
+              ? `
           <div class="field">
             <div class="field-label">Need Training:</div>
             <div class="field-value">${data.needTraining}</div>
           </div>
-          ` : ''}
+          `
+              : ""
+          }
         </div>
 
         <div class="section">
           <div class="section-title">🚀 Step 7: Future Expansion</div>
-          ${data.futureFeatures ? `
+          ${
+            data.futureFeatures
+              ? `
           <div class="field">
             <div class="field-label">Future Features:</div>
             <div class="field-value">${data.futureFeatures}</div>
           </div>
-          ` : ''}
-          ${data.additionalNotes ? `
+          `
+              : ""
+          }
+          ${
+            data.additionalNotes
+              ? `
           <div class="field">
             <div class="field-label">Additional Notes:</div>
             <div class="field-value">${data.additionalNotes}</div>
           </div>
-          ` : ''}
+          `
+              : ""
+          }
         </div>
 
         <div class="footer">
@@ -339,10 +409,9 @@ async function sendOnboardingEmail(data: OnboardingData): Promise<void> {
 
   // Send the email
   const mailOptions = {
-    from: `"Blackbox Designs Onboarding" <${process.env.EMAIL_USER}>`,
+    from: `"Blackbox Designs Onboarding" <${process.env.EMAIL_FROM}>`,
     to: process.env.EMAIL_TO,
-    replyTo: data.contactEmail,
-    subject: `New Client Onboarding: ${data.companyName}`,
+    subject: `New Client Onboarding`,
     html: emailHtml,
   };
 

@@ -8,23 +8,8 @@ import { z } from "zod";
 import { toast } from "sonner";
 import {
   Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  FormDescription,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
 import {
   ChevronLeft,
@@ -41,7 +26,6 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Metadata } from "next";
 import {
   Step1ContactInfo,
   Step2BusinessVision,
@@ -55,7 +39,7 @@ import {
 const STORAGE_KEY = "client-onboarding-draft";
 
 // Multi-step form schema
-const onboardingSchema = z.object({
+export const onboardingSchema = z.object({
   // Step 1: Contact Information
   contactName: z.string().min(2, "Name must be at least 2 characters"),
   contactEmail: z.string().email("Please enter a valid email address"),
@@ -65,8 +49,12 @@ const onboardingSchema = z.object({
   // Step 2: Business & Vision
   mainGoal: z.string().min(10, "Please describe your main goal"),
   primaryAudience: z.string().min(10, "Please describe your target audience"),
-  problemSolving: z.string().min(10, "Please describe the problem you're solving"),
-  differentiation: z.string().min(10, "Please describe what makes you different"),
+  problemSolving: z
+    .string()
+    .min(10, "Please describe the problem you're solving"),
+  differentiation: z
+    .string()
+    .min(10, "Please describe what makes you different"),
   brandIdentity: z.string().optional(),
   websiteTone: z.string().optional(),
 
@@ -74,9 +62,11 @@ const onboardingSchema = z.object({
   speakerInfo: z.string().optional(),
   approvalProcess: z.string().optional(),
   speakerEditProfile: z.string().optional(),
+  speakerLogin: z.string().optional(),
   corporateDetails: z.string().optional(),
   clientBrowsing: z.string().optional(),
   bookingType: z.string().optional(),
+  emailNotifications: z.string().optional(),
   adminManagement: z.string().optional(),
   needAnalytics: z.string().optional(),
   automatedEmails: z.string().optional(),
@@ -86,9 +76,13 @@ const onboardingSchema = z.object({
   contentReady: z.string().min(1, "Please indicate if content is ready"),
   needBlog: z.string().optional(),
   needTestimonials: z.string().optional(),
+  haveDomain: z.string().optional(),
+  needPayments: z.string().optional(),
 
   // Step 5: Design & Branding
-  haveBrandMaterials: z.string().min(1, "Please indicate if you have brand materials"),
+  haveBrandMaterials: z
+    .string()
+    .min(1, "Please indicate if you have brand materials"),
   referenceWebsites: z.string().optional(),
   designStyle: z.string().optional(),
   colorThemes: z.string().optional(),

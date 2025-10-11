@@ -145,7 +145,7 @@ const steps = [
   },
 ];
 
-export default function OnboardingPage() {
+export default function Page() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isComplete, setIsComplete] = useState(false);

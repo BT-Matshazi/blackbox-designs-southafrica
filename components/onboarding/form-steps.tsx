@@ -610,7 +610,9 @@ export function Step6TimelineBudget({ control }: any) {
             <FormControl>
               <Input type="date" {...field} />
             </FormControl>
-            <FormDescription>When would you like the website to go live?</FormDescription>
+            <FormDescription>
+              When would you like the website to go live?
+            </FormDescription>
             <FormMessage />
           </FormItem>
         )}
@@ -629,11 +631,10 @@ export function Step6TimelineBudget({ control }: any) {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                <SelectItem value="under-50k">Under R50,000</SelectItem>
+                <SelectItem value="under-10k">Under R10,000</SelectItem>
+                <SelectItem value="10K-50k">10,000 - R50,000</SelectItem>
                 <SelectItem value="50k-100k">R50,000 - R100,000</SelectItem>
                 <SelectItem value="100k-200k">R100,000 - R200,000</SelectItem>
-                <SelectItem value="200k-500k">R200,000 - R500,000</SelectItem>
-                <SelectItem value="500k-plus">R500,000+</SelectItem>
                 <SelectItem value="not-sure">Not sure yet</SelectItem>
               </SelectContent>
             </Select>
@@ -656,7 +657,9 @@ export function Step6TimelineBudget({ control }: any) {
               </FormControl>
               <SelectContent>
                 <SelectItem value="yes">Yes, monthly support</SelectItem>
-                <SelectItem value="as-needed">As needed (pay per request)</SelectItem>
+                <SelectItem value="as-needed">
+                  As needed (pay per request)
+                </SelectItem>
                 <SelectItem value="no">No, just build it</SelectItem>
                 <SelectItem value="not-sure">Not sure yet</SelectItem>
               </SelectContent>

@@ -3,6 +3,8 @@ import { FeaturedProjects } from "@/components/sections/featured-projects";
 import { ProcessSection } from "@/components/sections/process";
 import { CTASection } from "@/components/sections/cta";
 import { TestimonialsSection } from "@/components/sections/testimonials";
+import { StatsSection } from "@/components/sections/stats";
+import { ServicesHighlight } from "@/components/sections/services-highlight";
 import { getProjectsController } from "@/src/presentation/controllers/product.controller";
 
 export default async function Home() {
@@ -11,6 +13,8 @@ export default async function Home() {
   return (
     <div className="flex flex-col w-full">
       <HeroSection />
+      <StatsSection />
+      <ServicesHighlight />
       {!success || !data ? <></> : <FeaturedProjects projects={data} />}
       <ProcessSection />
       <CTASection />

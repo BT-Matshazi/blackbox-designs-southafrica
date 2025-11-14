@@ -3,9 +3,10 @@
 import Cubes from "@/components/ui/cubes";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, MousePointer, Star } from "lucide-react";
+import { ArrowRight, MousePointer, Star, Users, Award, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatedBackground } from "@/components/animated-background";
+import Link from "next/link";
 
 export function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -179,15 +180,17 @@ export function HeroSection() {
                 whileHover="hover"
                 whileTap="tap"
               >
-                <Button
-                  size="lg"
-                  className="group border-2 border-accent bg-gradient-to-r from-[#D43F52] to-[#E55A6F] hover:from-[#C23648] hover:to-[#D43F52] px-8 py-6 text-lg font-semibold shadow-lg shadow-[#D43F52]/25 text-white"
-                >
-                  <motion.span className="flex items-center">
-                    Start Your Project
-                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </motion.span>
-                </Button>
+                <Link href="/contact">
+                  <Button
+                    size="lg"
+                    className="group border-2 border-accent bg-gradient-to-r from-[#D43F52] to-[#E55A6F] hover:from-[#C23648] hover:to-[#D43F52] px-8 py-6 text-lg font-semibold shadow-lg shadow-[#D43F52]/25 text-white"
+                  >
+                    <motion.span className="flex items-center">
+                      Start Your Project
+                      <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                    </motion.span>
+                  </Button>
+                </Link>
               </motion.div>
 
               <motion.div
@@ -195,13 +198,75 @@ export function HeroSection() {
                 whileHover="hover"
                 whileTap="tap"
               >
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-2 hover:border-[#D43F52] hover:bg-[#D43F52]/5 px-8 py-6 text-lg font-semibold backdrop-blur-sm"
-                >
-                  <motion.span>View Portfolio</motion.span>
-                </Button>
+                <Link href="/portfolio">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-2 hover:border-[#D43F52] hover:bg-[#D43F52]/5 px-8 py-6 text-lg font-semibold backdrop-blur-sm"
+                  >
+                    <motion.span>View Portfolio</motion.span>
+                  </Button>
+                </Link>
+              </motion.div>
+            </motion.div>
+
+            {/* Trust Indicators */}
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-12 max-w-3xl mx-auto"
+              variants={itemVariants}
+            >
+              <motion.div
+                className="flex flex-col items-center gap-2 group"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <div className="flex items-center gap-2">
+                  <div className="p-2 rounded-full bg-[#D43F52]/10 text-[#D43F52] group-hover:bg-[#D43F52]/20 transition-colors">
+                    <Users className="h-5 w-5" />
+                  </div>
+                  <span className="text-3xl font-bold bg-gradient-to-r from-[#D43F52] to-[#E55A6F] bg-clip-text text-transparent">
+                    50+
+                  </span>
+                </div>
+                <span className="text-sm text-muted-foreground font-medium">
+                  Happy Clients
+                </span>
+              </motion.div>
+
+              <motion.div
+                className="flex flex-col items-center gap-2 group"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <div className="flex items-center gap-2">
+                  <div className="p-2 rounded-full bg-[#D43F52]/10 text-[#D43F52] group-hover:bg-[#D43F52]/20 transition-colors">
+                    <Sparkles className="h-5 w-5" />
+                  </div>
+                  <span className="text-3xl font-bold bg-gradient-to-r from-[#D43F52] to-[#E55A6F] bg-clip-text text-transparent">
+                    100+
+                  </span>
+                </div>
+                <span className="text-sm text-muted-foreground font-medium">
+                  Projects Delivered
+                </span>
+              </motion.div>
+
+              <motion.div
+                className="flex flex-col items-center gap-2 group"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <div className="flex items-center gap-2">
+                  <div className="p-2 rounded-full bg-[#D43F52]/10 text-[#D43F52] group-hover:bg-[#D43F52]/20 transition-colors">
+                    <Award className="h-5 w-5" />
+                  </div>
+                  <span className="text-3xl font-bold bg-gradient-to-r from-[#D43F52] to-[#E55A6F] bg-clip-text text-transparent">
+                    5+
+                  </span>
+                </div>
+                <span className="text-sm text-muted-foreground font-medium">
+                  Years Experience
+                </span>
               </motion.div>
             </motion.div>
 

@@ -37,7 +37,7 @@ export function FeaturedProjects({ projects }: { projects: Project[] }) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects
-          .slice(0,2)
+          .slice(0,3)
           .map((project, index) => (
             <Reveal key={project.id} delay={0.05 * index}>
               <motion.div

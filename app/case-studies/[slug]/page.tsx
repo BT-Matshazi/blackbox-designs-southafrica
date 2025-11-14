@@ -6,9 +6,9 @@ import { SEO_CONFIG } from "@/lib/config/seo-config";
 import type { Metadata } from "next";
 
 interface CaseStudyPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 // Generate static paths for all case studies
@@ -22,7 +22,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: CaseStudyPageProps): Promise<Metadata> {
-  const caseStudy = caseStudies.find((cs) => cs.slug === params.slug);
+  const { slug } = await params;
+  const caseStudy = caseStudies.find((cs) => cs.slug === slug);
 
   if (!caseStudy) {
     return {
@@ -47,8 +48,9 @@ export async function generateMetadata({
   });
 }
 
-export default function CaseStudyPage({ params }: CaseStudyPageProps) {
-  const caseStudy = caseStudies.find((cs) => cs.slug === params.slug);
+export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
+  const { slug } = await params;
+  const caseStudy = caseStudies.find((cs) => cs.slug === slug);
 
   if (!caseStudy) {
     notFound();

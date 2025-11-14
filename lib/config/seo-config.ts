@@ -56,11 +56,20 @@ export const PAGE_METADATA = {
   home: {
     title: "Blackbox Designs | Professional Web Development & Design Agency",
     description:
-      "Transform your digital presence with Blackbox Designs. We create stunning websites, mobile apps, and digital solutions for businesses across South Africa. Expert web development, UI/UX design, and e-commerce solutions.",
+      "Transform your digital presence with Blackbox Designs. Leading South African web development agency with 5+ years experience, 100+ successful projects, and 98% client satisfaction. Expert web development, mobile apps, UI/UX design, and custom software solutions in Johannesburg.",
     keywords: [
       ...SEO_CONFIG.defaultKeywords,
       "best web development agency South Africa",
       "top web designers Johannesburg",
+      "award winning web design",
+      "professional mobile app development",
+      "digital transformation services",
+      "custom software development South Africa",
+      "enterprise web solutions",
+      "scalable web applications",
+      "modern web technologies",
+      "React web development",
+      "Next.js development agency",
     ],
   },
   about: {

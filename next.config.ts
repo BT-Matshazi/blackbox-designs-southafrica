@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withPayload } from '@payloadcms/next/withPayload'
 
 const nextConfig: NextConfig = {
   images: {
@@ -28,9 +29,9 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: [
     "local-origin.dev",
     "*.local-origin.dev",
-    "192.168.1.193", // Fixed: removed protocol and port
-    "localhost", // Fixed: removed port
+    "192.168.1.193",
+    "localhost",
   ],
 };
 
-export default nextConfig;
+export default withPayload(nextConfig);

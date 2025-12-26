@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import { withPayload } from '@payloadcms/next/withPayload'
 
 const nextConfig: NextConfig = {
   images: {
@@ -17,10 +16,6 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
       {
-        protocol: "https",
-        hostname: "cms.blackboxdesigns.co.za",
-      },
-      {
         protocol: "http",
         hostname: "localhost",
       },
@@ -34,4 +29,4 @@ const nextConfig: NextConfig = {
   ],
 };
 
-export default withPayload(nextConfig);
+export default nextConfig;

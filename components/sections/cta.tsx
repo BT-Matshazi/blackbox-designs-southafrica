@@ -104,13 +104,6 @@ export function CTASection() {
                 </Link>
               </div>
             </Reveal>
-
-            {/* Trust indicator */}
-            <Reveal delay={0.4}>
-              <p className="text-sm text-muted-foreground mt-6">
-                🔒 No credit card required • Response within 24 hours • 100% confidential
-              </p>
-            </Reveal>
           </div>
         </div>
       </div>

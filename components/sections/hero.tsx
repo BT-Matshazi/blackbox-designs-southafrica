@@ -88,19 +88,6 @@ export function HeroSection() {
     >
       {/* Elegant Animated Background */}
       <AnimatedBackground />
-      <div className="absolute inset-0 z-0 hidden md:block">
-        <Cubes
-          gridSize={12}
-          maxAngle={60}
-          radius={5}
-          borderStyle="2px dashed #e55a6f"
-          faceColor="#e55a6f/20"
-          rippleColor="#e55a6f"
-          rippleSpeed={1.8}
-          autoAnimate={true}
-          rippleOnClick={true}
-        />
-      </div>
       {/* Content */}
       <motion.div
         className="container mx-auto px-4 relative z-20"
@@ -111,17 +98,6 @@ export function HeroSection() {
       >
         <div className="max-w-5xl mx-auto text-center">
           <div className="space-y-8">
-            {/* Premium Badge */}
-            <motion.div
-              className="lg:inline-flex hidden items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#D43F52]/10 to-[#D43F52]/5 border border-[#D43F52]/20 backdrop-blur-sm"
-              variants={itemVariants}
-            >
-              <Star className="h-4 w-4 text-[#D43F52]" />
-              <span className="text-sm font-medium bg-gradient-to-r from-[#D43F52] to-[#D43F52]/80 bg-clip-text text-transparent">
-                Premium Design Solutions
-              </span>
-            </motion.div>
-
             {/* Main Title */}
             <motion.h1
               className="text-5xl font-bold leading-tight sm:text-6xl md:text-7xl"
@@ -225,7 +201,7 @@ export function HeroSection() {
                     <Users className="h-5 w-5" />
                   </div>
                   <span className="text-3xl font-bold bg-gradient-to-r from-[#D43F52] to-[#E55A6F] bg-clip-text text-transparent">
-                    50+
+                    20+
                   </span>
                 </div>
                 <span className="text-sm text-muted-foreground font-medium">
@@ -243,7 +219,7 @@ export function HeroSection() {
                     <Sparkles className="h-5 w-5" />
                   </div>
                   <span className="text-3xl font-bold bg-gradient-to-r from-[#D43F52] to-[#E55A6F] bg-clip-text text-transparent">
-                    100+
+                    50+
                   </span>
                 </div>
                 <span className="text-sm text-muted-foreground font-medium">
@@ -261,7 +237,7 @@ export function HeroSection() {
                     <Award className="h-5 w-5" />
                   </div>
                   <span className="text-3xl font-bold bg-gradient-to-r from-[#D43F52] to-[#E55A6F] bg-clip-text text-transparent">
-                    5+
+                    2+
                   </span>
                 </div>
                 <span className="text-sm text-muted-foreground font-medium">

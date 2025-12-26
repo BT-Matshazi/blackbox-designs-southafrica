@@ -10,38 +10,44 @@ const services = [
   {
     icon: <Globe className="h-8 w-8" />,
     title: "Web Development",
-    description: "Custom websites and web applications built with cutting-edge technologies for optimal performance.",
-    color: "from-blue-500 to-cyan-500",
+    description:
+      "Custom websites and web applications built with cutting-edge technologies for optimal performance.",
+    color: "from-[#D43F52] to-[#E55A6F]",
   },
   {
     icon: <Smartphone className="h-8 w-8" />,
     title: "Mobile Apps",
-    description: "Native and cross-platform mobile applications that deliver seamless user experiences.",
-    color: "from-purple-500 to-pink-500",
+    description:
+      "Native and cross-platform mobile applications that deliver seamless user experiences.",
+    color: "from-[#D43F52] to-[#E55A6F]",
   },
   {
     icon: <Palette className="h-8 w-8" />,
     title: "UI/UX Design",
-    description: "Beautiful, intuitive interfaces that engage users and drive conversions.",
-    color: "from-orange-500 to-red-500",
+    description:
+      "Beautiful, intuitive interfaces that engage users and drive conversions.",
+    color: "from-[#D43F52] to-[#E55A6F]",
   },
   {
     icon: <Code2 className="h-8 w-8" />,
     title: "Custom Software",
-    description: "Tailored software solutions designed to solve your unique business challenges.",
-    color: "from-green-500 to-emerald-500",
+    description:
+      "Tailored software solutions designed to solve your unique business challenges.",
+    color: "from-[#D43F52] to-[#E55A6F]",
   },
   {
     icon: <Megaphone className="h-8 w-8" />,
     title: "Digital Marketing",
-    description: "Strategic marketing campaigns that boost your online presence and drive growth.",
-    color: "from-yellow-500 to-orange-500",
+    description:
+      "Strategic marketing campaigns that boost your online presence and drive growth.",
+    color: "from-[#D43F52] to-[#E55A6F]",
   },
   {
     icon: <Zap className="h-8 w-8" />,
     title: "Brand Strategy",
-    description: "Comprehensive branding solutions that make your business stand out from the crowd.",
-    color: "from-indigo-500 to-purple-500",
+    description:
+      "Comprehensive branding solutions that make your business stand out from the crowd.",
+    color: "from-[#D43F52] to-[#E55A6F]",
   },
 ];
 

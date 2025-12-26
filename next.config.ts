@@ -16,8 +16,8 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
       {
-        protocol: "http",
-        hostname: "localhost",
+        protocol: "https",
+        hostname: "cms.blackboxdesigns.co.za",
       },
     ],
   },

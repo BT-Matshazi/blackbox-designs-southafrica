@@ -13,6 +13,8 @@ import {
   TrendingUp,
   ExternalLink,
   Quote,
+  Globe2,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -27,11 +29,22 @@ export function CaseStudyDetail({ caseStudy }: CaseStudyDetailProps) {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative py-24 overflow-hidden">
+      <section className="relative py-20 md:py-24 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-muted/50 to-background" />
+        <div
+          className="absolute inset-4 md:inset-8 rounded-3xl overflow-hidden opacity-20"
+          style={{
+            backgroundImage: `url(${caseStudy.heroImage.url})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+          aria-hidden="true"
+        />
+        <div className="absolute -left-20 top-10 h-72 w-72 bg-[#D43F52]/12 blur-3xl" />
+        <div className="absolute -right-16 bottom-0 h-72 w-72 bg-[#E55A6F]/12 blur-3xl" />
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-5xl mx-auto text-center space-y-6">
             <Reveal>
               <div className="flex flex-wrap items-center justify-center gap-3 mb-6">
                 <Badge className="bg-[#D43F52] text-white px-4 py-1">
@@ -55,29 +68,65 @@ export function CaseStudyDetail({ caseStudy }: CaseStudyDetailProps) {
               </p>
             </Reveal>
 
-            <Reveal delay={0.3}>
-              <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <Building2 className="w-4 h-4" />
-                  <span>
-                    <strong>Client:</strong> {caseStudy.client}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
-                  <span>
-                    <strong>Duration:</strong> {caseStudy.duration}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
-                  <span>
-                    <strong>Completed:</strong> {caseStudy.completedDate}
-                  </span>
-                </div>
+            <Reveal delay={0.25}>
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                {caseStudy.services.slice(0, 4).map((service) => (
+                  <Badge
+                    key={service}
+                    variant="outline"
+                    className="border-border/70 bg-background/70"
+                  >
+                    {service}
+                  </Badge>
+                ))}
               </div>
             </Reveal>
           </div>
+
+          <Reveal delay={0.3}>
+            <div className="mt-12 grid gap-6 md:grid-cols-[1.2fr_0.8fr] max-w-5xl mx-auto">
+              <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-card/70 backdrop-blur-xl p-6 shadow-[0_20px_60px_-45px_rgba(212,63,82,0.7)] text-left">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#D43F52]/8 via-transparent to-transparent opacity-80" />
+                <div className="relative flex flex-wrap items-center gap-3 mb-4">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-[#D43F52]/15 text-[#D43F52] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em]">
+                    <Sparkles className="h-4 w-4" />
+                    Project snapshot
+                  </span>
+                </div>
+                <p className="relative text-lg text-muted-foreground leading-relaxed">
+                  We partnered with {caseStudy.client} to design, build, and launch a high-performing experience tailored to their industry, improving engagement and conversion while tightening technical foundations.
+                </p>
+              </div>
+
+              <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-card/80 backdrop-blur-xl p-6 shadow-[0_18px_50px_-38px_rgba(212,63,82,0.6)]">
+                <div className="grid gap-3 text-sm text-muted-foreground">
+                  {[
+                    { label: "Client", value: caseStudy.client, icon: Building2 },
+                    { label: "Industry", value: caseStudy.industry, icon: Globe2 },
+                    { label: "Duration", value: caseStudy.duration, icon: Clock },
+                    { label: "Completed", value: caseStudy.completedDate, icon: Calendar },
+                  ].map(({ label, value, icon: Icon }) => (
+                    <div key={label} className="flex items-start gap-3 p-3 rounded-xl border border-border/60 bg-background/70">
+                      <Icon className="h-4 w-4 text-[#D43F52] mt-0.5" />
+                      <div>
+                        <div className="text-xs uppercase tracking-[0.12em] font-semibold text-muted-foreground">
+                          {label}
+                        </div>
+                        <div className="text-foreground font-medium">{value}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {caseStudy.services.slice(0, 3).map((service) => (
+                    <Badge key={service} className="bg-[#D43F52]/10 text-foreground border-border/60">
+                      {service}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -88,7 +137,7 @@ export function CaseStudyDetail({ caseStudy }: CaseStudyDetailProps) {
             {caseStudy.metrics.map((metric, index) => (
               <Reveal key={metric.label} delay={0.1 * index}>
                 <motion.div
-                  className="bg-card p-6 rounded-2xl border border-border text-center"
+                  className="bg-card/80 backdrop-blur rounded-2xl border border-border/60 text-center shadow-[0_18px_50px_-40px_rgba(212,63,82,0.5)]"
                   whileHover={{ y: -5 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
@@ -194,7 +243,7 @@ export function CaseStudyDetail({ caseStudy }: CaseStudyDetailProps) {
             </Reveal>
 
             <Reveal delay={0.3}>
-              <div className="bg-card border border-border rounded-2xl p-8">
+              <div className="bg-card/80 backdrop-blur border border-border/70 rounded-2xl p-8 shadow-[0_18px_50px_-40px_rgba(212,63,82,0.5)]">
                 <h4 className="text-xl font-semibold mb-6">Key Features</h4>
                 <div className="grid md:grid-cols-2 gap-4">
                   {caseStudy.solution.features.map((feature, index) => (
@@ -265,10 +314,12 @@ export function CaseStudyDetail({ caseStudy }: CaseStudyDetailProps) {
               {caseStudy.results.map((result, index) => (
                 <Reveal key={result.metric} delay={0.1 * index}>
                   <motion.div
-                    className="bg-gradient-to-br from-card to-card/50 border border-border rounded-2xl p-8"
+                    className="relative overflow-hidden bg-gradient-to-br from-card to-card/50 border border-border/70 rounded-2xl p-8 shadow-[0_18px_50px_-40px_rgba(212,63,82,0.5)]"
                     whileHover={{ y: -5 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#D43F52]/6 via-transparent to-transparent opacity-80" />
+                    <div className="relative">
                     <div className="text-4xl font-bold text-[#D43F52] mb-2">
                       {result.value}
                     </div>
@@ -278,6 +329,7 @@ export function CaseStudyDetail({ caseStudy }: CaseStudyDetailProps) {
                     <p className="text-muted-foreground">
                       {result.description}
                     </p>
+                    </div>
                   </motion.div>
                 </Reveal>
               ))}

@@ -13,6 +13,8 @@ export const metadata: Metadata = generateSEOMetadata({
   canonical: `${SEO_CONFIG.siteUrl}/portfolio`,
 });
 
+
+
 export default async function PortfolioPage() {
   const { success, data } = await getProjectsController();
 

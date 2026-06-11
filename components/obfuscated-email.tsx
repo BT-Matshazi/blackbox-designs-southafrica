@@ -18,8 +18,12 @@ type ObfuscatedEmailProps = {
   className?: string;
   subject?: string;
   children?: ReactNode;
+  /** Static content (e.g. an icon) rendered before the assembled address. */
+  prefix?: ReactNode;
   /** Where this link lives, for analytics (e.g. "footer", "contact"). */
   location?: string;
+  /** Extra handler to run on click (e.g. close a menu). */
+  onClick?: () => void;
 };
 
 /**
@@ -31,7 +35,9 @@ export function ObfuscatedEmail({
   className,
   subject,
   children,
+  prefix,
   location = "site",
+  onClick,
 }: ObfuscatedEmailProps) {
   const [email, setEmail] = useState<string>();
   const [href, setHref] = useState<string>();
@@ -48,6 +54,7 @@ export function ObfuscatedEmail({
 
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
     trackContactClick("email", location);
+    onClick?.();
     // Covers a click in the window before hydration state lands.
     if (href) return;
     event.preventDefault();
@@ -56,6 +63,7 @@ export function ObfuscatedEmail({
 
   return (
     <a href={href ?? "#"} onClick={handleClick} className={className}>
+      {prefix}
       {children ??
         email ?? (
           <span aria-label="email address">

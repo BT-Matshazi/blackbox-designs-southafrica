@@ -7,6 +7,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
 import ChatButton from "@/components/chat-button";
+import { GoogleAnalytics } from "@/components/google-analytics";
 import { generateMetadata as generateSEOMetadata } from "@/lib/utils/metadata";
 import { PAGE_METADATA } from "@/lib/config/seo-config";
 import {
@@ -55,6 +56,7 @@ export default function RootLayout({
   const organizationSchema = getOrganizationSchema();
   const localBusinessSchema = getLocalBusinessSchema();
   const websiteSchema = getWebSiteSchema();
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
   return (
     <html lang="en">
@@ -100,6 +102,7 @@ export default function RootLayout({
           <Toaster />
           <ChatButton />
         </ThemeProvider>
+        {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>
   );

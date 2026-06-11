@@ -1,13 +1,14 @@
 import {
     Body,
     Button,
+    Column,
     Container,
     Head,
     Heading,
     Hr,
-    Img,
     Html,
-    Link,
+    Preview,
+    Row,
     Section,
     Text,
 } from "@react-email/components";
@@ -28,6 +29,33 @@ interface EmailProps {
     attachmentType?: string;
 }
 
+// Ink & Crimson brand palette (matches app/globals.css)
+const INK = "#1B1B20";
+const MUTED = "#6B6B74";
+const BORDER = "#E8E6E1";
+const PAPER = "#FBFAF7";
+const PANEL = "#F6F5F1";
+const CRIMSON = "#D43F52";
+
+const DetailRow = ({
+    label,
+    value,
+}: {
+    label: string;
+    value: React.ReactNode;
+}) => (
+    <Row className={`border-b border-solid border-[${BORDER}]`}>
+        <Column
+            className={`w-[140px] py-[10px] text-[11px] font-bold uppercase tracking-[1px] text-[${MUTED}]`}
+        >
+            {label}
+        </Column>
+        <Column className={`py-[10px] text-[14px] font-medium text-[${INK}]`}>
+            {value}
+        </Column>
+    </Row>
+);
+
 export const ContactUsEmail = ({
     email,
     firstName,
@@ -39,10 +67,10 @@ export const ContactUsEmail = ({
     budgetRange,
     attachmentName,
     attachmentSize,
-    attachmentType
+    attachmentType,
 }: EmailProps) => {
     const formatFileSize = (bytes?: number) => {
-        if (!bytes) return '';
+        if (!bytes) return "";
         const kb = bytes / 1024;
         if (kb < 1024) return `${kb.toFixed(2)} KB`;
         return `${(kb / 1024).toFixed(2)} MB`;
@@ -51,85 +79,103 @@ export const ContactUsEmail = ({
     return (
         <Html>
             <Head />
+            <Preview>
+                New enquiry from {firstName} {lastName}
+                {projectType ? ` — ${projectType}` : ""}
+            </Preview>
             <Tailwind>
-                <Body className="mx-auto my-auto bg-white px-2 font-sans">
-                    <Container className="mx-auto my-[40px] max-w-[770px] rounded border border-solid border-[#eaeaea] p-[20px]">
-                        <Heading className="mx-0 my-[30px] p-0 text-center text-[24px] font-normal text-black">
-                            New Contact Request from {firstName} {lastName}
+                <Body className={`mx-auto my-auto bg-[${PAPER}] px-2 font-sans`}>
+                    <Container
+                        className={`mx-auto my-[40px] max-w-[600px] rounded-[16px] border border-solid border-[${BORDER}] border-t-[4px] border-t-[${CRIMSON}] bg-white p-[32px]`}
+                    >
+                        {/* Brand mark — the black box, rebuilt in HTML for email clients */}
+                        <Text className="m-0 mb-[28px]">
+                            <span
+                                className={`inline-block rounded-[8px] bg-[${INK}] px-[11px] py-[5px] text-[16px] font-bold leading-[20px] text-white`}
+                            >
+                                B
+                            </span>
+                            <span
+                                className={`ml-[10px] text-[16px] font-semibold text-[${INK}]`}
+                            >
+                                BlackBox Designs
+                            </span>
+                        </Text>
+
+                        <Text
+                            className={`m-0 mb-[8px] text-[11px] font-bold uppercase tracking-[3px] text-[${MUTED}]`}
+                        >
+                            <span className={`text-[${CRIMSON}]`}>&#9632;</span>
+                            &nbsp;&nbsp;New Enquiry
+                        </Text>
+                        <Heading
+                            className={`m-0 mb-[28px] text-[26px] font-bold leading-[32px] text-[${INK}]`}
+                        >
+                            {firstName} {lastName} wants to start a project
                         </Heading>
 
-                        <Section className="mb-[32px]">
-                            <Heading className="text-[18px] font-semibold text-black mb-[12px]">
-                                Contact Details
-                            </Heading>
-                            <Text className="text-[14px] leading-[24px] text-black my-[8px]">
-                                <strong>Name:</strong> {firstName} {lastName}
-                            </Text>
-                            <Text className="text-[14px] leading-[24px] text-black my-[8px]">
-                                <strong>Email:</strong> {email}
-                            </Text>
-                            <Text className="text-[14px] leading-[24px] text-black my-[8px]">
-                                <strong>Phone:</strong> {phone}
-                            </Text>
-                            {company && (
-                                <Text className="text-[14px] leading-[24px] text-black my-[8px]">
-                                    <strong>Company:</strong> {company}
-                                </Text>
+                        <Section className="mb-[28px]">
+                            <DetailRow label="Name" value={`${firstName} ${lastName}`} />
+                            <DetailRow label="Email" value={email} />
+                            {phone && <DetailRow label="Phone" value={phone} />}
+                            {company && <DetailRow label="Company" value={company} />}
+                            {projectType && (
+                                <DetailRow label="Project Type" value={projectType} />
+                            )}
+                            {budgetRange && (
+                                <DetailRow label="Budget" value={budgetRange} />
                             )}
                         </Section>
 
-                        {(projectType || budgetRange) && (
-                            <Section className="mb-[32px]">
-                                <Heading className="text-[18px] font-semibold text-black mb-[12px]">
-                                    Project Information
-                                </Heading>
-                                {projectType && (
-                                    <Text className="text-[14px] leading-[24px] text-black my-[8px]">
-                                        <strong>Project Type:</strong> {projectType}
-                                    </Text>
-                                )}
-                                {budgetRange && (
-                                    <Text className="text-[14px] leading-[24px] text-black my-[8px]">
-                                        <strong>Budget Range:</strong> {budgetRange}
-                                    </Text>
-                                )}
-                            </Section>
-                        )}
-
-                        <Section className="mb-[32px]">
-                            <Heading className="text-[18px] font-semibold text-black mb-[12px]">
-                                Message
-                            </Heading>
-                            <Text className="text-[14px] leading-[24px] text-black whitespace-pre-wrap">
+                        <Text
+                            className={`m-0 mb-[8px] text-[11px] font-bold uppercase tracking-[1px] text-[${MUTED}]`}
+                        >
+                            Message
+                        </Text>
+                        <Section
+                            className={`mb-[28px] rounded-[10px] border-l-[3px] border-solid border-l-[${CRIMSON}] bg-[${PANEL}] px-[20px] py-[6px]`}
+                        >
+                            <Text
+                                className={`whitespace-pre-wrap text-[14px] leading-[24px] text-[${INK}]`}
+                            >
                                 {message}
                             </Text>
                         </Section>
 
                         {attachmentName && (
-                            <Section className="mb-[32px]">
-                                <Heading className="text-[18px] font-semibold text-black mb-[12px]">
+                            <Section className="mb-[28px]">
+                                <Text
+                                    className={`m-0 mb-[8px] text-[11px] font-bold uppercase tracking-[1px] text-[${MUTED}]`}
+                                >
                                     Attachment
-                                </Heading>
-                                <Text className="text-[14px] leading-[24px] text-black my-[8px]">
-                                    <strong>File:</strong> {attachmentName}
                                 </Text>
-                                {attachmentSize && (
-                                    <Text className="text-[14px] leading-[24px] text-black my-[8px]">
-                                        <strong>Size:</strong> {formatFileSize(attachmentSize)}
-                                    </Text>
-                                )}
-                                {attachmentType && (
-                                    <Text className="text-[14px] leading-[24px] text-black my-[8px]">
-                                        <strong>Type:</strong> {attachmentType}
-                                    </Text>
-                                )}
+                                <Text
+                                    className={`m-0 text-[14px] leading-[22px] text-[${INK}]`}
+                                >
+                                    {attachmentName}
+                                    {attachmentSize
+                                        ? ` · ${formatFileSize(attachmentSize)}`
+                                        : ""}
+                                    {attachmentType ? ` · ${attachmentType}` : ""}
+                                </Text>
                             </Section>
                         )}
 
-                        <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
+                        <Button
+                            href={`mailto:${email}`}
+                            className={`rounded-[8px] bg-[${INK}] px-[28px] py-[12px] text-[14px] font-semibold text-white`}
+                        >
+                            Reply to {firstName} &rarr;
+                        </Button>
 
-                        <Text className="text-[12px] leading-[24px] text-gray-500">
-                            This email was sent from the contact form on blackboxdesigns.co.za
+                        <Hr
+                            className={`mx-0 my-[28px] w-full border border-solid border-[${BORDER}]`}
+                        />
+
+                        <Text className={`m-0 text-[12px] leading-[20px] text-[${MUTED}]`}>
+                            <span className={`text-[${CRIMSON}]`}>&#9632;</span>
+                            &nbsp;&nbsp;Sent from the contact form on
+                            blackboxdesigns.co.za
                         </Text>
                     </Container>
                 </Body>

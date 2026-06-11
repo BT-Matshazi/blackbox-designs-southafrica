@@ -10,6 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Reveal } from "@/components/reveal";
 import { ObfuscatedEmail } from "@/components/obfuscated-email";
 import { Button } from "@/components/ui/button";
+import { whatsappLink, PHONE_NUMBER, PHONE_DISPLAY } from "@/lib/contact";
+import { trackLead, trackContactClick } from "@/lib/analytics";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -38,6 +40,7 @@ import {
   Upload,
   X,
   FileText,
+  MessageCircle,
 } from "lucide-react";
 import { contactUsController } from "@/src/presentation/controllers/contact-us.controller";
 
@@ -53,29 +56,30 @@ const ACCEPTED_FILE_TYPES = [
 ];
 
 const contactFormSchema = z.object({
-  firstName: z
-    .string()
-    .min(2, { message: "First name must be at least 2 characters" }),
-  lastName: z
-    .string()
-    .min(2, { message: "Last name must be at least 2 characters" }),
+  name: z.string().min(2, { message: "Please enter your name" }),
   email: z.string().email({ message: "Please enter a valid email address" }),
-  phone: z
-    .string()
-    .min(10, { message: "Phone number must be at least 10 characters" }),
+  phone: z.string().optional(),
   company: z.string().optional(),
   projectType: z.string().optional(),
   budgetRange: z.string().optional(),
   message: z
     .string()
-    .min(10, { message: "Message must be at least 10 characters" }),
+    .min(10, { message: "Please add a little more detail (10+ characters)" }),
   // Honeypot field - should always be empty
   website: z.string().optional(),
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
-const FORM_STORAGE_KEY = "contact-form-draft";
+// Bumped to v2 — the field shape changed (single name field).
+const FORM_STORAGE_KEY = "contact-form-draft-v2";
+
+// Split a single "name" field into the first/last the backend expects.
+function splitName(fullName: string) {
+  const parts = fullName.trim().replace(/\s+/g, " ").split(" ");
+  const firstName = parts.shift() ?? "";
+  return { firstName, lastName: parts.join(" ") };
+}
 
 const PROJECT_TYPES = [
   "Website Development",
@@ -107,8 +111,7 @@ export function ContactSection() {
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      name: "",
       phone: "",
       email: "",
       company: "",
@@ -201,8 +204,13 @@ export function ContactSection() {
       return;
     }
 
+    const { firstName, lastName } = splitName(data.name);
     const result = await contactUsController({
-      ...data,
+      firstName,
+      lastName,
+      email: data.email,
+      phone: data.phone || "",
+      message: data.message,
       company: data.company || "",
       projectType: data.projectType,
       budgetRange: data.budgetRange,
@@ -212,6 +220,10 @@ export function ContactSection() {
     });
 
     if (result.success) {
+      trackLead("contact_form", {
+        projectType: data.projectType,
+        budgetRange: data.budgetRange,
+      });
       toast.success("Your message has been sent. We'll get back to you soon!");
       setIsSubmitting(false);
       setIsSubmitted(true);
@@ -242,9 +254,22 @@ export function ContactSection() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="text-muted-foreground text-lg mb-8">
-                Ready to start your next project? Contact us today for a free
-                consultation.
+                Ready to start your next project? Send a message for a free, no
+                obligation quote — or chat with us instantly on WhatsApp.
               </p>
+            </Reveal>
+
+            <Reveal delay={0.15}>
+              <a
+                href={whatsappLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackContactClick("whatsapp", "contact_section")}
+                className="mb-10 inline-flex items-center gap-3 rounded-xl bg-[#25D366] px-6 py-4 font-semibold text-white shadow-sm transition-transform hover:-translate-y-0.5"
+              >
+                <MessageCircle className="h-5 w-5" />
+                Chat with us on WhatsApp
+              </a>
             </Reveal>
 
             <div className="space-y-6 mb-10">
@@ -271,7 +296,10 @@ export function ContactSection() {
                   </div>
                   <div>
                     <h3 className="font-medium text-lg">Email Us</h3>
-                    <ObfuscatedEmail className="text-muted-foreground transition-colors hover:text-accent" />
+                    <ObfuscatedEmail
+                      location="contact_section"
+                      className="text-muted-foreground transition-colors hover:text-accent"
+                    />
                   </div>
                 </div>
               </Reveal>
@@ -284,10 +312,11 @@ export function ContactSection() {
                   <div>
                     <h3 className="font-medium text-lg">Call Us</h3>
                     <Link
-                      href="tel:+27615314470"
+                      href={`tel:${PHONE_NUMBER}`}
+                      onClick={() => trackContactClick("phone", "contact_section")}
                       className="text-muted-foreground transition-colors hover:text-accent"
                     >
-                      +27 61 531 4470
+                      {PHONE_DISPLAY}
                     </Link>
                   </div>
                 </div>
@@ -321,40 +350,19 @@ export function ContactSection() {
                       onSubmit={form.handleSubmit(onSubmit)}
                       className="space-y-4"
                     >
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <FormField
-                          control={form.control}
-                          name="firstName"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>First Name</FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder="Your first name"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="lastName"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Last Name</FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder="Your last name"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
+                      <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Name</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Your name" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <FormField
@@ -375,10 +383,10 @@ export function ContactSection() {
                           name="phone"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Phone Number</FormLabel>
+                              <FormLabel>Phone / WhatsApp (Optional)</FormLabel>
                               <FormControl>
                                 <Input
-                                  placeholder="Your phone number"
+                                  placeholder="Your number"
                                   type="tel"
                                   {...field}
                                 />

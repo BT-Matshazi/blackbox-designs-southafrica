@@ -80,7 +80,10 @@ export function Footer() {
               <p>142 Elinta Avenue, Northwold</p>
               <p>Johannesburg, South Africa</p>
               <p>
-                <ObfuscatedEmail className="transition-colors hover:text-accent" />
+                <ObfuscatedEmail
+                  location="footer"
+                  className="transition-colors hover:text-accent"
+                />
               </p>
               <p>
                 <Link

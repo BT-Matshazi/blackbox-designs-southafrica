@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquare, Mail, X, MessageCircle } from "lucide-react";
 import { decodeContactEmail } from "@/components/obfuscated-email";
+import { whatsappLink } from "@/lib/contact";
+import { trackContactClick } from "@/lib/analytics";
 
 const ChatButton = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,6 +27,7 @@ const ChatButton = () => {
             {/* Contact options that slide up */}
             <motion.a
               href={emailHref}
+              onClick={() => trackContactClick("email", "chat_button")}
               initial={{ opacity: 0, y: 0, scale: 0.8 }}
               animate={{ opacity: 1, y: -120, scale: 1 }}
               exit={{ opacity: 0, y: 0, scale: 0.8 }}
@@ -36,9 +39,10 @@ const ChatButton = () => {
             </motion.a>
 
             <motion.a
-              href="https://wa.me/+27615314470" // Replace with your WhatsApp number
+              href={whatsappLink()}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackContactClick("whatsapp", "chat_button")}
               initial={{ opacity: 0, y: 0, scale: 0.8 }}
               animate={{ opacity: 1, y: -60, scale: 1 }}
               exit={{ opacity: 0, y: 0, scale: 0.8 }}

@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode, MouseEvent, useEffect, useState } from "react";
+import { trackContactClick } from "@/lib/analytics";
 
 // The address is stored reversed so the assembled email never appears in
 // server-rendered HTML or as a plain greppable string in the JS bundle.
@@ -17,6 +18,8 @@ type ObfuscatedEmailProps = {
   className?: string;
   subject?: string;
   children?: ReactNode;
+  /** Where this link lives, for analytics (e.g. "footer", "contact"). */
+  location?: string;
 };
 
 /**
@@ -28,6 +31,7 @@ export function ObfuscatedEmail({
   className,
   subject,
   children,
+  location = "site",
 }: ObfuscatedEmailProps) {
   const [email, setEmail] = useState<string>();
   const [href, setHref] = useState<string>();
@@ -42,8 +46,9 @@ export function ObfuscatedEmail({
     );
   }, [subject]);
 
-  // Covers a click in the window before hydration state lands.
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    trackContactClick("email", location);
+    // Covers a click in the window before hydration state lands.
     if (href) return;
     event.preventDefault();
     window.location.href = `mailto:${decodeContactEmail()}`;

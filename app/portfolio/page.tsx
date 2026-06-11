@@ -1,7 +1,9 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import { PortfolioSection } from "@/components/sections/portfolio";
 import { getProjectsController } from "@/src/presentation/controllers/product.controller";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { generateMetadata as generateSEOMetadata } from "@/lib/utils/metadata";
 import { PAGE_METADATA, SEO_CONFIG } from "@/lib/config/seo-config";
 import { Metadata } from "next";
@@ -31,46 +33,46 @@ export default async function PortfolioPage() {
 
   return (
     <div className="flex flex-col w-full pt-24">
-      <section className="bg-white">
+      <section className="bg-background">
         <div className="grid container px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
           <div className="mr-auto place-self-center lg:col-span-7">
-            <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl">
+            <p className="mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+              <span className="box-mark" aria-hidden />
+              Our Work
+            </p>
+            <h1 className="max-w-2xl mb-4 text-4xl font-bold tracking-tight leading-none md:text-5xl xl:text-6xl">
               Elevate Your Digital Presence with Expert Web Solutions
             </h1>
-            <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl">
+            <p className="max-w-2xl mb-8 text-muted-foreground md:text-lg lg:text-xl">
               We craft stunning websites and applications tailored to your
               needs. From sleek designs to seamless user experiences, we
               transform visions into engaging digital realities.
             </p>
-            <Link
-              href="/services"
-              className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-accent rounded-lg border  border-accent hover:bg-accent hover:text-white focus:ring-4 focus:ring-accent focus:ring-opacity-50 transition-all duration-3"
-            >
-              Explore Our Services
-              <svg
-                className="w-5 h-5 ml-2 -mr-1"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
+            <div className="flex flex-wrap items-center gap-4">
+              <Button
+                variant="outline-accent"
+                size="lg"
+                asChild
+                className="h-12 px-7 text-base"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                ></path>
-              </svg>
-            </Link>
-            <Link
-              href="/contact"
-              className="md:inline-flex hidden items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100"
-            >
-              Get In Touch
-            </Link>
+                <Link href="/services">
+                  Explore Our Services
+                  <ArrowRight className="size-4" />
+                </Link>
+              </Button>
+              <Button
+                size="lg"
+                asChild
+                className="hidden h-12 px-7 text-base shadow-[3px_3px_0_0_var(--accent)] transition-all hover:translate-x-[1.5px] hover:translate-y-[1.5px] hover:shadow-[1.5px_1.5px_0_0_var(--accent)] md:inline-flex"
+              >
+                <Link href="/contact">Get In Touch</Link>
+              </Button>
+            </div>
           </div>
           <div className="hidden lg:mt-0 lg:col-span-5 lg:flex lg:justify-center lg:items-center">
             <div className="relative w-full h-96 max-w-lg">
               {/* First image - top left */}
-              <div className="absolute top-0 left-0 w-48 h-48 transform rotate-3 shadow-xl rounded-lg overflow-hidden z-30">
+              <div className="absolute top-0 left-0 w-48 h-48 transform rotate-3 rounded-xl border border-border shadow-xl overflow-hidden z-30">
                 <Image
                   src={
                     data[0]?.cardImage?.url ||
@@ -84,7 +86,7 @@ export default async function PortfolioPage() {
               </div>
 
               {/* Second image - center right */}
-              <div className="absolute top-12 right-0 w-52 h-52 transform -rotate-6 shadow-xl rounded-lg overflow-hidden z-20">
+              <div className="absolute top-12 right-0 w-52 h-52 transform -rotate-6 rounded-xl border border-border shadow-xl overflow-hidden z-20">
                 <Image
                   src={
                     data[1]?.cardImage?.url ||
@@ -98,7 +100,7 @@ export default async function PortfolioPage() {
               </div>
 
               {/* Third image - bottom center */}
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 rotate-2 w-44 h-44 shadow-xl rounded-lg overflow-hidden z-10">
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 rotate-2 w-44 h-44 rounded-xl border border-border shadow-xl overflow-hidden z-10">
                 <Image
                   src={
                     data[2]?.cardImage?.url ||

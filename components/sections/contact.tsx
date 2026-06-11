@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Reveal } from "@/components/reveal";
+import { ObfuscatedEmail } from "@/components/obfuscated-email";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -249,7 +250,7 @@ export function ContactSection() {
             <div className="space-y-6 mb-10">
               <Reveal delay={0.2}>
                 <div className="flex items-start">
-                  <div className="mt-1 mr-4 p-2 rounded-full bg-primary/10 text-primary">
+                  <div className="mt-1 mr-4 rounded-lg bg-accent/10 p-2 text-accent">
                     <MapPin className="h-5 w-5" />
                   </div>
                   <div>
@@ -265,31 +266,26 @@ export function ContactSection() {
 
               <Reveal delay={0.3}>
                 <div className="flex items-start">
-                  <div className="mt-1 mr-4 p-2 rounded-full bg-primary/10 text-primary">
+                  <div className="mt-1 mr-4 rounded-lg bg-accent/10 p-2 text-accent">
                     <Mail className="h-5 w-5" />
                   </div>
                   <div>
                     <h3 className="font-medium text-lg">Email Us</h3>
-                    <Link
-                      href="mailto:info@blackboxdesigns.co.za"
-                      className="text-muted-foreground"
-                    >
-                      info@blackboxdesigns.co.za
-                    </Link>
+                    <ObfuscatedEmail className="text-muted-foreground transition-colors hover:text-accent" />
                   </div>
                 </div>
               </Reveal>
 
               <Reveal delay={0.4}>
                 <div className="flex items-start">
-                  <div className="mt-1 mr-4 p-2 rounded-full bg-primary/10 text-primary">
+                  <div className="mt-1 mr-4 rounded-lg bg-accent/10 p-2 text-accent">
                     <Phone className="h-5 w-5" />
                   </div>
                   <div>
                     <h3 className="font-medium text-lg">Call Us</h3>
                     <Link
                       href="tel:+27615314470"
-                      className="text-muted-foreground"
+                      className="text-muted-foreground transition-colors hover:text-accent"
                     >
                       +27 61 531 4470
                     </Link>

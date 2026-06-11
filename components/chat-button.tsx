@@ -1,11 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquare, Mail, X, MessageCircle } from "lucide-react";
+import { decodeContactEmail } from "@/components/obfuscated-email";
 
 const ChatButton = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [emailHref, setEmailHref] = useState("#");
+
+  useEffect(() => {
+    setEmailHref(`mailto:${decodeContactEmail()}`);
+  }, []);
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -18,12 +24,12 @@ const ChatButton = () => {
           <>
             {/* Contact options that slide up */}
             <motion.a
-              href="mailto:info@blackboxdesigns.co.za"
+              href={emailHref}
               initial={{ opacity: 0, y: 0, scale: 0.8 }}
               animate={{ opacity: 1, y: -120, scale: 1 }}
               exit={{ opacity: 0, y: 0, scale: 0.8 }}
               transition={{ duration: 0.3 }}
-              className="absolute bottom-0 right-0 w-12 h-12 bg-gray-500 rounded-full flex items-center justify-center shadow-lg text-white"
+              className="absolute bottom-0 right-0 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg"
               aria-label="Send Email"
             >
               <Mail size={20} />
@@ -37,7 +43,7 @@ const ChatButton = () => {
               animate={{ opacity: 1, y: -60, scale: 1 }}
               exit={{ opacity: 0, y: 0, scale: 0.8 }}
               transition={{ duration: 0.3, delay: 0.1 }}
-              className="absolute bottom-0 right-0 w-12 h-12 bg-green-300 rounded-full flex items-center justify-center shadow-lg text-white"
+              className="absolute bottom-0 right-0 flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg"
               aria-label="WhatsApp Contact"
             >
               <MessageCircle size={20} />

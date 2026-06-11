@@ -38,7 +38,7 @@ export function PortfolioSection({ projects }: { projects: Project[] }) {
   }, [projects, activeCategory]);
 
   return (
-    <section id="portfolio" className="py-1.2">
+    <section id="portfolio" className="pb-28">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="flex flex-wrap justify-center gap-2 mt-8">
@@ -68,7 +68,7 @@ export function PortfolioSection({ projects }: { projects: Project[] }) {
             {filteredProjects.map((project, index) => (
               <Reveal key={project.id} delay={0.05 * index}>
                 <motion.div
-                  className="group relative bg-gradient-to-br from-card to-card/50 rounded-2xl overflow-hidden border border-border/50 shadow-lg hover:shadow-xl transition-all duration-500"
+                  className="group relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-shadow duration-500 hover:shadow-xl hover:shadow-accent/5"
                   whileHover={{ y: -8, scale: 1.02 }}
                   onHoverStart={() => setHoveredIndex(index)}
                   onHoverEnd={() => setHoveredIndex(null)}
@@ -76,7 +76,7 @@ export function PortfolioSection({ projects }: { projects: Project[] }) {
                   {/* Featured Badge */}
                   {project.isFeatured && (
                     <div className="absolute top-4 right-4 z-40">
-                      <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0 shadow-lg">
+                      <Badge className="border-0 bg-accent text-accent-foreground shadow-md">
                         <Star className="w-3 h-3 mr-1 fill-current" />
                         Featured
                       </Badge>
@@ -107,7 +107,7 @@ export function PortfolioSection({ projects }: { projects: Project[] }) {
                             <Badge
                               key={category.id}
                               variant="secondary"
-                              className="text-xs bg-white/90 text-gray-800 backdrop-blur-sm border-0 shadow-sm"
+                              className="border-0 bg-background/90 text-xs text-foreground shadow-sm backdrop-blur-sm"
                             >
                               {category.name}
                             </Badge>
@@ -115,7 +115,7 @@ export function PortfolioSection({ projects }: { projects: Project[] }) {
                         {project.project_categories.length > 2 && (
                           <Badge
                             variant="secondary"
-                            className="text-xs bg-white/90 text-gray-800 backdrop-blur-sm border-0 shadow-sm"
+                            className="border-0 bg-background/90 text-xs text-foreground shadow-sm backdrop-blur-sm"
                           >
                             +{project.project_categories.length - 2}
                           </Badge>
@@ -128,7 +128,7 @@ export function PortfolioSection({ projects }: { projects: Project[] }) {
                   <div className="p-6 space-y-4">
                     {/* Project Title */}
                     <div className="space-y-2">
-                      <h3 className="text-xl font-bold leading-tight group-hover:text-primary transition-colors duration-300">
+                      <h3 className="text-xl font-bold leading-tight group-hover:text-accent transition-colors duration-300">
                         {project.name}
                       </h3>
 
@@ -160,7 +160,7 @@ export function PortfolioSection({ projects }: { projects: Project[] }) {
                         >
                           <Button
                             size="sm"
-                            className="w-full group/btn bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary border-0 shadow-sm"
+                            className="w-full group/btn"
                           >
                             Visit Site
                             <ExternalLink className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
@@ -169,7 +169,7 @@ export function PortfolioSection({ projects }: { projects: Project[] }) {
                       ) : (
                         <Button
                           size="sm"
-                          className="w-full group/btn bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary border-0 shadow-sm"
+                          className="w-full group/btn"
                           disabled
                         >
                           No Link Available
@@ -179,7 +179,7 @@ export function PortfolioSection({ projects }: { projects: Project[] }) {
                   </div>
 
                   {/* Subtle Hover Glow Effect */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 </motion.div>
               </Reveal>
             ))}

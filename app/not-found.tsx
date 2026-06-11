@@ -1,23 +1,36 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
 const Custom404 = () => {
   return (
-    <div className="flex justify-center align-bottom h-screen">
-      <div className="min-h-full px-4 py-16 sm:px-6 sm:py-24 grid place-items-center lg:px-8">
-        <div className="mx-auto max-w-max">
-          <main className="sm:flex">
-            <p className="bg-gradient-to-br from-blue-900 to-cyan-600 bg-clip-text md:text-7xl font-bold tracking-tight text-transparent text-6xl">
-              404
-            </p>
-            <div className="sm:ml-6">
-              <div className="sm:border-l sm:border-gray-200 sm:pl-6">
-                <h1 className="text-4xl font-bold tracking-tight text-primary dark:text-white sm:text-5xl">
-                  Page Not Found - Page Is Coming Soon
-                </h1>
-                <p className="mt-1 text-base text-gray-500">
-                  Please check the URL in the address bar and try again.
-                </p>
-              </div>
-            </div>
-          </main>
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4">
+      <div aria-hidden className="absolute inset-0 bg-grid bg-grid-fade opacity-60" />
+      <div className="relative mx-auto max-w-xl text-center">
+        <p className="mx-auto mb-8 inline-block -rotate-2 rounded-xl bg-primary px-6 py-2 font-display text-6xl font-bold text-primary-foreground shadow-[6px_6px_0_0_var(--accent)] sm:text-7xl">
+          404
+        </p>
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
+          This page is off the map
+        </h1>
+        <p className="mb-8 text-lg text-muted-foreground">
+          The page you&apos;re looking for doesn&apos;t exist or has moved.
+          Check the URL, or head back to safer ground.
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <Button
+            size="lg"
+            asChild
+            className="h-12 px-7 text-base shadow-[3px_3px_0_0_var(--accent)] transition-all hover:translate-x-[1.5px] hover:translate-y-[1.5px] hover:shadow-[1.5px_1.5px_0_0_var(--accent)]"
+          >
+            <Link href="/">
+              Back to Home
+              <ArrowRight className="size-4" />
+            </Link>
+          </Button>
+          <Button variant="outline-accent" size="lg" asChild className="h-12 px-7 text-base">
+            <Link href="/contact">Contact Us</Link>
+          </Button>
         </div>
       </div>
     </div>

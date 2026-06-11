@@ -58,7 +58,7 @@ export function ServicesSection() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section id="services" className="py-10 bg-muted/50">
+    <section id="services" className="border-t border-border bg-muted/40 py-24">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
@@ -69,14 +69,14 @@ export function ServicesSection() {
               direction={index % 2 === 0 ? "left" : "right"}
             >
               <motion.div
-                className="h-full bg-card hover:bg-card/80 border border-border rounded-xl p-8 transition-colors"
+                className="group h-full rounded-xl border border-border bg-card p-8 transition-colors duration-300 hover:border-accent/50"
                 onHoverStart={() => setHoveredIndex(index)}
                 onHoverEnd={() => setHoveredIndex(null)}
                 whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <motion.div
-                  className="mb-6 text-primary"
+                  className="mb-6 inline-flex rounded-lg bg-accent/10 p-3 text-accent"
                   animate={{
                     scale: hoveredIndex === index ? 1.1 : 1,
                   }}
@@ -92,7 +92,7 @@ export function ServicesSection() {
         </div>
 
         <div className="mt-24">
-          <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-background p-8 md:p-12 rounded-2xl">
+          <div className="rounded-3xl border border-border bg-card p-8 shadow-sm md:p-12">
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div>
                 <Reveal>
@@ -125,7 +125,9 @@ export function ServicesSection() {
                   ].map((item, i) => (
                     <Reveal key={i} delay={0.2 + i * 0.1}>
                       <div className="flex items-center">
-                        <div className="mr-3 text-primary">{item.icon}</div>
+                        <div className="mr-3 rounded-md bg-accent/10 p-1.5 text-accent">
+                          {item.icon}
+                        </div>
                         <p>{item.text}</p>
                       </div>
                     </Reveal>
@@ -142,7 +144,7 @@ export function ServicesSection() {
                       className="w-full object-cover rounded-lg"
                       style={{ height: "400px" }}
                     />
-                    <div className="absolute inset-0 bg-primary/10 rounded-lg" />
+                    <div className="absolute inset-0 rounded-lg bg-primary/15" />
                   </div>
                 </Reveal>
               </div>

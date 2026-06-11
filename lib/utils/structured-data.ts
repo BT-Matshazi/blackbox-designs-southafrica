@@ -18,10 +18,12 @@ export function getOrganizationSchema() {
       postalCode: SEO_CONFIG.companyInfo.address.postalCode,
       addressCountry: SEO_CONFIG.companyInfo.address.country,
     },
+    // Email intentionally omitted from public structured data to keep it
+    // away from scrapers; contact happens via the form or assembled-in-browser
+    // mailto links.
     contactPoint: {
       "@type": "ContactPoint",
       telephone: SEO_CONFIG.companyInfo.contact.phone,
-      email: SEO_CONFIG.companyInfo.contact.email,
       contactType: "Customer Service",
       areaServed: "ZA",
       availableLanguage: ["English"],
@@ -44,7 +46,6 @@ export function getLocalBusinessSchema() {
     name: SEO_CONFIG.companyInfo.name,
     image: `${SEO_CONFIG.siteUrl}/logo.webp`,
     telephone: SEO_CONFIG.companyInfo.contact.phone,
-    email: SEO_CONFIG.companyInfo.contact.email,
     address: {
       "@type": "PostalAddress",
       streetAddress: SEO_CONFIG.companyInfo.address.street,

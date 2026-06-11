@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Logo from "@/public/logo.webp";
@@ -11,19 +12,19 @@ import Image from "next/image";
 import {
   Sheet,
   SheetContent,
+  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-// import { ThemeToggle } from "@/components/theme-toggle";
 
 const navItems = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services" },
   { name: "Work", href: "/portfolio" },
-  // { name: "About", href: "/about" },
 ];
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,43 +39,59 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+
   return (
     <header
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300",
+        "fixed top-0 z-50 w-full transition-all duration-300",
         scrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-border shadow-sm py-3"
-          : "bg-transparent py-6"
+          ? "border-b border-border bg-background/85 py-3 shadow-sm backdrop-blur-md"
+          : "bg-transparent py-5"
       )}
     >
-      <div className="container mx-auto px-4 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 z-50">
-          <Image src={Logo} width={250} alt="BlackBox Designs Logo" />
+      <div className="container mx-auto flex items-center justify-between px-4">
+        <Link href="/" className="z-50 flex items-center gap-2">
+          <Image
+            src={Logo}
+            width={180}
+            alt="BlackBox Designs Logo"
+            priority
+            className="h-auto w-[150px] md:w-[180px]"
+          />
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-          <ul className="flex gap-6">
+        <nav className="hidden items-center gap-8 md:flex">
+          <ul className="flex gap-7">
             {navItems.map((item) => (
               <li key={item.name}>
                 <Link
                   href={item.href}
-                  className="text-sm font-medium transition-colors hover:text-primary"
+                  className={cn(
+                    "relative py-1 text-sm font-medium transition-colors hover:text-accent",
+                    "after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300",
+                    isActive(item.href)
+                      ? "text-accent after:w-full"
+                      : "after:w-0 hover:after:w-full"
+                  )}
                 >
                   {item.name}
                 </Link>
               </li>
             ))}
           </ul>
-          {/* <ThemeToggle /> */}
-          <Button asChild>
+          <Button
+            asChild
+            className="shadow-[3px_3px_0_0_var(--accent)] transition-all hover:translate-x-[1.5px] hover:translate-y-[1.5px] hover:shadow-[1.5px_1.5px_0_0_var(--accent)]"
+          >
             <Link href="/contact">Get in Touch</Link>
           </Button>
         </nav>
 
         {/* Mobile Navigation */}
         <div className="flex items-center gap-4 md:hidden">
-          {/* <ThemeToggle /> */}
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" aria-label="Toggle Menu">
@@ -82,7 +99,8 @@ export function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <nav className="flex flex-col items-center gap-8 mt-8">
+              <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+              <nav className="mt-8 flex flex-col items-center gap-8">
                 <ul className="flex flex-col items-center gap-6">
                   {navItems.map((item) => (
                     <motion.li
@@ -93,7 +111,10 @@ export function Header() {
                     >
                       <Link
                         href={item.href}
-                        className="text-2xl font-medium transition-colors hover:text-primary"
+                        className={cn(
+                          "text-2xl font-medium transition-colors hover:text-accent",
+                          isActive(item.href) && "text-accent"
+                        )}
                       >
                         {item.name}
                       </Link>

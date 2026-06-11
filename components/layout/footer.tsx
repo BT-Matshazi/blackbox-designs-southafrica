@@ -1,148 +1,100 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image"
+import Image from "next/image";
 import Logo from "@/public/logo.webp";
+import { ObfuscatedEmail } from "@/components/obfuscated-email";
 
+const serviceLinks = [
+  { name: "Web Development", href: "/services" },
+  { name: "UX/UI Design", href: "/services" },
+  { name: "Mobile Applications", href: "/services" },
+  { name: "E-commerce Solutions", href: "/services" },
+  { name: "Digital Strategy", href: "/services" },
+];
+
+const companyLinks = [
+  { name: "Our Work", href: "/portfolio" },
+  { name: "Contact", href: "/contact" },
+];
 
 export function Footer() {
   return (
-    <footer className="bg-card py-16">
+    <footer className="border-t border-border bg-card py-16">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
-          <div className="space-y-4">
+          <div className="space-y-5">
             <div className="flex items-center gap-2">
-              <Image src={Logo} width={250} alt="BlackBox Designs Logo" />
+              <Image
+                src={Logo}
+                width={200}
+                alt="BlackBox Designs Logo"
+                className="h-auto w-[180px]"
+              />
             </div>
-            <p className="text-muted-foreground max-w-xs">
+            <p className="max-w-xs text-muted-foreground">
               Crafting exceptional digital experiences that transform businesses
               and engage users.
             </p>
-            <div className="flex gap-4">
-              {/* <Button variant="ghost" size="icon" asChild>
-                <Link href="https://github.com">
-                  <Github className="h-5 w-5" />
-                  <span className="sr-only">GitHub</span>
-                </Link>
-              </Button>
-              <Button variant="ghost" size="icon" asChild>
-                <Link href="https://instagram.com">
-                  <Instagram className="h-5 w-5" />
-                  <span className="sr-only">Instagram</span>
-                </Link>
-              </Button>
-              <Button variant="ghost" size="icon" asChild>
-                <Link href="https://linkedin.com">
-                  <Linkedin className="h-5 w-5" />
-                  <span className="sr-only">LinkedIn</span>
-                </Link>
-              </Button> */}
-            </div>
+            <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+              <span className="box-mark" aria-hidden />
+              Johannesburg, ZA
+            </p>
           </div>
 
           <div>
-            <h3 className="font-medium text-lg mb-4">Services</h3>
+            <h3 className="mb-4 text-lg font-medium">Services</h3>
             <ul className="space-y-3">
-              <li>
-                <Link
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Web Development
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  UX/UI Design
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Mobile Applications
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  E-commerce Solutions
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Digital Strategy
-                </Link>
-              </li>
+              {serviceLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-muted-foreground transition-colors hover:text-accent"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div>
-            <h3 className="font-medium text-lg mb-4">Company</h3>
+            <h3 className="mb-4 text-lg font-medium">Company</h3>
             <ul className="space-y-3">
-              {/* <li>
-                <Link
-                  href="#about"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  About Us
-                </Link>
-              </li> */}
-              <li>
-                <Link
-                  href="#portfolio"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Our Work
-                </Link>
-              </li>
-              {/* <li>
-                <Link
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Blog
-                </Link>
-              </li> */}
-              <li>
-                <Link
-                  href="#contact"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Contact
-                </Link>
-              </li>
+              {companyLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-muted-foreground transition-colors hover:text-accent"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div>
-            <h3 className="font-medium text-lg mb-4">Contact</h3>
-            <address className="not-italic space-y-3 text-muted-foreground">
+            <h3 className="mb-4 text-lg font-medium">Contact</h3>
+            <address className="space-y-3 not-italic text-muted-foreground">
               <p>142 Elinta Avenue, Northwold</p>
               <p>Johannesburg, South Africa</p>
               <p>
-                {" "}
-                <Link href="mailto:info@blackboxdesigns.co.za">
-                  info@blackboxdesigns.co.za
-                </Link>{" "}
+                <ObfuscatedEmail className="transition-colors hover:text-accent" />
               </p>
               <p>
-                <Link href="tel:+27615314470">+27 61 531 4470</Link>
+                <Link
+                  href="tel:+27615314470"
+                  className="transition-colors hover:text-accent"
+                >
+                  +27 61 531 4470
+                </Link>
               </p>
             </address>
           </div>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
           <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} Blackbox Designs. All rights
             reserved.
@@ -150,19 +102,19 @@ export function Footer() {
           <div className="flex gap-6 text-sm">
             <Link
               href="/privacy-policy"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground transition-colors hover:text-accent"
             >
               Privacy Policy
             </Link>
             <Link
               href="/terms-&-conditions"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground transition-colors hover:text-accent"
             >
               Terms of Service
             </Link>
             <Link
               href="/popi"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground transition-colors hover:text-accent"
             >
               POPI
             </Link>

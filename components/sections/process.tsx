@@ -2,63 +2,83 @@
 
 import { motion } from "framer-motion";
 import { Reveal } from "@/components/reveal";
+import { SectionHeading } from "@/components/section-heading";
 import { Code, Palette, Rocket, Search } from "lucide-react";
 
 const steps = [
   {
-    icon: <Search className="h-8 w-8" />,
+    icon: <Search className="h-6 w-6" />,
+    number: "01",
     title: "Discovery",
-    description: "We dive deep into your business goals, target audience, and market position to create a strategic roadmap.",
+    description:
+      "We dive deep into your business goals, target audience, and market position to create a strategic roadmap.",
   },
   {
-    icon: <Palette className="h-8 w-8" />,
+    icon: <Palette className="h-6 w-6" />,
+    number: "02",
     title: "Design",
-    description: "Our designers craft beautiful, intuitive interfaces that align with your brand and engage your users.",
+    description:
+      "Our designers craft beautiful, intuitive interfaces that align with your brand and engage your users.",
   },
   {
-    icon: <Code className="h-8 w-8" />,
+    icon: <Code className="h-6 w-6" />,
+    number: "03",
     title: "Development",
-    description: "We build robust, scalable solutions using cutting-edge technologies and best practices.",
+    description:
+      "We build robust, scalable solutions using cutting-edge technologies and best practices.",
   },
   {
-    icon: <Rocket className="h-8 w-8" />,
+    icon: <Rocket className="h-6 w-6" />,
+    number: "04",
     title: "Launch",
-    description: "We ensure a smooth deployment and provide ongoing support to help your business grow.",
+    description:
+      "We ensure a smooth deployment and provide ongoing support to help your business grow.",
   },
 ];
 
 export function ProcessSection() {
   return (
-    <section className="py-24">
+    <section className="relative overflow-hidden py-28">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <Reveal>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Process</h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              We follow a proven methodology to deliver exceptional results for
-              every project.
-            </p>
-          </Reveal>
-        </div>
+        <SectionHeading
+          eyebrow="How We Work"
+          title="Our Process"
+          lede="We follow a proven methodology to deliver exceptional results for every project."
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="relative grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+          {/* Connecting rail on large screens */}
+          <div
+            aria-hidden
+            className="absolute left-0 right-0 top-7 hidden h-px bg-border lg:block"
+          />
+
           {steps.map((step, index) => (
-            <Reveal key={step.title} delay={0.1 * index}>
+            <Reveal key={step.title} width="100%" delay={0.1 * index}>
               <motion.div
-                className="relative bg-card p-6 rounded-xl border border-border text-center"
+                className="group relative h-full rounded-xl border border-border bg-card p-7 transition-colors duration-300 hover:border-accent/50"
                 whileHover={{ y: -5 }}
-                transition={{ type: "spring", stiffness: 300 }}
+                transition={{ type: "spring", stiffness: 300, damping: 24 }}
               >
-                <div className="flex justify-center mb-4">
-                  <div className="p-3 rounded-full bg-primary/10 text-primary">
-                    {step.icon}
-                  </div>
+                {/* Ghost step number */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute right-5 top-4 font-display text-5xl font-bold text-border transition-colors duration-300 group-hover:text-accent/20"
+                >
+                  {step.number}
+                </span>
+
+                <div className="mb-5 inline-flex rounded-lg bg-accent/10 p-3 text-accent">
+                  {step.icon}
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
+                <h3 className="mb-2 text-xl font-semibold">{step.title}</h3>
                 <p className="text-muted-foreground">{step.description}</p>
-                <div className="absolute -z-10 inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-xl" />
+
+                {/* Crimson tick that grows on hover */}
+                <span
+                  aria-hidden
+                  className="absolute bottom-0 left-7 h-0.5 w-0 bg-accent transition-all duration-300 group-hover:w-12"
+                />
               </motion.div>
             </Reveal>
           ))}

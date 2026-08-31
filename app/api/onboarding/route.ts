@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import nodemailer, { Transporter, TransportOptions } from "nodemailer";
 import { onboardingSchema } from "@/lib/utils";
+import { NextRequest, NextResponse } from "next/server";
+import nodemailer, { TransportOptions } from "nodemailer";
 
 type OnboardingData = z.infer<typeof onboardingSchema>;
 
@@ -16,7 +16,6 @@ export async function POST(request: NextRequest) {
     // Validate the data
     // const validatedData = onboardingSchema.parse(body);
 
-
     console.log("[OnboardingController] Data validated successfully");
 
     // Send email
@@ -25,7 +24,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       { message: "Onboarding submission received successfully" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("[OnboardingController] Error processing onboarding:", error);
@@ -33,13 +32,13 @@ export async function POST(request: NextRequest) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: "Validation failed", details: error.errors },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     return NextResponse.json(
       { error: "Failed to process onboarding submission" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -49,14 +48,14 @@ async function sendOnboardingEmail(data: OnboardingData): Promise<void> {
 
   // Create transporter
   const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: parseInt(process.env.SMTP_PORT || "587"),
-        secure: process.env.SMTP_SECURE === "true",
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASSWORD,
-        },
-      } as TransportOptions);
+    host: process.env.SMTP_HOST,
+    port: parseInt(process.env.SMTP_PORT || "587"),
+    secure: process.env.SMTP_SECURE === "true",
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASSWORD,
+    },
+  } as TransportOptions);
 
   console.log("[OnboardingInfrastructure] Transporter created");
 

@@ -3,10 +3,7 @@ import { Geist, Geist_Mono, Bricolage_Grotesque } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
-import ChatButton from "@/components/chat-button";
 import { GoogleAnalytics } from "@/components/google-analytics";
 import { generateMetadata as generateSEOMetadata } from "@/lib/utils/metadata";
 import { PAGE_METADATA } from "@/lib/config/seo-config";
@@ -94,13 +91,8 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange={false}
         >
-          <div className="flex min-h-screen flex-col bg-background">
-            <Header />
-            <main>{children}</main>
-            <Footer />
-          </div>
+          {children}
           <Toaster />
-          <ChatButton />
         </ThemeProvider>
         {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>

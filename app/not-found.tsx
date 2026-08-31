@@ -1,10 +1,16 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
 
+// Lives at the app root (outside the (marketing) group) so it catches every
+// unmatched URL — it brings the site chrome along itself.
 const Custom404 = () => {
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4">
+    <div className="flex min-h-screen flex-col bg-background">
+      <Header />
+      <main className="relative flex flex-1 items-center justify-center overflow-hidden px-4">
       <div aria-hidden className="absolute inset-0 bg-grid bg-grid-fade opacity-60" />
       <div className="relative mx-auto max-w-xl text-center">
         <p className="mx-auto mb-8 inline-block -rotate-2 rounded-xl bg-primary px-6 py-2 font-display text-6xl font-bold text-primary-foreground shadow-[6px_6px_0_0_var(--accent)] sm:text-7xl">
@@ -32,7 +38,9 @@ const Custom404 = () => {
             <Link href="/contact">Contact Us</Link>
           </Button>
         </div>
-      </div>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };

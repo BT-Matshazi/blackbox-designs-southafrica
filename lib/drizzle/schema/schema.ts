@@ -7,6 +7,7 @@ import {
   text,
   timestamp,
   integer,
+  boolean,
 } from "drizzle-orm/pg-core";
 import { authTokenPurpose, leadSource, leadStatus, userRole } from "./enums";
 
@@ -20,6 +21,8 @@ export const users = pgTable(
     /** Bcrypt hash. Required — there is no guest/claimable-account flow here. */
     passwordHash: varchar("password_hash", { length: 255 }).notNull(),
     role: userRole().notNull().default("user"),
+    /** True for invited admins until they choose their own password. */
+    mustChangePassword: boolean("must_change_password").notNull().default(false),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },

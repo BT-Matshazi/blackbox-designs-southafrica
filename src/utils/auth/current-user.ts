@@ -13,6 +13,7 @@ export type CurrentUser = {
   firstName: string | null;
   lastName: string | null;
   role: UserRole;
+  mustChangePassword: boolean;
 };
 
 /**
@@ -37,6 +38,7 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
       firstName: users.firstName,
       lastName: users.lastName,
       role: users.role,
+      mustChangePassword: users.mustChangePassword,
     })
     .from(users)
     .where(eq(users.id, payload.sub))

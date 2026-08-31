@@ -20,6 +20,7 @@ import {
 import { sendPasswordResetOtpEmail } from "@/src/infrastructure/password-reset.infrastructure";
 import { roleHomePath, type UserRole } from "@/src/utils/auth/roles";
 import { safeNext } from "@/src/utils/auth/safe-next";
+import { getCurrentUser } from "@/src/utils/auth/current-user";
 
 export type ActionState = { ok: true } | { ok: false; error: string };
 
@@ -139,7 +140,46 @@ export async function login(
   }
 
   await setSession(user.id, role);
+  if (user.mustChangePassword) {
+    // Invited admins must choose their own password before going anywhere else.
+    redirect("/auth/set-password");
+  }
   redirect(safeNext(next, roleHomePath(role)));
+}
+
+/**
+ * Let a signed-in user replace the temporary password an invite gave them.
+ * Clears the must-change flag.
+ */
+export async function setOwnPassword(
+  _prev: ActionState | null,
+  formData: FormData,
+): Promise<ActionState> {
+  const user = await getCurrentUser();
+  if (!user) {
+    return { ok: false, error: "Your session has expired. Please log in again." };
+  }
+
+  const password = String(formData.get("password") ?? "");
+  const confirmPassword = String(formData.get("confirmPassword") ?? "");
+
+  if (password.length < MIN_PASSWORD) {
+    return {
+      ok: false,
+      error: `Password must be at least ${MIN_PASSWORD} characters.`,
+    };
+  }
+  if (password !== confirmPassword) {
+    return { ok: false, error: "Passwords do not match." };
+  }
+
+  const passwordHash = await hashPassword(password);
+  await db
+    .update(users)
+    .set({ passwordHash, mustChangePassword: false, updatedAt: new Date() })
+    .where(eq(users.id, user.id));
+
+  redirect(roleHomePath(user.role));
 }
 
 export async function logout(): Promise<void> {

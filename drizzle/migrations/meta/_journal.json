@@ -8,6 +8,13 @@
       "when": 1788187555939,
       "tag": "0000_complex_the_enforcers",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1788194000590,
+      "tag": "0001_curved_gauntlet",
+      "breakpoints": true
     }
   ]
 }

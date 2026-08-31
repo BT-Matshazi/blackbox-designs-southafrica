@@ -2,8 +2,18 @@
 
 import { useActionState, useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
-import { Check, Copy, ImageOff, Trash2 } from "lucide-react";
+import {
+  Check,
+  Copy,
+  ImageOff,
+  LoaderCircle,
+  Pencil,
+  Trash2,
+} from "lucide-react";
 import { deleteMedia, updateMedia } from "@/app/actions/media";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Sheet,
   SheetContent,
@@ -34,48 +44,72 @@ export function MediaGrid({ items }: { items: MediaGridItem[] }) {
 
   if (items.length === 0) {
     return (
-      <div className="grid place-items-center gap-3 rounded-xl border border-dashed border-border bg-card p-16 text-center">
-        <ImageOff className="size-8 text-muted-foreground" />
-        <p className="text-sm text-muted-foreground">
-          No images yet. Upload your first one to start the library.
-        </p>
-      </div>
+      <Card className="rounded-lg border-dashed py-0 shadow-none">
+        <CardContent className="flex min-h-80 flex-col items-center justify-center gap-3 p-10 text-center">
+          <span className="flex size-12 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+            <ImageOff className="size-5" />
+          </span>
+          <div>
+            <h2 className="font-display text-xl font-semibold">
+              No images yet
+            </h2>
+            <p className="mt-1 max-w-sm text-sm text-muted-foreground">
+              Upload your first image to start building the media library.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
     <>
-      <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {items.map((item) => (
-          <li key={item.id}>
-            <button
-              type="button"
-              onClick={() => setSelected(item)}
-              className="group w-full overflow-hidden rounded-xl border border-border bg-card text-left transition-all hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_var(--accent)]"
-            >
-              <span className="block aspect-square overflow-hidden bg-muted">
-                <img
-                  src={item.url}
-                  alt={item.alt ?? item.name}
-                  loading="lazy"
-                  className="size-full object-cover transition-transform group-hover:scale-105"
-                />
-              </span>
-              <span className="block px-3 py-2">
-                <span className="block truncate text-sm font-medium">
-                  {item.name}
-                </span>
-                <span className="block text-xs text-muted-foreground">
-                  {formatBytes(item.size)}
+      <div className="rounded-lg border border-border bg-card shadow-sm">
+        <div className="border-b border-border px-4 py-4">
+          <h2 className="font-display text-lg font-semibold">Library</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Select an image to copy its URL, edit metadata, or remove it.
+          </p>
+        </div>
+        <ul className="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 lg:grid-cols-4">
+          {items.map((item) => (
+            <li key={item.id}>
+              <button
+                type="button"
+                onClick={() => setSelected(item)}
+                className="group w-full overflow-hidden rounded-lg border border-border bg-background text-left transition-all hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                <span className="relative block aspect-square overflow-hidden bg-muted">
+                  <img
+                    src={item.url}
+                    alt={item.alt ?? item.name}
+                    loading="lazy"
+                    className="size-full object-cover transition-transform group-hover:scale-105"
+                  />
                   {!item.alt && (
-                    <span className="text-warning"> · no alt text</span>
+                    <span className="absolute right-2 top-2">
+                      <Badge
+                        variant="outline"
+                        className="border-warning/30 bg-background/90 text-warning"
+                      >
+                        No alt
+                      </Badge>
+                    </span>
                   )}
                 </span>
-              </span>
-            </button>
-          </li>
-        ))}
-      </ul>
+                <span className="block px-3 py-3">
+                  <span className="block truncate text-sm font-semibold">
+                    {item.name}
+                  </span>
+                  <span className="mt-1 block truncate text-xs text-muted-foreground">
+                    {formatBytes(item.size)}
+                  </span>
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <MediaEditSheet item={selected} onClose={() => setSelected(null)} />
     </>
@@ -93,6 +127,7 @@ function MediaEditSheet({
   const [confirmingDelete, setConfirmingDelete] = useState(false);
   const [deleting, startDelete] = useTransition();
   const [copied, setCopied] = useState(false);
+  const busy = pending || deleting;
 
   useEffect(() => {
     if (state?.ok === true) {
@@ -109,7 +144,12 @@ function MediaEditSheet({
   }, [item?.id]);
 
   return (
-    <Sheet open={item !== null} onOpenChange={(open) => !open && onClose()}>
+    <Sheet
+      open={item !== null}
+      onOpenChange={(open) => {
+        if (!open && !busy) onClose();
+      }}
+    >
       <SheetContent side="right" className="w-full overflow-y-auto sm:max-w-md">
         {item && (
           <>
@@ -120,34 +160,59 @@ function MediaEditSheet({
               </SheetDescription>
             </SheetHeader>
 
-            <div className="mt-4 overflow-hidden rounded-xl border border-border bg-muted">
+            <div className="relative mt-4 overflow-hidden rounded-lg border border-border bg-muted">
               <img
                 src={item.url}
                 alt={item.alt ?? item.name}
                 className="max-h-64 w-full object-contain"
               />
+              {busy && (
+                <div className="absolute inset-0 flex items-center justify-center bg-background/75">
+                  <span className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm font-medium shadow-sm">
+                    <LoaderCircle className="size-4 animate-spin text-accent" />
+                    {deleting ? "Deleting image" : "Saving changes"}
+                  </span>
+                </div>
+              )}
             </div>
 
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="sm"
+              disabled={busy}
               onClick={async () => {
                 await navigator.clipboard.writeText(item.url);
                 setCopied(true);
                 setTimeout(() => setCopied(false), 2000);
               }}
-              className="mt-3 inline-flex items-center gap-2 text-sm text-accent hover:underline"
+              className="mt-3"
             >
-              {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
+              {copied ? (
+                <Check data-icon="inline-start" />
+              ) : (
+                <Copy data-icon="inline-start" />
+              )}
               {copied ? "Copied" : "Copy URL"}
-            </button>
+            </Button>
 
-            <form action={action} className="mt-6 grid gap-4" key={item.id}>
+            <form
+              action={action}
+              aria-busy={pending}
+              className="mt-6 flex flex-col gap-4"
+              key={item.id}
+            >
               <input type="hidden" name="id" value={item.id} />
-              <label className="grid gap-2">
+              <label className="flex flex-col gap-2">
                 <span className="text-sm font-medium leading-none">Name</span>
-                <Input name="name" defaultValue={item.name} required />
+                <Input
+                  name="name"
+                  defaultValue={item.name}
+                  required
+                  disabled={busy}
+                />
               </label>
-              <label className="grid gap-2">
+              <label className="flex flex-col gap-2">
                 <span className="text-sm font-medium leading-none">
                   Alt text
                 </span>
@@ -156,27 +221,34 @@ function MediaEditSheet({
                   defaultValue={item.alt ?? ""}
                   rows={3}
                   placeholder="Describe the image for screen readers and SEO"
+                  disabled={busy}
                 />
               </label>
-              <button
-                type="submit"
-                disabled={pending}
-                className="inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {pending ? "Saving…" : "Save changes"}
-              </button>
+              <Button type="submit" disabled={busy} className="w-fit">
+                {pending ? (
+                  <LoaderCircle
+                    data-icon="inline-start"
+                    className="animate-spin"
+                  />
+                ) : (
+                  <Pencil data-icon="inline-start" />
+                )}
+                {pending ? "Saving..." : "Save changes"}
+              </Button>
             </form>
 
             <div className="mt-8 border-t border-border pt-4">
               {confirmingDelete ? (
-                <div className="grid gap-2">
+                <div className="flex flex-col gap-3 rounded-lg border border-destructive/25 bg-destructive/5 p-3">
                   <p className="text-sm text-muted-foreground">
                     This permanently deletes the file from storage. Anything
                     using its URL will break.
                   </p>
                   <div className="flex gap-2">
-                    <button
+                    <Button
                       type="button"
+                      variant="destructive"
+                      size="sm"
                       disabled={deleting}
                       onClick={() =>
                         startDelete(async () => {
@@ -189,28 +261,40 @@ function MediaEditSheet({
                           }
                         })
                       }
-                      className="inline-flex h-9 items-center justify-center rounded-full bg-destructive px-4 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
                     >
-                      {deleting ? "Deleting…" : "Yes, delete it"}
-                    </button>
-                    <button
+                      {deleting ? (
+                        <LoaderCircle
+                          data-icon="inline-start"
+                          className="animate-spin"
+                        />
+                      ) : (
+                        <Trash2 data-icon="inline-start" />
+                      )}
+                      {deleting ? "Deleting..." : "Delete"}
+                    </Button>
+                    <Button
                       type="button"
+                      variant="outline"
+                      size="sm"
+                      disabled={deleting}
                       onClick={() => setConfirmingDelete(false)}
-                      className="inline-flex h-9 items-center justify-center rounded-full border border-border px-4 text-sm hover:bg-muted"
                     >
                       Cancel
-                    </button>
+                    </Button>
                   </div>
                 </div>
               ) : (
-                <button
+                <Button
                   type="button"
+                  variant="ghost"
+                  size="sm"
+                  disabled={busy}
                   onClick={() => setConfirmingDelete(true)}
-                  className="inline-flex items-center gap-2 text-sm font-medium text-destructive hover:underline"
+                  className="text-destructive hover:text-destructive"
                 >
-                  <Trash2 className="size-4" />
+                  <Trash2 data-icon="inline-start" />
                   Delete image
-                </button>
+                </Button>
               )}
             </div>
           </>

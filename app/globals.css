@@ -28,6 +28,7 @@
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
+  --color-warning: var(--warning);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -64,6 +65,7 @@
   /* Crimson — the sharp brand accent (#D43F52) */
   --accent: oklch(56.8% 0.178 13.2);
   --accent-foreground: oklch(0.985 0 0);
+  --warning: oklch(0.666 0.132 74);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.912 0.005 80);
   --input: oklch(0.912 0.005 80);
@@ -98,6 +100,7 @@
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(56.8% 0.178 13.2);
   --accent-foreground: oklch(0.985 0 0);
+  --warning: oklch(0.795 0.145 84);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);

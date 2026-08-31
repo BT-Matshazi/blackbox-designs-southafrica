@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 
 const STATUS_STYLES: Record<LeadStatus, string> = {
   new: "border-accent/30 bg-accent/10 text-accent",
-  contacted: "border-amber-500/30 bg-amber-500/10 text-amber-600",
+  contacted: "border-warning/30 bg-warning/10 text-warning",
   closed: "border-border bg-muted text-muted-foreground",
 };
 

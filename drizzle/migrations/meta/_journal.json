@@ -15,6 +15,13 @@
       "when": 1788194000590,
       "tag": "0001_curved_gauntlet",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1788204321319,
+      "tag": "0002_ordinary_maddog",
+      "breakpoints": true
     }
   ]
 }

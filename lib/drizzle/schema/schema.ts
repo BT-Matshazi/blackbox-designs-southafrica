@@ -54,6 +54,27 @@ export const authTokens = pgTable(
   ],
 );
 
+export const media = pgTable(
+  "media",
+  {
+    id: uuid().defaultRandom().primaryKey().notNull(),
+    /** Immutable location in the blob store — the file's URL derives from it. */
+    pathname: varchar({ length: 500 }).notNull(),
+    url: varchar({ length: 1000 }).notNull(),
+    /** Editable display name shown in the media library. */
+    name: varchar({ length: 200 }).notNull(),
+    alt: varchar({ length: 500 }),
+    size: integer().notNull().default(0),
+    contentType: varchar("content_type", { length: 100 }),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => [
+    unique("media_pathname_unique").on(table.pathname),
+    index("media_created_at_idx").on(table.createdAt),
+  ],
+);
+
 export const leads = pgTable(
   "leads",
   {

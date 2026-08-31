@@ -22,6 +22,7 @@
     "@radix-ui/react-slot": "^1.2.2",
     "@react-email/components": "^0.1.1",
     "@react-email/tailwind": "^1.0.5",
+    "@vercel/blob": "^2.8.0",
     "axios": "^1.10.0",
     "bcryptjs": "^3.0.3",
     "class-variance-authority": "^0.7.1",

@@ -4,7 +4,14 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Inbox, LogOut, Menu, ShieldCheck, Users } from "lucide-react";
+import {
+  Image as ImageIcon,
+  Inbox,
+  LogOut,
+  Menu,
+  ShieldCheck,
+  Users,
+} from "lucide-react";
 import Logo from "@/public/logo.webp";
 import {
   Sheet,
@@ -16,6 +23,7 @@ import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { href: "/admin", label: "Leads", icon: Inbox, exact: true },
+  { href: "/admin/media", label: "Media", icon: ImageIcon, exact: false },
   { href: "/admin/admins", label: "Admins", icon: Users, exact: false },
 ];
 

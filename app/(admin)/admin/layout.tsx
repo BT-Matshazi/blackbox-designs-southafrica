@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/src/utils/auth/current-user";
 import { logout } from "@/app/actions/auth";
+import { AdminMobileBar, AdminSidebar } from "@/components/admin/sidebar";
 
 export const dynamic = "force-dynamic";
 
@@ -24,48 +24,21 @@ export default async function AdminLayout({
   // Invited admins can't use the dashboard until they set their own password.
   if (user.mustChangePassword) redirect("/auth/set-password");
 
+  const sidebarUser = {
+    email: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
+  };
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <header className="border-b border-border">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-8">
-            <div>
-              <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">
-                Blackbox Designs
-              </p>
-              <p className="font-display text-lg font-semibold">Admin</p>
-            </div>
-            <nav className="flex items-center gap-4 text-sm">
-              <Link
-                href="/admin"
-                className="text-muted-foreground transition-colors hover:text-foreground"
-              >
-                Leads
-              </Link>
-              <Link
-                href="/admin/admins"
-                className="text-muted-foreground transition-colors hover:text-foreground"
-              >
-                Admins
-              </Link>
-            </nav>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="hidden text-sm text-muted-foreground sm:inline">
-              {user.email}
-            </span>
-            <form action={logout}>
-              <button
-                type="submit"
-                className="rounded-full border border-border px-4 py-1.5 text-sm transition-colors hover:bg-muted"
-              >
-                Log out
-              </button>
-            </form>
-          </div>
-        </div>
-      </header>
-      <main className="mx-auto max-w-6xl px-6 py-8">{children}</main>
+    <div className="flex min-h-screen flex-col bg-background text-foreground lg:h-screen lg:flex-row lg:overflow-hidden">
+      <AdminSidebar user={sidebarUser} logout={logout} />
+      <div className="flex min-w-0 flex-1 flex-col">
+        <AdminMobileBar user={sidebarUser} logout={logout} />
+        <main className="flex-1 overflow-y-auto px-4 py-6 sm:px-8 sm:py-8">
+          <div className="mx-auto max-w-6xl">{children}</div>
+        </main>
+      </div>
     </div>
   );
 }

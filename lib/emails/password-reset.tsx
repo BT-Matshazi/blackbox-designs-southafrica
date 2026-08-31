@@ -39,7 +39,7 @@ export default function PasswordResetEmail({
   return (
     <Html>
       <Head />
-      <Preview>{`Your code is ${code}. Expires in ${ttlMinutes} minutes.`}</Preview>
+      <Preview>{`Your Blackbox Designs password reset code — expires in ${ttlMinutes} minutes.`}</Preview>
       <Tailwind config={tailwindConfig}>
         <Body className="bg-paper m-0 p-0 font-sans text-ink">
           <Container className="mx-auto max-w-[480px] px-6 py-10">

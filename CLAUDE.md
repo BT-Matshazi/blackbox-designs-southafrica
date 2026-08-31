@@ -59,7 +59,6 @@ src/
 ### Directory Structure
 
 - `app/` - Next.js App Router pages and API routes
-  - `api/recaptchaSubmit/` - reCAPTCHA verification endpoint
   - `(legal)/` - Route group for legal pages (privacy, terms, POPI)
 - `components/` - React components
   - `sections/` - Page sections (hero, about, contact, portfolio, etc.)
@@ -67,7 +66,6 @@ src/
   - `ui/` - Reusable UI components (shadcn/ui pattern)
 - `lib/` - Utilities and shared code
   - `config/` - Configuration (CMS settings)
-  - `context/` - React context providers (GoogleCaptchaWrapper)
   - `emails/` - Email templates using @react-email
   - `utils.ts` - Utility functions (cn, renderEmailTemplate)
 - `public/` - Static assets
@@ -140,6 +138,9 @@ Required environment variables (see `.env`):
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD` - Email configuration
 - `EMAIL_FROM` - Sender email address
 - `EMAIL_TO` - Business contact email
+- `DATABASE_URL` - PostgreSQL connection string (Drizzle)
+- `JWT_SECRET` - Session signing secret (min 32 characters)
+- `ADMIN_PROMOTE_EMAILS` - Optional comma-separated admin allowlist
 
 ## Code Conventions
 

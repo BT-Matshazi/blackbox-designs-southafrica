@@ -80,8 +80,22 @@ describe("ContactUsUseCase", () => {
   it("accepts empty phone and company (they are optional in the UI)", async () => {
     const { leadRepo, emailRepo } = makeMocks();
     const useCase = new ContactUsUseCase(emailRepo, leadRepo);
-    const result = await useCase.execute({ ...baseData, phone: "", company: "" });
+    const result = await useCase.execute({
+      ...baseData,
+      phone: "",
+      company: "",
+      projectType: "",
+      budgetRange: "",
+    });
     expect(result.success).toBe(true);
+    expect(leadRepo.save).toHaveBeenCalledWith(
+      expect.objectContaining({
+        phone: undefined,
+        company: undefined,
+        projectType: undefined,
+        budgetRange: undefined,
+      }),
+    );
   });
 
   it("rejects a submission with no message and touches nothing", async () => {

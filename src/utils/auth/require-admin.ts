@@ -23,5 +23,11 @@ export async function requireAdmin(): Promise<AdminUser> {
   if (user.role !== "admin") {
     throw new AuthorizationError("Admin role required");
   }
+  // A temp-password session is not fully authorized until the invitee has
+  // chosen their own password — the flag is an authorization boundary, not
+  // just a UI redirect.
+  if (user.mustChangePassword) {
+    throw new AuthorizationError("Password change required");
+  }
   return user as AdminUser;
 }

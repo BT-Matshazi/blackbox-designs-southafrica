@@ -159,6 +159,14 @@ export async function setOwnPassword(
   if (!user) {
     return { ok: false, error: "Your session has expired. Please log in again." };
   }
+  if (!user.mustChangePassword) {
+    // Only invitees mid-onboarding may set a password without proving the
+    // old one — everyone else goes through the OTP reset flow.
+    return {
+      ok: false,
+      error: "Your password is already set. Use “Forgot password” to change it.",
+    };
+  }
 
   const password = String(formData.get("password") ?? "");
   const confirmPassword = String(formData.get("confirmPassword") ?? "");

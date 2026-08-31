@@ -29,7 +29,10 @@ export async function inviteAdmin(
   if (!firstName) {
     return { ok: false, error: "First name is required." };
   }
-  if (!EMAIL_RE.test(email)) {
+  if (firstName.length > 100 || lastName.length > 100) {
+    return { ok: false, error: "Name is too long (max 100 characters)." };
+  }
+  if (!EMAIL_RE.test(email) || email.length > 255) {
     return { ok: false, error: "Please enter a valid email address." };
   }
 
@@ -45,17 +48,31 @@ export async function inviteAdmin(
   const tempPassword = generateTempPassword();
   const passwordHash = await hashPassword(tempPassword);
 
-  const [created] = await db
-    .insert(users)
-    .values({
-      email,
-      firstName,
-      lastName: lastName || null,
-      passwordHash,
-      role: "admin",
-      mustChangePassword: true,
-    })
-    .returning({ id: users.id });
+  let created: { id: string };
+  try {
+    [created] = await db
+      .insert(users)
+      .values({
+        email,
+        firstName,
+        lastName: lastName || null,
+        passwordHash,
+        role: "admin",
+        mustChangePassword: true,
+      })
+      .returning({ id: users.id });
+  } catch (error) {
+    // Concurrent invites for the same address race past the pre-check and
+    // trip users_email_unique — map that back to the friendly message.
+    const code =
+      (error as { code?: string }).code ??
+      ((error as { cause?: { code?: string } }).cause?.code);
+    if (code === "23505") {
+      return { ok: false, error: "A user with this email already exists." };
+    }
+    console.error("[inviteAdmin] Failed to create invited admin:", error);
+    return { ok: false, error: "Could not create the admin. Try again." };
+  }
 
   const sent = await sendAdminInviteEmail({
     to: email,

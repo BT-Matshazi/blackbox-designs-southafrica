@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Inbox, LogOut, Menu, Users } from "lucide-react";
+import { Inbox, LogOut, Menu, ShieldCheck, Users } from "lucide-react";
 import Logo from "@/public/logo.webp";
 import {
   Sheet,
@@ -34,7 +34,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
 
   return (
-    <nav className="grid gap-1">
+    <nav className="grid gap-1.5">
       {NAV_ITEMS.map((item) => {
         const active = item.exact
           ? pathname === item.href
@@ -45,10 +45,10 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
             href={item.href}
             onClick={onNavigate}
             className={cn(
-              "relative flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+              "relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all",
               active
-                ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                : "text-muted-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground",
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
             )}
           >
             {active && (
@@ -71,28 +71,32 @@ function UserBlock({
   logout: () => Promise<void>;
 }) {
   return (
-    <div className="flex items-center gap-3 border-t border-sidebar-border px-3 py-4">
-      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary font-display text-xs font-bold text-primary-foreground">
-        {initials(user)}
-      </span>
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium">
-          {user.firstName
-            ? `${user.firstName} ${user.lastName ?? ""}`.trim()
-            : "Admin"}
-        </p>
-        <p className="truncate text-xs text-muted-foreground">{user.email}</p>
+    <div className="border-t border-sidebar-border p-3">
+      <div className="flex items-center gap-3 rounded-lg bg-sidebar-accent/70 p-3">
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary font-display text-xs font-bold text-primary-foreground shadow-sm">
+          {initials(user)}
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-semibold text-sidebar-foreground">
+            {user.firstName
+              ? `${user.firstName} ${user.lastName ?? ""}`.trim()
+              : "Admin"}
+          </p>
+          <p className="truncate text-xs text-muted-foreground">
+            {user.email}
+          </p>
+        </div>
+        <form action={logout}>
+          <button
+            type="submit"
+            aria-label="Log out"
+            title="Log out"
+            className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-background hover:text-foreground"
+          >
+            <LogOut className="size-4" />
+          </button>
+        </form>
       </div>
-      <form action={logout}>
-        <button
-          type="submit"
-          aria-label="Log out"
-          title="Log out"
-          className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-foreground"
-        >
-          <LogOut className="size-4" />
-        </button>
-      </form>
     </div>
   );
 }
@@ -109,7 +113,12 @@ function SidebarBody({
   return (
     <div className="flex h-full flex-col">
       <div className="px-4 py-5">
-        <Link href="/admin" onClick={onNavigate} aria-label="Admin dashboard">
+        <Link
+          href="/admin"
+          onClick={onNavigate}
+          aria-label="Admin dashboard"
+          className="inline-flex rounded-md"
+        >
           <Image
             src={Logo}
             width={130}
@@ -118,11 +127,17 @@ function SidebarBody({
             className="h-auto w-[120px]"
           />
         </Link>
-        <p className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
-          Admin
-        </p>
+        <div className="mt-5 rounded-lg border border-sidebar-border bg-background/70 p-3">
+          <div className="flex items-center gap-2 text-sm font-semibold">
+            <ShieldCheck className="size-4 text-accent" />
+            Dashboard
+          </div>
+          <p className="mt-1 text-xs leading-5 text-muted-foreground">
+            Manage leads and administrator access.
+          </p>
+        </div>
       </div>
-      <div className="flex-1 overflow-y-auto px-3">
+      <div className="flex-1 overflow-y-auto px-3 pb-4">
         <NavLinks onNavigate={onNavigate} />
       </div>
       <UserBlock user={user} logout={logout} />
@@ -138,7 +153,7 @@ export function AdminSidebar({
   logout: () => Promise<void>;
 }) {
   return (
-    <aside className="hidden w-64 shrink-0 border-r border-sidebar-border bg-sidebar lg:block">
+    <aside className="hidden w-72 shrink-0 border-r border-sidebar-border bg-sidebar shadow-[1px_0_0_var(--border)] lg:block">
       <SidebarBody user={user} logout={logout} />
     </aside>
   );
@@ -154,7 +169,7 @@ export function AdminMobileBar({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex items-center justify-between border-b border-sidebar-border bg-sidebar px-4 py-3 lg:hidden">
+    <div className="flex items-center justify-between border-b border-sidebar-border bg-sidebar/95 px-4 py-3 shadow-sm lg:hidden">
       <Link href="/admin" aria-label="Admin dashboard">
         <Image
           src={Logo}
@@ -166,7 +181,7 @@ export function AdminMobileBar({
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger
           aria-label="Open menu"
-          className="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-foreground"
+          className="inline-flex size-10 items-center justify-center rounded-lg border border-sidebar-border text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-foreground"
         >
           <Menu className="size-5" />
         </SheetTrigger>

@@ -135,7 +135,7 @@
   h3,
   h4 {
     font-family: var(--font-display), var(--font-geist-sans), sans-serif;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
     text-wrap: balance;
   }
 

@@ -31,12 +31,16 @@ export default async function AdminLayout({
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground lg:h-screen lg:flex-row lg:overflow-hidden">
+    <div className="flex min-h-screen flex-col bg-muted/35 text-foreground lg:h-screen lg:flex-row lg:overflow-hidden">
       <AdminSidebar user={sidebarUser} logout={logout} />
       <div className="flex min-w-0 flex-1 flex-col">
         <AdminMobileBar user={sidebarUser} logout={logout} />
-        <main className="flex-1 overflow-y-auto px-4 py-6 sm:px-8 sm:py-8">
-          <div className="mx-auto max-w-6xl">{children}</div>
+        <main className="relative flex-1 overflow-y-auto px-4 py-6 sm:px-6 lg:px-8">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-[linear-gradient(180deg,var(--background),transparent)]"
+          />
+          <div className="relative mx-auto max-w-7xl">{children}</div>
         </main>
       </div>
     </div>

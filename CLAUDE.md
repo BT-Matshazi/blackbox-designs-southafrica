@@ -13,7 +13,6 @@ This is a **Next.js 15** portfolio/agency website for Blackbox Designs built wit
 - **GSAP** for advanced animations
 - **React Hook Form** with **Zod** validation
 - **Nodemailer** for email notifications
-- **Google reCAPTCHA v3** for form protection
 
 ## Development Commands
 
@@ -74,6 +73,14 @@ src/
 - `public/` - Static assets
 
 ## Important Implementation Details
+
+### Database & Admin Dashboard
+
+- **Drizzle ORM + PostgreSQL** (`DATABASE_URL`): schema in `lib/drizzle/schema/`, migrations in `drizzle/migrations/` (`npm run db:generate` / `db:migrate`). Tables: `users`, `auth_tokens`, `leads`.
+- **Leads**: `ContactUsUseCase` persists every contact submission to `leads` *before* sending emails. Repository seam: `src/application/interface/lead.repository.ts` → `src/infrastructure/lead.infrastructure.ts`.
+- **Auth**: custom JWT-cookie auth (`jose` + `bcryptjs`) in `src/utils/auth/` and `app/actions/auth.ts`. Login + OTP password reset only — no public signup. Admins: `npx tsx scripts/create-admin.ts <email> <password>` or `ADMIN_PROMOTE_EMAILS` allowlist. Requires `JWT_SECRET` (≥32 chars).
+- **Admin dashboard**: `/admin` (leads list, search/filter, status updates). Guarded by `middleware.ts` (JWT), the admin layout (DB re-check), and `requireAdmin()` in server actions.
+- **Tests**: `npm test` (vitest). Session/OTP/redirect-guard/use-case units in `src/**/*.test.ts`.
 
 ### Email System
 
@@ -185,10 +192,3 @@ Targeting South African market with location-based keywords:
 - "web design Johannesburg"
 - "mobile app development"
 - Full keyword list in `seo-config.ts`
-
-### SEO Action Items
-See `SEO-CHECKLIST.md` for:
-- Google Search Console setup
-- Content creation strategy
-- Performance optimization
-- Analytics configuration

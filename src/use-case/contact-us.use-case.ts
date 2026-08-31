@@ -1,54 +1,56 @@
 import { ContactUs } from "@/src/application/domain/contact-us.domain";
+import { ContactUsRepository } from "@/src/application/interface/contact-us.repository";
+import { LeadRepository } from "@/src/application/interface/lead.repository";
 import { ContactUsInfrastructure } from "@/src/infrastructure/contact-us.infrastructure";
+import { LeadInfrastructure } from "@/src/infrastructure/lead.infrastructure";
 
 export class ContactUsUseCase {
-  private contactUsRepository: ContactUsInfrastructure;
-
-  constructor() {
-    this.contactUsRepository = new ContactUsInfrastructure();
-  }
+  constructor(
+    private contactUsRepository: ContactUsRepository = new ContactUsInfrastructure(),
+    private leadRepository: LeadRepository = new LeadInfrastructure(),
+  ) {}
 
   async execute(
-    data: ContactUs
+    data: ContactUs,
   ): Promise<{ success: boolean; messageId?: string; error?: string }> {
-    console.log("[ContactUsUseCase] Starting execution", {
-      hasFirstName: !!data.firstName,
-      hasLastName: !!data.lastName,
-      hasEmail: !!data.email,
-      hasPhone: !!data.phone,
-      hasCompany: !!data.company,
-      hasMessage: !!data.message,
-    });
-
-    try {
-      // Validate the input data
-      console.log("[ContactUsUseCase] Validating input data");
-      if (!data.firstName || !data.lastName || !data.email || !data.company || !data.phone || !data.message) {
-        console.error("[ContactUsUseCase] Validation failed - missing required fields");
-        throw new Error("All fields are required");
-      }
-
-      console.log("[ContactUsUseCase] Validation passed, calling infrastructure layer");
-      const result = await this.contactUsRepository.sendContactUsEmail(data);
-
-      if (result.success) {
-        console.log("[ContactUsUseCase] Email sent successfully via infrastructure", {
-          messageId: result.messageId,
-        });
-      } else {
-        console.error("[ContactUsUseCase] Infrastructure layer returned failure", {
-          error: result.error,
-        });
-      }
-
-      return result;
-    } catch (error) {
-      console.error("[ContactUsUseCase] Error executing use case:", error);
-      return {
-        success: false,
-        error:
-          error instanceof Error ? error.message : "Failed to execute use case",
-      };
+    if (!data.firstName || !data.lastName || !data.email || !data.message) {
+      return { success: false, error: "Name, email and message are required" };
     }
+
+    // Persist first so an SMTP failure can never lose the lead.
+    const saved = await this.leadRepository.save({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phone: data.phone || undefined,
+      company: data.company || undefined,
+      message: data.message,
+      projectType: data.projectType,
+      budgetRange: data.budgetRange,
+      attachmentName: data.attachmentName,
+      attachmentSize: data.attachmentSize,
+      attachmentType: data.attachmentType,
+      source: "contact",
+    });
+    if (!saved.success) {
+      console.error("[ContactUsUseCase] Lead persistence failed", {
+        error: saved.error,
+      });
+    }
+
+    const emailResult = await this.contactUsRepository.sendContactUsEmail(data);
+    if (!emailResult.success) {
+      console.error("[ContactUsUseCase] Notification email failed", {
+        error: emailResult.error,
+      });
+    }
+
+    if (saved.success || emailResult.success) {
+      return { success: true, messageId: emailResult.messageId };
+    }
+    return {
+      success: false,
+      error: emailResult.error ?? "Failed to submit enquiry",
+    };
   }
 }

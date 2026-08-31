@@ -24,9 +24,7 @@ export function ResetForm({ email }: { email: string }) {
       <input type="hidden" name="code" value={code} />
 
       <div className="grid gap-2">
-        <span className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">
-          6-digit code
-        </span>
+        <span className="text-sm font-medium leading-none">6-digit code</span>
         <InputOTP maxLength={6} value={code} onChange={setCode} autoFocus>
           <InputOTPGroup>
             <InputOTPSlot index={0} />

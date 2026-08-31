@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { and, desc, eq, gt, isNull } from "drizzle-orm";
+import { and, desc, eq, gt, isNull, sql } from "drizzle-orm";
 import { db } from "@/lib/drizzle/db";
 import { users, authTokens } from "@/lib/drizzle/schema";
 import { hashPassword, verifyPassword } from "@/src/utils/auth/password";
@@ -26,6 +26,7 @@ export type ActionState = { ok: true } | { ok: false; error: string };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MIN_PASSWORD = 8;
 const CODE_RE = /^\d{6}$/;
+const RESET_REJECT_MESSAGE = "Invalid or expired code. Request a new one.";
 
 function adminEmails(): Set<string> {
   return new Set(
@@ -206,7 +207,7 @@ export async function resetPassword(
 
   // Generic message — never confirm whether the email exists.
   if (!user) {
-    return { ok: false, error: "Invalid code." };
+    return { ok: false, error: RESET_REJECT_MESSAGE };
   }
 
   const token = await findActiveResetToken(user.id);
@@ -220,20 +221,20 @@ export async function resetPassword(
       await db
         .update(authTokens)
         .set({
-          attempts: decision.incrementAttempts
-            ? token.attempts + 1
-            : token.attempts,
-          consumedAt: decision.consume ? new Date() : token.consumedAt,
+          ...(decision.incrementAttempts
+            ? { attempts: sql`${authTokens.attempts} + 1` }
+            : {}),
+          ...(decision.consume ? { consumedAt: new Date() } : {}),
         })
-        .where(eq(authTokens.id, token.id));
+        .where(and(eq(authTokens.id, token.id), isNull(authTokens.consumedAt)));
     }
-    return { ok: false, error: decision.error };
+    return { ok: false, error: RESET_REJECT_MESSAGE };
   }
 
   await db
     .update(authTokens)
     .set({ consumedAt: new Date() })
-    .where(eq(authTokens.id, token!.id));
+    .where(and(eq(authTokens.id, token!.id), isNull(authTokens.consumedAt)));
 
   const passwordHash = await hashPassword(password);
   await db
